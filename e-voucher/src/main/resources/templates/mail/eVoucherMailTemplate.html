@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+
+<h1>Bonjour,</h1>
+
+<p>Vous avez fait un don de <span th:text="${formattedAmount}"></span> et nous vous en remercions...</p>
+<p>Veuillez trouvez ci-joint le reçu <span th:text="${eVoucher.id}"></span> au nom de <span th:text="${eVoucher.name}"></span>.</p>
+<p>Contact...</p>
+
+<p>Pièce jointe...</p>
+
+</body>
+</html>
