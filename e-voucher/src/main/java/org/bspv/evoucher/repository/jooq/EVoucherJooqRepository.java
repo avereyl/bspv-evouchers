@@ -19,7 +19,7 @@ import org.bspv.evouchers.jooq.tables.records.EvouchersRecord;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Result;
-import org.jooq.exception.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -63,7 +63,9 @@ public class EVoucherJooqRepository implements EVoucherRepository {
 				 EVOUCHERS.EMAIL,
 				 EVOUCHERS.REQUEST_DATE,
 				 EVOUCHERS.AMOUNT,
-				 EVOUCHERS.STATUS)
+				 EVOUCHERS.STATUS,
+				 EVOUCHERS.TEAM_NUMBER,
+				 EVOUCHERS.DISTRIBUTION_YEAR)
 			.values(eVoucher.getId(), 
 					eVoucher.getCreatedBy(),
 					eVoucher.getCreatedDate(), 
@@ -71,7 +73,9 @@ public class EVoucherJooqRepository implements EVoucherRepository {
 					eVoucher.getEmail(),
 					eVoucher.getRequestDate(), 
 					eVoucher.getAmount(),
-					EVoucherStatus.ACTIVE.name())
+					EVoucherStatus.ACTIVE.name(),
+					eVoucher.getTeam().getNumber(),
+					eVoucher.getTeam().getYear())
 			.returning()
 			.fetchOne();
 		return RecordConverterFactory.convert(record);
@@ -93,7 +97,9 @@ public class EVoucherJooqRepository implements EVoucherRepository {
 						 EVOUCHERS.EMAIL,
 						 EVOUCHERS.REQUEST_DATE,
 						 EVOUCHERS.AMOUNT,
-						 EVOUCHERS.STATUS)
+						 EVOUCHERS.STATUS,
+						 EVOUCHERS.TEAM_NUMBER,
+						 EVOUCHERS.DISTRIBUTION_YEAR)
 					.values(eVoucher.getId(), 
 							eVoucher.getCreatedBy(),
 							eVoucher.getCreatedDate(), 
@@ -101,9 +107,11 @@ public class EVoucherJooqRepository implements EVoucherRepository {
 							eVoucher.getEmail(),
 							eVoucher.getRequestDate(), 
 							eVoucher.getAmount(),
-							EVoucherStatus.ACTIVE.name())
+							EVoucherStatus.ACTIVE.name(),
+							eVoucher.getTeam().getNumber(),
+							eVoucher.getTeam().getYear())
 			.execute();
-		} catch (DataAccessException e) {
+		} catch (DuplicateKeyException e) {
 			this.dslContext
 			.update(EVOUCHERS)
 			.set(EVOUCHERS.VERSION, EVOUCHERS.VERSION.add(1))

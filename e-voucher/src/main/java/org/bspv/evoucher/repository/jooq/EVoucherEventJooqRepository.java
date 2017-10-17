@@ -61,13 +61,11 @@ public class EVoucherEventJooqRepository implements EVoucherEventRepository {
 	public EVoucherEvent insert(EVoucherEvent event) {
 		EvoucherEventsRecord record = this.dslContext
 			.insertInto(EVOUCHER_EVENTS)
-			.columns(EVOUCHER_EVENTS.ID,
-					 EVOUCHER_EVENTS.EVOUCHER_ID,
+			.columns(EVOUCHER_EVENTS.EVOUCHER_ID,
 					 EVOUCHER_EVENTS.EVENT_TYPE, 
 					 EVOUCHER_EVENTS.CREATED_BY,
 					 EVOUCHER_EVENTS.CREATED_DATE)
-			.values(event.getId(), 
-					event.getEVoucherUuid(), 
+			.values(event.getEVoucherUuid(), 
 					event.getEventType().name(), 
 					event.getCreatedBy(),
 					event.getCreatedDate())

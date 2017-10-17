@@ -15,7 +15,6 @@ import javax.annotation.PostConstruct;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.preflight.PreflightDocument;
 import org.apache.pdfbox.preflight.ValidationResult;
-import org.apache.pdfbox.preflight.ValidationResult.ValidationError;
 import org.apache.pdfbox.preflight.exception.SyntaxValidationException;
 import org.apache.pdfbox.preflight.parser.PreflightParser;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -70,7 +69,7 @@ public class PrintingServiceTest {
 			// tests on content
 			Assert.assertNotNull("The document content should not be null.", content);
 			// Assert.assertTrue("", content.contains("Hello World"));
-		
+
 		} finally {
 			if (document != null) {
 				document.close();
@@ -89,15 +88,16 @@ public class PrintingServiceTest {
 		try {
 
 			/*
-			 * Parse the PDF file with PreflightParser that inherits from the NonSequentialParser. Some additional
-			 * controls are present to check a set of PDF/A requirements. (Stream length consistency, EOL after some
-			 * Keyword...)
+			 * Parse the PDF file with PreflightParser that inherits from the
+			 * NonSequentialParser. Some additional controls are present to check a set of
+			 * PDF/A requirements. (Stream length consistency, EOL after some Keyword...)
 			 */
 			parser.parse();
 
 			/*
-			 * Once the syntax validation is done, the parser can provide a PreflightDocument (that inherits from
-			 * PDDocument) This document process the end of PDF/A validation.
+			 * Once the syntax validation is done, the parser can provide a
+			 * PreflightDocument (that inherits from PDDocument) This document process the
+			 * end of PDF/A validation.
 			 */
 			PreflightDocument document = parser.getPreflightDocument();
 			document.validate();
@@ -108,8 +108,9 @@ public class PrintingServiceTest {
 
 		} catch (SyntaxValidationException e) {
 			/*
-			 * the parse method can throw a SyntaxValidationException if the PDF file can't be parsed. In this case, the
-			 * exception contains an instance of ValidationResult
+			 * the parse method can throw a SyntaxValidationException if the PDF file can't
+			 * be parsed. In this case, the exception contains an instance of
+			 * ValidationResult
 			 */
 			result = e.getResult();
 		}
@@ -119,9 +120,8 @@ public class PrintingServiceTest {
 			log.debug("The file is a valid PDF/A-1b file");
 		} else {
 			log.error("The file is not valid, error(s) :");
-			for (ValidationError error : result.getErrorsList()) {
-				log.error(error.getErrorCode() + " : " + error.getDetails());
-			}
+			result.getErrorsList().stream()
+					.forEach(error -> log.error("{0} : {1}", error.getErrorCode(), error.getDetails()));
 			fail();
 		}
 	}

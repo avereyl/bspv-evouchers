@@ -12,6 +12,7 @@ import org.bspv.evoucher.tech.PrintingService;
 import org.bspv.evoucher.tech.helper.PrintingHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.MessageSourceResourceBundle;
@@ -47,6 +48,11 @@ public class PrintingServiceJasper implements PrintingService {
 	 */
 //	@Autowired
 //	private BarcodeGenerationService barcodeGenerationService;
+	/**
+	 * 
+	 */
+	@Value("${voucher.responsible}")
+	private String voucherResponsible;
 	
 	/**
 	 * 
@@ -120,7 +126,7 @@ public class PrintingServiceJasper implements PrintingService {
         	parameters.put("voucherAssociationAddress", messageSource.getMessage("voucher.bspv.address", new Object[]{}, locale));
         	parameters.put("voucherDonationAmount", amount.toString());
         	parameters.put("voucherDonationDate", messageSource.getMessage("voucher.text.date", new Object[]{requestDate}, locale));
-        	parameters.put("voucherResponsible", "Yann Drouet");//FIXME from properties
+        	parameters.put("voucherResponsible", voucherResponsible);
 
             
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
@@ -132,7 +138,7 @@ public class PrintingServiceJasper implements PrintingService {
 			SimplePdfReportConfiguration reportConfig = new SimplePdfReportConfiguration();
 			reportConfig.setSizePageToContent(true);
 			reportConfig.setForceLineBreakPolicy(false);
-// PDF metadata
+//			PDF metadata
 			SimplePdfExporterConfiguration exportConfig = new SimplePdfExporterConfiguration();
 			exportConfig.setMetadataAuthor(messageSource.getMessage("voucher.metadata.author", new Object[]{}, locale));
 			exportConfig.setMetadataTitle(messageSource.getMessage("voucher.metadata.title", new Object[]{String.valueOf(eVoucher.getCreatedDate().getYear())}, locale));
@@ -141,14 +147,14 @@ public class PrintingServiceJasper implements PrintingService {
 			
 			exportConfig.setMetadataKeywords("");
 			
-			// PDF/A conformance
+//			PDF/A conformance
 			exportConfig.setPdfaConformance(PdfaConformanceEnum.PDFA_1A);
 			String iccProfilePath = resourceLoader.getResource("classpath:assets/icm/sRGB Color Space Profile.icm").getURI().getPath();
 			exportConfig.setIccProfilePath(iccProfilePath);
-//
+
 			exporter.setConfiguration(reportConfig);
 			exporter.setConfiguration(exportConfig);
-//
+
 			exporter.exportReport();
 			
 			return baos;

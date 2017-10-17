@@ -7,8 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.springframework.beans.BeanUtils;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -198,7 +196,8 @@ public final class EVoucherEvent implements Serializable {
 	 */
 	public static Builder builderBasedOn(EVoucherEvent event) {
 		Builder builder = new Builder(event.getEVoucherUuid());
-		BeanUtils.copyProperties(event, builder, "uuid");
+		builder.createdBy(event.getCreatedBy());
+		builder.withKey(event.getEventType());
 		return builder;
 	}
 

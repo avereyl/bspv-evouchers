@@ -25,10 +25,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,7 +68,7 @@ public class EVoucherController {
 	 *            The user asking to process the e-voucher.
 	 */
 	@PostMapping("eVouchers/")
-	public ResponseBodyEmitter processEVoucher(@ModelAttribute("evoucher") @Validated EVoucherBean eVoucherBean,
+	public ResponseBodyEmitter processEVoucher(@RequestBody @Validated EVoucherBean eVoucherBean,
 			@AuthenticationPrincipal User user) {
 		SseEmitter emitter = new SseEmitter();
 		Integer year = eVoucherBean.getDistributionYear();
@@ -155,7 +155,7 @@ public class EVoucherController {
 	 *            The principal responsible for the request.
 	 */
 	@PutMapping("eVouchers/")
-	public ResponseEntity<EVoucher> saveEVoucher(@ModelAttribute("evoucher") @Validated EVoucherBean eVoucherBean,
+	public ResponseEntity<EVoucher> saveEVoucher(@RequestBody @Validated EVoucherBean eVoucherBean,
 			@AuthenticationPrincipal User user) {
 //		@formatter:off
 		EVoucher eVoucher = EVoucher.builder()

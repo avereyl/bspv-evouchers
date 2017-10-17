@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.MediaType;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -78,7 +77,7 @@ public class MailingServiceDefault implements MailingService {
 	public EVoucher sendEVoucherPrint(EVoucher eVoucher, final ByteArrayOutputStream baos) {
 
 		MimeMessagePreparator messagePreparator = mimeMessage -> {
-			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
 			messageHelper.setFrom(this.mailFromAddress);
 			messageHelper.setTo(eVoucher.getEmail());
 			// add team members issuing the evoucher
@@ -93,7 +92,7 @@ public class MailingServiceDefault implements MailingService {
 			messageHelper.setText(content, true);
 			// add attachement
 			if (baos != null) {
-				messageHelper.addAttachment(MailingService.computeFilename(eVoucher), new ByteArrayResource(baos.toByteArray()), MediaType.APPLICATION_PDF.getType());
+				messageHelper.addAttachment(MailingService.computeFilename(eVoucher), new ByteArrayResource(baos.toByteArray()));
 			}
 		};
 		try {
