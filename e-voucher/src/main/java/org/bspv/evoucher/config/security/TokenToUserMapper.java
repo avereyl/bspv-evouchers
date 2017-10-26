@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.bspv.evoucher.core.model.Team;
 import org.bspv.evoucher.core.model.User;
+import org.bspv.security.Constants;
 import org.bspv.security.jwt.mapper.TokenToUserDetailsMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,7 +39,7 @@ public class TokenToUserMapper implements TokenToUserDetailsMapper<User> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public User toUserDetails(final Claims claims) {
-		List<String> scopes = claims.get(AUTHORITIES_CLAIM_NAME, List.class);
+		List<String> scopes = claims.get(Constants.AUTHORITIES_CLAIM_NAME, List.class);
 		List<GrantedAuthority> authorities = scopes.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 		Map<String, Integer> teamMap = claims.get(TEAM_CLAIM_NAME, Map.class);
 		Team team = Team.builder().withNumber(teamMap.get(Team.NUMBER_FIELD)).forYear(teamMap.get(Team.YEAR_FIELD)).build();
@@ -57,7 +58,7 @@ public class TokenToUserMapper implements TokenToUserDetailsMapper<User> {
 	public Claims toClaims(final User user) {
 		Claims claims = Jwts.claims().setSubject(user.getUsername());
 		claims.setId(user.getId().toString());
-		claims.put(AUTHORITIES_CLAIM_NAME, user.getAuthorities().stream().map(Object::toString).collect(Collectors.toList()));
+		claims.put(Constants.AUTHORITIES_CLAIM_NAME, user.getAuthorities().stream().map(Object::toString).collect(Collectors.toList()));
 		claims.put(TEAM_CLAIM_NAME, user.getTeam());
 		claims.put(VERSION_CLAIM_NAME, user.getVersion());
 		return claims;

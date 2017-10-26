@@ -30,7 +30,7 @@ public class PayloadTokenWriter implements TokenWriter {
 	 */
 	@Override
 	public void write(String token, HttpServletResponse response) {
-		Map<String, String> tokenMap = new HashMap<String, String>();
+		Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("jwt", token);
 		response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

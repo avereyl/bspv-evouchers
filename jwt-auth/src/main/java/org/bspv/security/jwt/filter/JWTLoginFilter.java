@@ -29,41 +29,42 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-	private final TokenAuthenticationService authenticationService;
+    private final TokenAuthenticationService authenticationService;
 
-	public JWTLoginFilter(String url, AuthenticationManager authManager,
-			TokenAuthenticationService authenticationService) {
-		super(new AntPathRequestMatcher(url, HttpMethod.POST.name()));
-		setAuthenticationManager(authManager);
-		this.authenticationService = authenticationService;
-	}
+    public JWTLoginFilter(String url, AuthenticationManager authManager,
+            TokenAuthenticationService authenticationService) {
+        super(new AntPathRequestMatcher(url, HttpMethod.POST.name()));
+        setAuthenticationManager(authManager);
+        this.authenticationService = authenticationService;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter#attemptAuthentication(
-	 * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 */
-	@Override
-	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
-			throws AuthenticationException, IOException, ServletException {
-		AccountCredentials creds = new ObjectMapper().readValue(req.getInputStream(), AccountCredentials.class);
-		return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
-				creds.getPassword(), Collections.emptyList()));
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter#attemptAuthentication(
+     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
+            throws AuthenticationException, IOException, ServletException {
+        AccountCredentials creds = new ObjectMapper().readValue(req.getInputStream(), AccountCredentials.class);
+        return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
+                creds.getPassword(), Collections.emptyList()));
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter#successfulAuthentication(
-	 * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain,
-	 * org.springframework.security.core.Authentication)
-	 */
-	@Override
-	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
-			Authentication auth) throws IOException, ServletException {
-		this.authenticationService.addAuthenticationToken(res, (UserDetails)auth.getPrincipal());
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter#successfulAuthentication(
+     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain,
+     * org.springframework.security.core.Authentication)
+     */
+    @Override
+    protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
+            Authentication auth) throws IOException, ServletException {
+        this.authenticationService.addAuthenticationToken(req, res, (UserDetails) auth.getPrincipal());
+    }
+
 }

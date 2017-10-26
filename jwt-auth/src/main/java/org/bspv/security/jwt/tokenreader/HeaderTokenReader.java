@@ -6,15 +6,17 @@ package org.bspv.security.jwt.tokenreader;
 import javax.servlet.http.HttpServletRequest;
 
 import org.bspv.security.jwt.TokenProcessorProperties;
-import org.bspv.security.jwt.tokenwriter.HeaderTokenWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  */
 public class HeaderTokenReader implements TokenReader {
+    
 
-	@Autowired
+	private static final String TOKEN_PREFIX = "Bearer ";
+	
+    @Autowired
 	private TokenProcessorProperties properties;
 	
 	/*
@@ -24,7 +26,7 @@ public class HeaderTokenReader implements TokenReader {
 	@Override
 	public String find(HttpServletRequest request) {
 		String authorizationHeader = request.getHeader(properties.getAuthorizationHeaderName());
-		return authorizationHeader != null ? authorizationHeader.replace(HeaderTokenWriter.TOKEN_PREFIX, "") : "";
+		return authorizationHeader != null ? authorizationHeader.replace(TOKEN_PREFIX, "") : "";
 	}
 
 

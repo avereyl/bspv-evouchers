@@ -66,7 +66,7 @@ public class TokenProcessorProperties implements Serializable {
 	 * 
 	 *
 	 */
-	public static enum CHANNEL {
+	public enum CHANNEL {
 		COOKIE, HEADER, PAYLOAD
 	}
 

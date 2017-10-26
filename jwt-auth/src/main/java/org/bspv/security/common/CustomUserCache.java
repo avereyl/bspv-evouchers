@@ -3,29 +3,26 @@
  */
 package org.bspv.security.common;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.cache.Cache;
 import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * User cache implementation to handle {@link User}.
  */
+@Slf4j
 public class CustomUserCache implements UserCache, InitializingBean {
 
     /**
      * Name of the users cache.
      */
     public static final String USER_CACHE_NAME = "users";
-
-    /**
-     * Logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomUserCache.class);
 
     /**
      * Spring cache.
@@ -57,7 +54,9 @@ public class CustomUserCache implements UserCache, InitializingBean {
     @Override
     public UserDetails getUserFromCache(final String username) {
         final ValueWrapper element = this.cache.get(username.toLowerCase());
-        LOGGER.debug("Cache hit: {0} ; username: {1}", (element != null), username.toLowerCase());
+        if (log.isDebugEnabled()) {
+            log.debug("Cache hit: {0} ; username: {1}", (element != null), username.toLowerCase());
+        }
         return (element == null) ? null : (UserDetails) element.get();
     }
 
@@ -69,7 +68,9 @@ public class CustomUserCache implements UserCache, InitializingBean {
      */
     @Override
     public void putUserInCache(final UserDetails user) {
-        LOGGER.debug("Cache put: {}", user.getUsername().toLowerCase());
+        if (log.isDebugEnabled()) {
+            log.debug("Cache put: {}", user.getUsername().toLowerCase());
+        }
         this.cache.put(user.getUsername().toLowerCase(), user);
     }
 
@@ -80,7 +81,9 @@ public class CustomUserCache implements UserCache, InitializingBean {
      */
     @Override
     public void removeUserFromCache(final String username) {
-        LOGGER.debug("Cache remove: {}", username.toLowerCase());
+        if (log.isDebugEnabled()) {
+            log.debug("Cache remove: {}", username.toLowerCase());
+        }
         this.cache.evict(username.toLowerCase());
     }
 

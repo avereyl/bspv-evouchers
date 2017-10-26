@@ -24,9 +24,10 @@ public class CookieTokenWriter implements TokenWriter {
 	@Override
 	public void write(String token, HttpServletResponse response) {
 		Cookie cookie = new Cookie(properties.getAuthorizationCookieName(), token);
-		cookie.setSecure(false);// FIXME change
-		cookie.setHttpOnly(true);// set to false for stateless CSRF protection (double submit of csrf token) 
+		cookie.setSecure(true);
+		cookie.setHttpOnly(true);
 		response.addCookie(cookie);
 	}
+
 
 }
