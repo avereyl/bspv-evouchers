@@ -1,0 +1,92 @@
+spring:
+  profiles: 
+    active: dev
+  application: 
+    name: evouchers
+  thymeleaf:
+    prefix: classpath:/templates/mail/
+#  mvc: 
+#    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+    
+### specific app properties
+mail: 
+  from: noreply.evouchers.pompiers-laverrie@gmail.com
+  answer: pompiers-laverrie@gmail.com
+  archive: pompiers-laverrie@gmail.com
+
+voucher:  
+  responsible: John Doe
+barcode:
+  size: 400
+
+---
+### dev profil
+
+spring:
+  profiles: dev
+### data access
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+    url: jdbc:h2:tcp://localhost/~/db/h2/evouchers
+
+  jooq:
+    sql-dialect: h2
+
+### mail
+  mail: 
+    default-encoding: UTF-8
+    host: 
+    protocol: smtp
+    port: 25
+    username: # Login user of the SMTP server.
+    password: # Login password of the SMTP server.
+    test-connection: false
+    properties: 
+      mail: 
+        smtp: 
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+
+server: 
+  port: 8443
+  ssl:
+    key-store: src/main/resources/security/keystore.p12
+    key-store-password: password
+    keyStoreType: PKCS12
+    keyAlias: evouchers
+   
+### logging
+logging: 
+  level: 
+    org.jooq.tools: DEBUG
+    org.bspv.evoucher: DEBUG
+    org.springframework.web.servlet.mvc: DEBUG
+
+### security
+security: 
+  jwt: 
+    secret: key
+    default-expiration-time: 864000
+
+---
+### prod profile
+spring: 
+  profiles: prod
+  sendgrid: 
+    username: 
+    api-key: 
+
+  datasource:
+    driver-class-name: 
+    username: 
+    password: 
+    url: 
+
+  jooq:
+    sql-dialect: 
+
