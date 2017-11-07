@@ -203,6 +203,7 @@ public class SecurityAutoConfiguration {
          */
         @Bean
         @Order(Ordered.LOWEST_PRECEDENCE - 1)
+        @ConditionalOnMissingBean(CookieTokenWriter.class)
         @ConditionalOnProperty(value = "security.jwt.cookie-token-writer.enabled", matchIfMissing = true)
         public TokenWriter cookieTokenWriter() {
             return new CookieTokenWriter();
@@ -213,6 +214,7 @@ public class SecurityAutoConfiguration {
          */
         @Bean
         @Order(Ordered.LOWEST_PRECEDENCE)
+        @ConditionalOnMissingBean(PayloadTokenWriter.class)
         @ConditionalOnProperty(value = "security.jwt.payload-token-writer.enabled", matchIfMissing = true)
         public TokenWriter payloadTokenWriter() {
             return new PayloadTokenWriter();
@@ -223,6 +225,7 @@ public class SecurityAutoConfiguration {
          */
         @Bean
         @Order(Ordered.LOWEST_PRECEDENCE - 1)
+        @ConditionalOnMissingBean(HeaderTokenReader.class)
         @ConditionalOnProperty(value = "security.jwt.header-token-finder.enabled", matchIfMissing = true)
         public HeaderTokenReader headerTokenReader() {
             return new HeaderTokenReader();
@@ -230,6 +233,7 @@ public class SecurityAutoConfiguration {
 
         @Bean
         @Order(Ordered.LOWEST_PRECEDENCE)
+        @ConditionalOnMissingBean(CookieTokenReader.class)
         @ConditionalOnProperty(value = "security.jwt.cookie-token-finder.enabled", matchIfMissing = true)
         public CookieTokenReader cookieTokenReader() {
             return new CookieTokenReader();

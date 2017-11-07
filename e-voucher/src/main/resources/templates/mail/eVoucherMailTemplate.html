@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head></head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+</head>
 <body>
 
-<h1>Bonjour,</h1>
+	<h1>Bonjour,</h1>
 
-<p>Vous avez fait un don de <span th:text="${formattedAmount}"></span> et nous vous en remercions...</p>
-<p>Veuillez trouvez ci-joint le reçu <span th:text="${eVoucher.id}"></span> au nom de <span th:text="${eVoucher.name}"></span>.</p>
-<p>Contact...</p>
+	<p>
+		Vous avez fait un don de <span th:text="${formattedAmount}">50 euros</span> et nous vous en remercions.
+	</p>
+	<p>
+		Veuillez trouvez ci-joint le reçu <span th:text="${eVoucher.id}">83c869ec28b9</span>
+		au nom de <span th:text="${eVoucher.name}">SARL Bonne nuit les p'tits loups</span>.
+	</p>
+	<p>Pour toutes questions, n'hésitez pas à nous contacter à l'	adresse suivante : <span th:text="${mail.bspv.email}">pompiers-laverrie@gmail.com</span></p>
 
-
+	<hr />
+	<footer>Amicale des sapeurs pompiers de La Verrie</footer>
 </body>
 </html>

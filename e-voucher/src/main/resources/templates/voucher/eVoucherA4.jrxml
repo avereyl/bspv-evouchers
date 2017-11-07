@@ -117,7 +117,7 @@
 			</textField>
 			<textField>
 				<reportElement x="0" y="50" width="239" height="19" uuid="1caf7a23-0c41-46f2-a824-c36bc1ce58b4"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
 					<font size="11" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
@@ -125,7 +125,7 @@
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="241" y="50" width="239" height="19" uuid="ef1e836a-e948-4ccb-9d1b-19f2fd178fcc"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
 					<font size="11" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
@@ -133,7 +133,7 @@
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="RelativeToTallestObject" x="0" y="69" width="239" height="19" isPrintWhenDetailOverflows="true" uuid="914c5a83-bb29-437d-9a1c-6b35d4d636c4"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
 					<font size="11" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>

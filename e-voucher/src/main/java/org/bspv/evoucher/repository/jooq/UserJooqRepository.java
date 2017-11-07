@@ -88,7 +88,7 @@ public class UserJooqRepository implements UserRepository {
 			Set<GrantedAuthority> authorities = entry.getValue()
 					.getValues(AUTHORITIES.AUTHORITY)
 					.stream()
-					.map(s -> new SimpleGrantedAuthority(s))
+					.map(SimpleGrantedAuthority::new)
 					.collect(Collectors.toSet());
 //		@formatter:on
 			user = RecordConverterFactory.toBuilder(userRecord).withTeam(team).withAuthorities(authorities).build();
@@ -113,9 +113,9 @@ public class UserJooqRepository implements UserRepository {
 	 * java.time.LocalDateTime)
 	 */
 	@Override
-	public Set<User> findTeammates(User user, LocalDateTime date) {
+	public Set<User> findTeammates(final User user, final LocalDateTime date) {
 		Set<User> teammates;
-		date = (date == null) ? LocalDateTime.now() : date;
+		LocalDateTime validityDate = (date == null) ? LocalDateTime.now() : date;
 //		@formatter:off
 		Map<UsersRecord, Result<Record>> recordResultMap = 
 		this.dslContext
@@ -125,8 +125,8 @@ public class UserJooqRepository implements UserRepository {
 			.on(AUTHORITIES.USER_ID.eq(USERS.ID))
 			.leftJoin(TEAM_MEMBERS)
 			.on(TEAM_MEMBERS.USER_ID.eq(USERS.ID))
-			.and(TEAM_MEMBERS.VALIDITY_START.le(date))
-			.and(TEAM_MEMBERS.VALIDITY_END.greaterThan(date))
+			.and(TEAM_MEMBERS.VALIDITY_START.le(validityDate))
+			.and(TEAM_MEMBERS.VALIDITY_END.greaterThan(validityDate))
 			.where(TEAM_MEMBERS.TEAM_NUMBER.eq(user.getTeam().getNumber()))
 			.and(TEAM_MEMBERS.DISTRIBUTION_YEAR.eq(user.getTeam().getYear()))
 			.and(USERS.ENABLED.eq(Boolean.TRUE))
@@ -142,7 +142,7 @@ public class UserJooqRepository implements UserRepository {
 					Set<GrantedAuthority> authorities = entry.getValue()
 							.getValues(AUTHORITIES.AUTHORITY)
 							.stream()
-							.map(s -> new SimpleGrantedAuthority(s))
+							.map(SimpleGrantedAuthority::new)
 							.collect(Collectors.toSet());
 //		@formatter:on
 					return RecordConverterFactory.toBuilder(userRecord).withTeam(user.getTeam()).withAuthorities(authorities)
@@ -159,9 +159,9 @@ public class UserJooqRepository implements UserRepository {
 	 * java.time.LocalDateTime)
 	 */
 	@Override
-	public Set<User> findMembers(Team team, LocalDateTime date) {
+	public Set<User> findMembers(final Team team, final LocalDateTime date) {
 		Set<User> teamMembers = new HashSet<>();
-		date = (date == null) ? LocalDateTime.now() : date;
+		LocalDateTime validityDate = (date == null) ? LocalDateTime.now() : date;
 		if (team == null) {
 			log.info("No given team !");
 			return teamMembers;
@@ -175,8 +175,8 @@ public class UserJooqRepository implements UserRepository {
 			.on(AUTHORITIES.USER_ID.eq(USERS.ID))
 			.leftJoin(TEAM_MEMBERS)
 			.on(TEAM_MEMBERS.USER_ID.eq(USERS.ID))
-			.and(TEAM_MEMBERS.VALIDITY_START.le(date))
-			.and(TEAM_MEMBERS.VALIDITY_END.greaterThan(date))
+			.and(TEAM_MEMBERS.VALIDITY_START.le(validityDate))
+			.and(TEAM_MEMBERS.VALIDITY_END.greaterThan(validityDate))
 			.where(TEAM_MEMBERS.TEAM_NUMBER.eq(team.getNumber()))
 			.and(TEAM_MEMBERS.DISTRIBUTION_YEAR.eq(team.getYear()))
 			.and(USERS.ENABLED.eq(Boolean.TRUE))
@@ -191,7 +191,7 @@ public class UserJooqRepository implements UserRepository {
 					Set<GrantedAuthority> authorities = entry.getValue()
 							.getValues(AUTHORITIES.AUTHORITY)
 							.stream()
-							.map(s -> new SimpleGrantedAuthority(s))
+							.map(SimpleGrantedAuthority::new)
 							.collect(Collectors.toSet());
 //		@formatter:on
 					return RecordConverterFactory.toBuilder(userRecord).withTeam(team).withAuthorities(authorities)

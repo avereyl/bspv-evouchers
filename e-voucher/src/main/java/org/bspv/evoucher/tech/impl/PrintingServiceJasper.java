@@ -120,13 +120,13 @@ public class PrintingServiceJasper implements PrintingService {
             
             //make a bean from these following parameters
             parameters.put("voucherDate", messageSource.getMessage("voucher.date", new Object[]{PrintingHelper.formatDateInFrench(eVoucher.getCreatedDate())}, locale));
-        	parameters.put("voucherReference", messageSource.getMessage("voucher.reference", new Object[]{eVoucherReference}, locale));
-        	parameters.put("voucherDonorName", eVoucher.getName());
-        	parameters.put("voucherAssociationName", messageSource.getMessage("voucher.bspv", new Object[]{}, locale));
-        	parameters.put("voucherAssociationAddress", messageSource.getMessage("voucher.bspv.address", new Object[]{}, locale));
-        	parameters.put("voucherDonationAmount", amount.toString());
-        	parameters.put("voucherDonationDate", messageSource.getMessage("voucher.text.date", new Object[]{requestDate}, locale));
-        	parameters.put("voucherResponsible", voucherResponsible);
+            parameters.put("voucherReference", messageSource.getMessage("voucher.reference", new Object[]{eVoucherReference}, locale));
+            parameters.put("voucherDonorName", eVoucher.getName());
+            parameters.put("voucherAssociationName", messageSource.getMessage("voucher.bspv", new Object[]{}, locale));
+            parameters.put("voucherAssociationAddress", messageSource.getMessage("voucher.bspv.address", new Object[]{}, locale));
+            parameters.put("voucherDonationAmount", amount.toString());
+            parameters.put("voucherDonationDate", messageSource.getMessage("voucher.text.date", new Object[]{requestDate}, locale));
+            parameters.put("voucherResponsible", voucherResponsible);
 
             
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());

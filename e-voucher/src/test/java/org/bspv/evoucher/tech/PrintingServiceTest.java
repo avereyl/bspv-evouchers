@@ -40,6 +40,8 @@ public class PrintingServiceTest {
 
 	private static final String EVOUCHER_FILEPATH = "target/eVoucher_test.pdf";
 
+    private static final String DONOR_NAME = "SARL Bonne nuit les petits loups";
+
 	@Autowired
 	@Qualifier("printingServiceJasper")
 	private PrintingService printingService;
@@ -47,8 +49,11 @@ public class PrintingServiceTest {
 	@PostConstruct
 	public void printingTestEVoucher() throws IOException {
 		// given
-		EVoucher evoucher = EVoucher.builder().withName("SARL Bonne nuit les petits loups")
-				.withAmount(new BigDecimal(137.271d)).requestDate(LocalDateTime.now()).build();
+		EVoucher evoucher = EVoucher.builder()
+		        .withName(DONOR_NAME)
+				.withAmount(new BigDecimal(137.271d))
+				.requestDate(LocalDateTime.now())
+				.build();
 		// when
 		ByteArrayOutputStream baos = printingService.printOriginalEVoucher(evoucher);
 		OutputStream outputStream = new FileOutputStream(EVOUCHER_FILEPATH);
@@ -68,7 +73,7 @@ public class PrintingServiceTest {
 
 			// tests on content
 			Assert.assertNotNull("The document content should not be null.", content);
-			// Assert.assertTrue("", content.contains("Hello World"));
+			 Assert.assertTrue("The voucher should contains the name of the donor.", content.contains(DONOR_NAME));
 
 		} finally {
 			if (document != null) {

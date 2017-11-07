@@ -41,10 +41,10 @@ public final class PaginationHelper {
 	 *            The range to transform.
 	 * @return a {@link PageRequest}
 	 */
-	public static PageRequest rangeToPageRequest(String range) throws IllegalArgumentException {
-		range = StringUtils.isEmpty(range) ? DEFAULT_PAGINATION_RANGE : range;
+	public static PageRequest rangeToPageRequest(final String range) throws IllegalArgumentException {
+		String elementRange = StringUtils.isEmpty(range) ? DEFAULT_PAGINATION_RANGE : range;
 		PageRequest pr = new PageRequest(0, DEFAULT_PAGE_SIZE);
-		String[] data = range.split("-");
+		String[] data = elementRange.split("-");
 		try {
 			int start = Integer.parseInt(data[0]);
 			int end = Integer.parseInt(data[1]);
