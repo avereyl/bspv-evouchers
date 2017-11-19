@@ -23,6 +23,12 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 
+		<db.url>jdbc:h2:/${project.build.directory}/evouchers</db.url>
+		<db.inputSchema>PUBLIC</db.inputSchema>
+		<db.username>sa</db.username>
+		<db.password></db.password>
+		<db.flyway.locations>db/migration/h2</db.flyway.locations>
+
 		<!-- lib and plugins versions -->
 		<org.bspv.e-voucher-fonts.version>0.0.1-SNAPSHOT</org.bspv.e-voucher-fonts.version>
 		<org.bspv.security.jwt-auth-spring-boot-starter.version>0.0.1-SNAPSHOT</org.bspv.security.jwt-auth-spring-boot-starter.version>
@@ -40,7 +46,7 @@
 		<com.sendgrid.sendgrid-java.version>4.0.1</com.sendgrid.sendgrid-java.version>
 		<com.ibm.icu.icu4j.version>59.1</com.ibm.icu.icu4j.version>
 		<com.icegreen.greenmail.version>1.5.0</com.icegreen.greenmail.version>
-		<com.heroku.sdk.heroku-maven-plugin.version>1.2.1</com.heroku.sdk.heroku-maven-plugin.version>
+		<!-- <com.heroku.sdk.heroku-maven-plugin.version>1.2.1</com.heroku.sdk.heroku-maven-plugin.version> -->
 		<org.codehaus.mojo.properties-maven-plugin.version>1.0.0</org.codehaus.mojo.properties-maven-plugin.version>
 		<org.flywaydb.flyway-maven-plugin.version>4.1.2</org.flywaydb.flyway-maven-plugin.version>
 
@@ -108,6 +114,19 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-parameter-names</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jdk8</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
 		</dependency>
@@ -133,6 +152,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sf.barcode4j/barcode4j -->
+		<dependency>
+			<groupId>net.sf.barcode4j</groupId>
+			<artifactId>barcode4j</artifactId>
+			<version>2.1</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.apache.pdfbox</groupId>
@@ -188,6 +214,10 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jooq</artifactId>
 		</dependency>
@@ -207,8 +237,130 @@
 
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<db.url>jdbc:postgresql://localhost:5432/evouchersdb</db.url>
+				<db.inputSchema></db.inputSchema>
+				<db.username></db.username>
+				<db.password></db.password>
+				<db.flyway.locations>db/migration/postgres</db.flyway.locations>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.postgresql</groupId>
+					<artifactId>postgresql</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<db.url></db.url>
+				<db.inputSchema></db.inputSchema>
+				<db.username></db.username>
+				<db.password></db.password>
+				<db.flyway.locations>db/migration/mariadb</db.flyway.locations>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.mariadb.jdbc</groupId>
+					<artifactId>mariadb-java-client</artifactId>
+					<version>1.5.8</version>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>4.1.2</version>
+				<!-- Note that we're executing the Flyway plugin in the "generate-sources" 
+					phase -->
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>migrate</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<!-- Note that we need to prefix the db/migration path with filesystem: 
+					to prevent Flyway from looking for our migration scripts only on the classpath -->
+				<configuration>
+					<url>${db.url}</url>
+					<user>${db.username}</user>
+					<password>${db.password}</password>
+					<locations>
+						<location>filesystem:src/main/resources/${db.flyway.locations}</location>
+					</locations>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+
+				<!-- The jOOQ code generation plugin is also executed in the generate-sources 
+					phase, prior to compilation -->
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<!-- This is a minimal working configuration. See the manual's section 
+					about the code generator for more details -->
+				<configuration>
+					<jdbc>
+						<url>${db.url}</url>
+						<user>${db.username}</user>
+						<password>${db.password}</password>
+					</jdbc>
+					<generator>
+						<database>
+							<includes>.*</includes>
+							<inputSchema>${db.inputSchema}</inputSchema>
+							<customTypes>
+								<customType>
+									<name>LocalDateTime</name>
+									<type>java.time.LocalDateTime</type>
+									<converter>org.bspv.evoucher.repository.jooq.converter.LocalDateTimeConverter</converter>
+								</customType>
+								<customType>
+									<name>UUID</name>
+									<type>java.util.UUID</type>
+									<converter>org.bspv.evoucher.repository.jooq.converter.UUIDConverter</converter>
+								</customType>
+							</customTypes>
+							<forcedTypes>
+								<forcedType>
+									<name>LocalDateTime</name>
+									<types>TIMESTAMP</types>
+								</forcedType>
+								<forcedType><!-- In this app (for mariadb) UUID are stored as BINARY(16) -->
+									<name>UUID</name>
+									<types>BINARY(16)</types>
+								</forcedType>
+
+							</forcedTypes>
+						</database>
+						<target>
+							<packageName>org.bspv.evouchers.jooq</packageName>
+							<directory>src/generated/java</directory>
+						</target>
+					</generator>
+				</configuration>
+			</plugin>
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -233,137 +385,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>com.heroku.sdk</groupId>
-				<artifactId>heroku-maven-plugin</artifactId>
-				<version>1.2.1</version>
-				<configuration>
-					<appName>evouchers</appName>
-					<processTypes>
-						<web>java $JAVA_OPTS -cp target/classes:target/dependency/*
-							EVoucherApplication</web>
-					</processTypes>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>generate</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>properties-maven-plugin</artifactId>
-						<version>1.0.0</version>
-						<executions>
-							<execution>
-								<phase>initialize</phase>
-								<goals>
-									<goal>read-project-properties</goal>
-								</goals>
-								<configuration>
-									<files>
-										<file>src/main/resources/application.properties</file>
-									</files>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.flywaydb</groupId>
-						<artifactId>flyway-maven-plugin</artifactId>
-						<version>4.1.2</version>
-						<configuration>
-							<url>${spring.datasource.url}</url>
-							<user>${spring.datasource.username}</user>
-							<password>${spring.datasource.password}</password>
-							<baselineOnMigrate>true</baselineOnMigrate>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>initialize</phase>
-								<goals>
-									<goal>migrate</goal>
-								</goals>
-							</execution>
-						</executions>
-
-						<dependencies>
-							<dependency>
-								<groupId>com.h2database</groupId>
-								<artifactId>h2</artifactId>
-								<version>${h2.version}</version>
-							</dependency>
-						</dependencies>
-					</plugin>
-
-					<plugin>
-						<groupId>org.jooq</groupId>
-						<artifactId>jooq-codegen-maven</artifactId>
-						<executions>
-							<execution>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>generate</goal>
-								</goals>
-							</execution>
-						</executions>
-						<dependencies>
-							<dependency>
-								<groupId>com.h2database</groupId>
-								<artifactId>h2</artifactId>
-								<version>${h2.version}</version>
-							</dependency>
-						</dependencies>
-						<configuration>
-							<jdbc>
-								<driver>${spring.datasource.driver-class-name}</driver>
-								<url>${spring.datasource.url}</url>
-								<user>${spring.datasource.username}</user>
-								<password>${spring.datasource.password}</password>
-							</jdbc>
-							<generator>
-								<name>org.jooq.util.DefaultGenerator</name>
-								<database>
-									<name>org.jooq.util.h2.H2Database</name>
-									<includes>.*</includes>
-									<excludes></excludes>
-									<inputSchema>PUBLIC</inputSchema>
-									<customTypes>
-										<customType>
-											<name>LocalDateTime</name>
-											<type>java.time.LocalDateTime</type>
-											<converter>org.bspv.evoucher.repository.jooq.converter.LocalDateTimeConverter</converter>
-										</customType>
-									</customTypes>
-									<forcedTypes>
-										<forcedType>
-											<name>LocalDateTime</name>
-											<types>TIMESTAMP</types>
-										</forcedType>
-
-									</forcedTypes>
-								</database>
-
-								<generate>
-									<deprecated>false</deprecated>
-								</generate>
-								<target>
-									<packageName>org.bspv.evouchers.jooq</packageName>
-									<directory>src/generated/java</directory>
-								</target>
-							</generator>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-
-	</profiles>
 
 
 </project>

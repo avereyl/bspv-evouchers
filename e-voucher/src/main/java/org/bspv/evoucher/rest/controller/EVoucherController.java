@@ -158,6 +158,12 @@ public class EVoucherController {
 	public ResponseEntity<EVoucher> saveEVoucher(@RequestBody @Validated EVoucherBean eVoucherBean,
 			@AuthenticationPrincipal User user) {
 //		@formatter:off
+	    boolean isNew = eVoucherBean.getVersion() == null || eVoucherBean.getVersion() == 0;
+	    Integer year = eVoucherBean.getDistributionYear();
+        Integer number = eVoucherBean.getTeamNumber();
+        year = (year == null || year <= 0) ? user.getTeam().getYear() : year;
+        number = (number == null || number <= 0) ? user.getTeam().getNumber() : number;
+        Team team = Team.builder().forYear(year).withNumber(number).build();
 		EVoucher eVoucher = EVoucher.builder()
 				.withId(UUID.fromString(eVoucherBean.getUuid()))
 				.withVersion(eVoucherBean.getVersion())
@@ -165,13 +171,15 @@ public class EVoucherController {
 				.withAmount(new BigDecimal(eVoucherBean.getAmount()))
 				.withEmail(eVoucherBean.getEmail())
 				.requestDate(eVoucherBean.getRequestDate())
-				.lastModifiedBy(user.getId())
-				.lastModifiedDate(LocalDateTime.now())
-				.withTeam(Team.builder().build())
+				.createdBy(isNew ? user.getId() : null)
+				.createdDate(isNew ? LocalDateTime.now() : null)
+				.lastModifiedBy(isNew ? null : user.getId())
+				.lastModifiedDate(isNew ? null : LocalDateTime.now())
+				.withTeam(team)
 				.build();
 //		@formatter:on
 		// save the e-voucher
-		eVoucher = eVoucherProcessService.updateEVoucher(eVoucher, user);
+		eVoucher = eVoucherProcessService.saveEVoucher(eVoucher, user);
 		// TODO handle errors...
 		return new ResponseEntity<>(eVoucher, HttpStatus.OK);
 	}

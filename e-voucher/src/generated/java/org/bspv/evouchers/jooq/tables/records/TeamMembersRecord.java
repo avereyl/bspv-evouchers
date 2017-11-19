@@ -30,73 +30,73 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeamMembersRecord extends UpdatableRecordImpl<TeamMembersRecord> implements Record5<UUID, Integer, Integer, LocalDateTime, LocalDateTime> {
 
-    private static final long serialVersionUID = -715090496;
+    private static final long serialVersionUID = -641137280;
 
     /**
-     * Setter for <code>PUBLIC.TEAM_MEMBERS.USER_ID</code>.
+     * Setter for <code>public.team_members.user_id</code>.
      */
     public void setUserId(UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.TEAM_MEMBERS.USER_ID</code>.
+     * Getter for <code>public.team_members.user_id</code>.
      */
     public UUID getUserId() {
         return (UUID) get(0);
     }
 
     /**
-     * Setter for <code>PUBLIC.TEAM_MEMBERS.DISTRIBUTION_YEAR</code>.
+     * Setter for <code>public.team_members.distribution_year</code>.
      */
     public void setDistributionYear(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.TEAM_MEMBERS.DISTRIBUTION_YEAR</code>.
+     * Getter for <code>public.team_members.distribution_year</code>.
      */
     public Integer getDistributionYear() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>PUBLIC.TEAM_MEMBERS.TEAM_NUMBER</code>.
+     * Setter for <code>public.team_members.team_number</code>.
      */
     public void setTeamNumber(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.TEAM_MEMBERS.TEAM_NUMBER</code>.
+     * Getter for <code>public.team_members.team_number</code>.
      */
     public Integer getTeamNumber() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>PUBLIC.TEAM_MEMBERS.VALIDITY_START</code>.
+     * Setter for <code>public.team_members.validity_start</code>.
      */
     public void setValidityStart(LocalDateTime value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.TEAM_MEMBERS.VALIDITY_START</code>.
+     * Getter for <code>public.team_members.validity_start</code>.
      */
     public LocalDateTime getValidityStart() {
         return (LocalDateTime) get(3);
     }
 
     /**
-     * Setter for <code>PUBLIC.TEAM_MEMBERS.VALIDITY_END</code>.
+     * Setter for <code>public.team_members.validity_end</code>.
      */
     public void setValidityEnd(LocalDateTime value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.TEAM_MEMBERS.VALIDITY_END</code>.
+     * Getter for <code>public.team_members.validity_end</code>.
      */
     public LocalDateTime getValidityEnd() {
         return (LocalDateTime) get(4);

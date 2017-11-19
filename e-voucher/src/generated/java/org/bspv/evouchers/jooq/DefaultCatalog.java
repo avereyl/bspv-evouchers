@@ -27,7 +27,7 @@ import org.jooq.impl.CatalogImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultCatalog extends CatalogImpl {
 
-    private static final long serialVersionUID = 14740396;
+    private static final long serialVersionUID = 2122643372;
 
     /**
      * The reference instance of <code></code>
@@ -35,7 +35,7 @@ public class DefaultCatalog extends CatalogImpl {
     public static final DefaultCatalog DEFAULT_CATALOG = new DefaultCatalog();
 
     /**
-     * The schema <code>PUBLIC</code>.
+     * The schema <code>public</code>.
      */
     public final Public PUBLIC = org.bspv.evouchers.jooq.Public.PUBLIC;
 

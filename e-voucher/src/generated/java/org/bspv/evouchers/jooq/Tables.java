@@ -15,7 +15,7 @@ import org.bspv.evouchers.jooq.tables.Users;
 
 
 /**
- * Convenience access to all tables in PUBLIC
+ * Convenience access to all tables in public
  */
 @Generated(
     value = {
@@ -28,32 +28,32 @@ import org.bspv.evouchers.jooq.tables.Users;
 public class Tables {
 
     /**
-     * The table <code>PUBLIC.AUTHORITIES</code>.
+     * The table <code>public.authorities</code>.
      */
     public static final Authorities AUTHORITIES = org.bspv.evouchers.jooq.tables.Authorities.AUTHORITIES;
 
     /**
-     * The table <code>PUBLIC.EVOUCHERS</code>.
-     */
-    public static final Evouchers EVOUCHERS = org.bspv.evouchers.jooq.tables.Evouchers.EVOUCHERS;
-
-    /**
-     * The table <code>PUBLIC.EVOUCHER_EVENTS</code>.
+     * The table <code>public.evoucher_events</code>.
      */
     public static final EvoucherEvents EVOUCHER_EVENTS = org.bspv.evouchers.jooq.tables.EvoucherEvents.EVOUCHER_EVENTS;
 
     /**
-     * The table <code>PUBLIC.TEAM_MEMBERS</code>.
+     * The table <code>public.evouchers</code>.
+     */
+    public static final Evouchers EVOUCHERS = org.bspv.evouchers.jooq.tables.Evouchers.EVOUCHERS;
+
+    /**
+     * The table <code>public.schema_version</code>.
+     */
+    public static final SchemaVersion SCHEMA_VERSION = org.bspv.evouchers.jooq.tables.SchemaVersion.SCHEMA_VERSION;
+
+    /**
+     * The table <code>public.team_members</code>.
      */
     public static final TeamMembers TEAM_MEMBERS = org.bspv.evouchers.jooq.tables.TeamMembers.TEAM_MEMBERS;
 
     /**
-     * The table <code>PUBLIC.USERS</code>.
+     * The table <code>public.users</code>.
      */
     public static final Users USERS = org.bspv.evouchers.jooq.tables.Users.USERS;
-
-    /**
-     * The table <code>PUBLIC.schema_version</code>.
-     */
-    public static final SchemaVersion SCHEMA_VERSION = org.bspv.evouchers.jooq.tables.SchemaVersion.SCHEMA_VERSION;
 }

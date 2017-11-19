@@ -34,10 +34,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = 321504740;
+    private static final long serialVersionUID = -1957850884;
 
     /**
-     * The reference instance of <code>PUBLIC.USERS</code>
+     * The reference instance of <code>public.users</code>
      */
     public static final Users USERS = new Users();
 
@@ -50,44 +50,44 @@ public class Users extends TableImpl<UsersRecord> {
     }
 
     /**
-     * The column <code>PUBLIC.USERS.ID</code>.
+     * The column <code>public.users.id</code>.
      */
-    public final TableField<UsersRecord, UUID> ID = createField("ID", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<UsersRecord, UUID> ID = createField("id", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.USERS.VERSION</code>.
+     * The column <code>public.users.version</code>.
      */
-    public final TableField<UsersRecord, Long> VERSION = createField("VERSION", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("1", org.jooq.impl.SQLDataType.BIGINT)), this, "");
+    public final TableField<UsersRecord, Long> VERSION = createField("version", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("1", org.jooq.impl.SQLDataType.BIGINT)), this, "");
 
     /**
-     * The column <code>PUBLIC.USERS.USERNAME</code>.
+     * The column <code>public.users.username</code>.
      */
-    public final TableField<UsersRecord, String> USERNAME = createField("USERNAME", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
+    public final TableField<UsersRecord, String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.USERS.SECRETKEY</code>.
+     * The column <code>public.users.secretkey</code>.
      */
-    public final TableField<UsersRecord, String> SECRETKEY = createField("SECRETKEY", org.jooq.impl.SQLDataType.VARCHAR.length(128).nullable(false), this, "");
+    public final TableField<UsersRecord, String> SECRETKEY = createField("secretkey", org.jooq.impl.SQLDataType.VARCHAR.length(128).nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.USERS.ENABLED</code>.
+     * The column <code>public.users.enabled</code>.
      */
-    public final TableField<UsersRecord, Boolean> ENABLED = createField("ENABLED", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.field("TRUE", org.jooq.impl.SQLDataType.BOOLEAN)), this, "");
+    public final TableField<UsersRecord, Boolean> ENABLED = createField("enabled", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.field("true", org.jooq.impl.SQLDataType.BOOLEAN)), this, "");
 
     /**
-     * The column <code>PUBLIC.USERS.EMAIL</code>.
+     * The column <code>public.users.email</code>.
      */
-    public final TableField<UsersRecord, String> EMAIL = createField("EMAIL", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<UsersRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
     /**
-     * Create a <code>PUBLIC.USERS</code> table reference
+     * Create a <code>public.users</code> table reference
      */
     public Users() {
-        this("USERS", null);
+        this("users", null);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.USERS</code> table reference
+     * Create an aliased <code>public.users</code> table reference
      */
     public Users(String alias) {
         this(alias, USERS);
@@ -114,7 +114,7 @@ public class Users extends TableImpl<UsersRecord> {
      */
     @Override
     public UniqueKey<UsersRecord> getPrimaryKey() {
-        return Keys.CONSTRAINT_4;
+        return Keys.USERS_PKEY;
     }
 
     /**
@@ -122,7 +122,7 @@ public class Users extends TableImpl<UsersRecord> {
      */
     @Override
     public List<UniqueKey<UsersRecord>> getKeys() {
-        return Arrays.<UniqueKey<UsersRecord>>asList(Keys.CONSTRAINT_4, Keys.UK_USERS__1);
+        return Arrays.<UniqueKey<UsersRecord>>asList(Keys.USERS_PKEY, Keys.UK_USERS__1);
     }
 
     /**

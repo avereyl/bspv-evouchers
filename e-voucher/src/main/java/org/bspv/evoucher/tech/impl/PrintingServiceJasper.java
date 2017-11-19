@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.StringJoiner;
 
+import org.apache.commons.codec.digest.HmacUtils;
 import org.bspv.evoucher.core.model.EVoucher;
 import org.bspv.evoucher.tech.PrintingService;
 import org.bspv.evoucher.tech.helper.PrintingHelper;
@@ -44,10 +46,11 @@ import net.sf.jasperreports.export.type.PdfaConformanceEnum;
 public class PrintingServiceJasper implements PrintingService {
 
 	/**
-	 * 
-	 */
-//	@Autowired
-//	private BarcodeGenerationService barcodeGenerationService;
+     * 
+     */
+    @Value("${barcode.key}")
+    private String barcodeSigningKey;
+    
 	/**
 	 * 
 	 */
@@ -127,6 +130,7 @@ public class PrintingServiceJasper implements PrintingService {
             parameters.put("voucherDonationAmount", amount.toString());
             parameters.put("voucherDonationDate", messageSource.getMessage("voucher.text.date", new Object[]{requestDate}, locale));
             parameters.put("voucherResponsible", voucherResponsible);
+            parameters.put("voucherBarcode", computeBarcodeData(eVoucher));
 
             
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
@@ -145,7 +149,7 @@ public class PrintingServiceJasper implements PrintingService {
 			exportConfig.setMetadataSubject(messageSource.getMessage("voucher.metadata.subject", new Object[]{eVoucher.getId()}, locale));
 			exportConfig.setMetadataCreator(messageSource.getMessage("voucher.metadata.creator", new Object[]{}, locale));
 			
-			exportConfig.setMetadataKeywords("");
+			exportConfig.setMetadataKeywords(messageSource.getMessage("voucher.metadata.hash", new Object[]{computeHash(eVoucher)}, locale));
 			
 //			PDF/A conformance
 			exportConfig.setPdfaConformance(PdfaConformanceEnum.PDFA_1A);
@@ -162,6 +166,21 @@ public class PrintingServiceJasper implements PrintingService {
 			log.error("Oups !!!!!!!!!!!!", e);
 			return null;
 		}
+	}
+	
+	private String computeBarcodeData(EVoucher eVoucher) {
+        return "bspv " + eVoucher.getId().toString() + ';' + computeHash(eVoucher);
+    }
+	
+	private String computeHash(EVoucher eVoucher) {
+	    StringJoiner stringToSign = new StringJoiner("\n");
+        stringToSign.add(eVoucher.getId().toString());
+        stringToSign.add(eVoucher.getName());
+        stringToSign.add(PrintingHelper.formatAmountInEurosAndFrench(eVoucher.getAmount().floatValue()));
+        if (eVoucher.getRequestDate() != null) {
+            stringToSign.add(PrintingHelper.formatDateInLitteralFrench(eVoucher.getRequestDate()));
+        }
+        return HmacUtils.hmacSha256Hex(barcodeSigningKey, stringToSign.toString());
 	}
 
 }

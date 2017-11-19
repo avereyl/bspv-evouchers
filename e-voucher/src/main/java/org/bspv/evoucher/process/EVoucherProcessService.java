@@ -23,6 +23,7 @@ import org.bspv.evoucher.core.business.EVoucherEventBusinessService;
 import org.bspv.evoucher.core.model.EVoucher;
 import org.bspv.evoucher.core.model.EVoucher.EVoucherStatus;
 import org.bspv.evoucher.core.model.EVoucherEvent;
+import org.bspv.evoucher.core.model.EVoucherEvent.EVoucherEventType;
 import org.bspv.evoucher.core.model.Team;
 import org.bspv.evoucher.core.model.User;
 import org.bspv.evoucher.tech.MailingService;
@@ -126,7 +127,7 @@ public class EVoucherProcessService {
 	}
 	
 	/**
-	 * Update an eVoucher.
+	 * Save an eVoucher.
 	 * (Status is not change by this method)
 	 * 
 	 * @param eVoucher
@@ -135,12 +136,13 @@ public class EVoucherProcessService {
 	 */
 	@Transactional
 	@PreAuthorize("hasAuthority('ADMIN') or principal.team == eVoucher.team ")
-	public EVoucher updateEVoucher(EVoucher eVoucher, User user) {
+	public EVoucher saveEVoucher(EVoucher eVoucher, User user) {
 		UUID auditor = user.getId();
-		eVoucher = eVoucherBusinessService.save(eVoucher);
-		EVoucherEvent event = EVoucherEvent.builderFor(eVoucher.getId()).createdBy(auditor).withKey(UPDATE).build();
+		EVoucher savedEVoucher = eVoucherBusinessService.save(eVoucher);
+		EVoucherEventType eventType = (savedEVoucher.getVersion() == 1) ? CREATION : UPDATE;
+		EVoucherEvent event = EVoucherEvent.builderFor(savedEVoucher.getId()).createdBy(auditor).withKey(eventType).build();
 		eVoucherEventBusinessService.save(event);
-		return eVoucher;
+		return savedEVoucher;
 	}
 
 	/**
@@ -294,7 +296,5 @@ public class EVoucherProcessService {
 			}
 		});
 	}
-	
-
 
 }

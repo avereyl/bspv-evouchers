@@ -29,143 +29,143 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SchemaVersionRecord extends UpdatableRecordImpl<SchemaVersionRecord> implements Record10<Integer, String, String, String, String, Integer, String, LocalDateTime, Integer, Boolean> {
 
-    private static final long serialVersionUID = 419521293;
+    private static final long serialVersionUID = 583256845;
 
     /**
-     * Setter for <code>PUBLIC.schema_version.installed_rank</code>.
+     * Setter for <code>public.schema_version.installed_rank</code>.
      */
     public void setInstalledRank(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.schema_version.installed_rank</code>.
+     * Getter for <code>public.schema_version.installed_rank</code>.
      */
     public Integer getInstalledRank() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>PUBLIC.schema_version.version</code>.
+     * Setter for <code>public.schema_version.version</code>.
      */
     public void setVersion(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.schema_version.version</code>.
+     * Getter for <code>public.schema_version.version</code>.
      */
     public String getVersion() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>PUBLIC.schema_version.description</code>.
+     * Setter for <code>public.schema_version.description</code>.
      */
     public void setDescription(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.schema_version.description</code>.
+     * Getter for <code>public.schema_version.description</code>.
      */
     public String getDescription() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>PUBLIC.schema_version.type</code>.
+     * Setter for <code>public.schema_version.type</code>.
      */
     public void setType(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.schema_version.type</code>.
+     * Getter for <code>public.schema_version.type</code>.
      */
     public String getType() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>PUBLIC.schema_version.script</code>.
+     * Setter for <code>public.schema_version.script</code>.
      */
     public void setScript(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.schema_version.script</code>.
+     * Getter for <code>public.schema_version.script</code>.
      */
     public String getScript() {
         return (String) get(4);
     }
 
     /**
-     * Setter for <code>PUBLIC.schema_version.checksum</code>.
+     * Setter for <code>public.schema_version.checksum</code>.
      */
     public void setChecksum(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.schema_version.checksum</code>.
+     * Getter for <code>public.schema_version.checksum</code>.
      */
     public Integer getChecksum() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>PUBLIC.schema_version.installed_by</code>.
+     * Setter for <code>public.schema_version.installed_by</code>.
      */
     public void setInstalledBy(String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.schema_version.installed_by</code>.
+     * Getter for <code>public.schema_version.installed_by</code>.
      */
     public String getInstalledBy() {
         return (String) get(6);
     }
 
     /**
-     * Setter for <code>PUBLIC.schema_version.installed_on</code>.
+     * Setter for <code>public.schema_version.installed_on</code>.
      */
     public void setInstalledOn(LocalDateTime value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.schema_version.installed_on</code>.
+     * Getter for <code>public.schema_version.installed_on</code>.
      */
     public LocalDateTime getInstalledOn() {
         return (LocalDateTime) get(7);
     }
 
     /**
-     * Setter for <code>PUBLIC.schema_version.execution_time</code>.
+     * Setter for <code>public.schema_version.execution_time</code>.
      */
     public void setExecutionTime(Integer value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.schema_version.execution_time</code>.
+     * Getter for <code>public.schema_version.execution_time</code>.
      */
     public Integer getExecutionTime() {
         return (Integer) get(8);
     }
 
     /**
-     * Setter for <code>PUBLIC.schema_version.success</code>.
+     * Setter for <code>public.schema_version.success</code>.
      */
     public void setSuccess(Boolean value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.schema_version.success</code>.
+     * Getter for <code>public.schema_version.success</code>.
      */
     public Boolean getSuccess() {
         return (Boolean) get(9);

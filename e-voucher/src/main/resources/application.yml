@@ -12,14 +12,14 @@ spring:
     
 ### specific app properties
 mail: 
-  from: noreply.evouchers.pompiers-laverrie@gmail.com
-  answer: pompiers-laverrie@gmail.com
-  archive: pompiers-laverrie@gmail.com
-
+  from: 
+  answer: 
+  archive: 
+  
 voucher:  
-  responsible: Yann Drouet
-barcode:
-  size: 400
+  responsible: 
+barcode: 
+  key: 
 
 ---
 ### dev profil
@@ -28,29 +28,35 @@ spring:
   profiles: dev
 ### data access
   datasource:
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: sa
-    url: jdbc:h2:tcp://localhost/~/db/h2/evouchers
+    driver-class-name: org.postgresql.Driver
+    username: 
+    password: 
+    url: jdbc:postgresql://localhost:5432/evouchersdb
 
   jooq:
-    sql-dialect: h2
-
+    sql-dialect: POSTGRES
+    
+    
 ### mail
   mail: 
     default-encoding: UTF-8
-    host: 
+    host: smtp.gmail.com
     protocol: smtp
-    port: 25
-    username: # Login user of the SMTP server.
-    password: # Login password of the SMTP server.
+    port: 587
+    username: 
+    password: 
     test-connection: false
     properties: 
       mail: 
         smtp: 
+          auth: true
+          starttls: 
+            enable: true
           connectiontimeout: 5000
           timeout: 3000
           writetimeout: 5000
+
+          
 
 server: 
   port: 8443
@@ -70,23 +76,9 @@ logging:
 ### security
 security: 
   jwt: 
-    secret: key
+    secret: 
     default-expiration-time: 864000
 
----
-### prod profile
-spring: 
-  profiles: prod
-  sendgrid: 
-    username: 
-    api-key: 
 
-  datasource:
-    driver-class-name: 
-    username: 
-    password: 
-    url: 
 
-  jooq:
-    sql-dialect: 
-
+  

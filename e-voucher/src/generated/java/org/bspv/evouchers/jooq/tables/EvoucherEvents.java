@@ -38,10 +38,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EvoucherEvents extends TableImpl<EvoucherEventsRecord> {
 
-    private static final long serialVersionUID = 78123148;
+    private static final long serialVersionUID = -202420380;
 
     /**
-     * The reference instance of <code>PUBLIC.EVOUCHER_EVENTS</code>
+     * The reference instance of <code>public.evoucher_events</code>
      */
     public static final EvoucherEvents EVOUCHER_EVENTS = new EvoucherEvents();
 
@@ -54,39 +54,39 @@ public class EvoucherEvents extends TableImpl<EvoucherEventsRecord> {
     }
 
     /**
-     * The column <code>PUBLIC.EVOUCHER_EVENTS.ID</code>.
+     * The column <code>public.evoucher_events.id</code>.
      */
-    public final TableField<EvoucherEventsRecord, Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<EvoucherEventsRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('evoucher_events_id_seq'::regclass)", org.jooq.impl.SQLDataType.BIGINT)), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHER_EVENTS.EVOUCHER_ID</code>.
+     * The column <code>public.evoucher_events.evoucher_id</code>.
      */
-    public final TableField<EvoucherEventsRecord, UUID> EVOUCHER_ID = createField("EVOUCHER_ID", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<EvoucherEventsRecord, UUID> EVOUCHER_ID = createField("evoucher_id", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHER_EVENTS.EVENT_TYPE</code>.
+     * The column <code>public.evoucher_events.event_type</code>.
      */
-    public final TableField<EvoucherEventsRecord, String> EVENT_TYPE = createField("EVENT_TYPE", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
+    public final TableField<EvoucherEventsRecord, String> EVENT_TYPE = createField("event_type", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHER_EVENTS.CREATED_BY</code>.
+     * The column <code>public.evoucher_events.created_by</code>.
      */
-    public final TableField<EvoucherEventsRecord, UUID> CREATED_BY = createField("CREATED_BY", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<EvoucherEventsRecord, UUID> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHER_EVENTS.CREATED_DATE</code>.
+     * The column <code>public.evoucher_events.created_date</code>.
      */
-    public final TableField<EvoucherEventsRecord, LocalDateTime> CREATED_DATE = createField("CREATED_DATE", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "", new LocalDateTimeConverter());
+    public final TableField<EvoucherEventsRecord, LocalDateTime> CREATED_DATE = createField("created_date", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "", new LocalDateTimeConverter());
 
     /**
-     * Create a <code>PUBLIC.EVOUCHER_EVENTS</code> table reference
+     * Create a <code>public.evoucher_events</code> table reference
      */
     public EvoucherEvents() {
-        this("EVOUCHER_EVENTS", null);
+        this("evoucher_events", null);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.EVOUCHER_EVENTS</code> table reference
+     * Create an aliased <code>public.evoucher_events</code> table reference
      */
     public EvoucherEvents(String alias) {
         this(alias, EVOUCHER_EVENTS);
@@ -121,7 +121,7 @@ public class EvoucherEvents extends TableImpl<EvoucherEventsRecord> {
      */
     @Override
     public UniqueKey<EvoucherEventsRecord> getPrimaryKey() {
-        return Keys.CONSTRAINT_46;
+        return Keys.EVOUCHER_EVENTS_PKEY;
     }
 
     /**
@@ -129,7 +129,7 @@ public class EvoucherEvents extends TableImpl<EvoucherEventsRecord> {
      */
     @Override
     public List<UniqueKey<EvoucherEventsRecord>> getKeys() {
-        return Arrays.<UniqueKey<EvoucherEventsRecord>>asList(Keys.CONSTRAINT_46);
+        return Arrays.<UniqueKey<EvoucherEventsRecord>>asList(Keys.EVOUCHER_EVENTS_PKEY);
     }
 
     /**
@@ -137,7 +137,7 @@ public class EvoucherEvents extends TableImpl<EvoucherEventsRecord> {
      */
     @Override
     public List<ForeignKey<EvoucherEventsRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<EvoucherEventsRecord, ?>>asList(Keys.FK_EVOUCHER_EVENTS__EVOUCHERS, Keys.FK_EVOUCHERS_EVENTS__USERS);
+        return Arrays.<ForeignKey<EvoucherEventsRecord, ?>>asList(Keys.EVOUCHER_EVENTS__FK_EVOUCHER_EVENTS__EVOUCHERS, Keys.EVOUCHER_EVENTS__FK_EVOUCHERS_EVENTS__USERS);
     }
 
     /**

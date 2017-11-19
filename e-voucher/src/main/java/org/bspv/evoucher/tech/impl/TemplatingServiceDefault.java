@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.spring4.SpringTemplateEngine;
 
 /**
  *
@@ -26,7 +26,7 @@ public class TemplatingServiceDefault implements TemplatingService {
 	 */
 	private static final String EVOUCHER_MAIL_TEMPLATE_KEY = "eVoucherMailTemplate";
 	
-	   /**
+    /**
      * 
      */
     @Autowired
@@ -37,7 +37,7 @@ public class TemplatingServiceDefault implements TemplatingService {
 	 * 
 	 */
 	@Autowired
-	private TemplateEngine templateEngine;
+	private SpringTemplateEngine templateEngine;
 
 	/*
 	 * (non-Javadoc)
@@ -45,11 +45,14 @@ public class TemplatingServiceDefault implements TemplatingService {
 	 */
 	@Override
 	public String buildEmailContentFromEVoucher(EVoucher eVoucher) {
-		Context thymeleafContext = new Context();
+	    
+	    System.out.println(messageSource.getMessage("mail.bspv.email", new Object[] {}, Locale.FRANCE));
+//	    templateEngine.setCacheManager(null);
+	    
+		Context thymeleafContext = new Context(Locale.FRANCE);
 		thymeleafContext.setVariable("eVoucher", eVoucher);
-		thymeleafContext.setVariable("formattedAmount",
-				TemplatingService.formatAmount(eVoucher.getAmount(), Locale.FRANCE, 2));
-		thymeleafContext.setVariable("properties", messageSource);// FIXME
+		thymeleafContext.setVariable("formattedAmount", TemplatingService.formatAmount(eVoucher.getAmount(), Locale.FRANCE, 2));
+		templateEngine.setTemplateEngineMessageSource(messageSource);
 		return templateEngine.process(EVOUCHER_MAIL_TEMPLATE_KEY, thymeleafContext);
 	}
 

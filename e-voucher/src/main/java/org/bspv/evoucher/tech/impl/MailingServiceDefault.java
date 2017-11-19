@@ -85,6 +85,7 @@ public class MailingServiceDefault implements MailingService {
 				messageHelper.addBcc(user.getEmail());
 			}
 			// add archiving address
+			
 			messageHelper.addBcc(this.mailArchiveAddress);
 			messageHelper.setSubject(messageSource.getMessage("mail.subject", new Object[] {}, Locale.getDefault()));
 			// generate content																						
