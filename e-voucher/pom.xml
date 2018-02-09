@@ -23,11 +23,11 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 
-		<db.url>jdbc:h2:/${project.build.directory}/evouchers</db.url>
-		<db.inputSchema>PUBLIC</db.inputSchema>
-		<db.username>sa</db.username>
-		<db.password></db.password>
-		<db.flyway.locations>db/migration/h2</db.flyway.locations>
+		<db.url>jdbc:postgresql://localhost:5432/evouchersdb</db.url>
+		<db.inputSchema>public</db.inputSchema>
+		<db.username>evoucher</db.username>
+		<db.password>bspv85302db</db.password>
+		<db.flyway.locations>db/migration/postgres</db.flyway.locations>
 
 		<!-- lib and plugins versions -->
 		<org.bspv.e-voucher-fonts.version>0.0.1-SNAPSHOT</org.bspv.e-voucher-fonts.version>
@@ -94,6 +94,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.hateoas/spring-hateoas -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.hateoas</groupId> -->
+<!-- 			<artifactId>spring-hateoas</artifactId> -->
+<!-- 			<version>0.24.0.RELEASE</version> -->
+<!-- 		</dependency> -->
+
 
 		<dependency>
 			<groupId>io.reactivex</groupId>
@@ -210,10 +217,6 @@
 
 		<!-- db and db access -->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
@@ -236,42 +239,6 @@
 		</dependency>
 
 	</dependencies>
-
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<properties>
-				<db.url>jdbc:postgresql://localhost:5432/evouchersdb</db.url>
-				<db.inputSchema>public</db.inputSchema>
-				<db.username>evoucher</db.username>
-				<db.password>bspv85302db</db.password>
-				<db.flyway.locations>db/migration/postgres</db.flyway.locations>
-			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>org.postgresql</groupId>
-					<artifactId>postgresql</artifactId>
-				</dependency>
-			</dependencies>
-		</profile>
-		<profile>
-			<id>prod</id>
-			<properties>
-				<db.url>jdbc:mariadb://192.168.1.30:3307/evouchers</db.url>
-				<db.inputSchema>evouchers</db.inputSchema>
-				<db.username>evouchers</db.username>
-				<db.password>mariabergdb</db.password>
-				<db.flyway.locations>db/migration/mariadb</db.flyway.locations>
-			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>org.mariadb.jdbc</groupId>
-					<artifactId>mariadb-java-client</artifactId>
-					<version>1.5.8</version>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
 
 	<build>
 		<plugins>

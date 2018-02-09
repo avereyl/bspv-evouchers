@@ -40,7 +40,6 @@ public class TemplatingServiceTest {
 		
 		// then
 		Assert.assertTrue("The name must be present in the text.", content.contains(name));
-		Assert.assertTrue("The id must be present in the text.", content.contains(uuid.toString()));
 		Assert.assertTrue("The amount must be present in the text.", content.contains(TemplatingService.formatAmount(amount, Locale.FRANCE, 2)));
 	}
 

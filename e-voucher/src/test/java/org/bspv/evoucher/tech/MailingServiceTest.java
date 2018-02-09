@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Locale;
 
@@ -67,6 +68,11 @@ public class MailingServiceTest {
 	 */
 	@Mock
 	private UserBusinessService userBusinessService;
+	/**
+	 * Mock of the {@link TemplatingService} used in the {@link MailingService}
+	 */
+	@Mock
+	private TemplatingService templatingService;
 
 
 	/**
@@ -99,11 +105,12 @@ public class MailingServiceTest {
 		// given
 		String subject = messageSource.getMessage("mail.subject", new Object[] {}, Locale.getDefault());
 		ByteArrayOutputStream baos = null;
-		EVoucher eVoucher = EVoucher.builder().withEmail("avereyl@mail.com").build();
+		EVoucher eVoucher = EVoucher.builder().withName("test").withAmount(new BigDecimal(10)).withEmail("avereyl@mail.com").build();
 		
 
 		// when
 		when(userBusinessService.findMembers(eVoucher.getTeam())).thenReturn(new HashSet<>());
+		when(templatingService.buildEmailContentFromEVoucher(eVoucher)).thenReturn("TEST");
 		mailingService.sendEVoucherPrint(eVoucher, baos);
 
 		// then
