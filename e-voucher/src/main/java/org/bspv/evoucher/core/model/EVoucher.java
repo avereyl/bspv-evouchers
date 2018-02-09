@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.EqualsAndHashCode;
@@ -232,12 +233,14 @@ public final class EVoucher implements Serializable {
 	 * Date of creation.
 	 */
 	@Getter
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private final LocalDateTime createdDate;
 
 	/**
 	 * Date of latest change.
 	 */
 	@Getter
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private final LocalDateTime lastModifiedDate;
 
 	/**
@@ -268,6 +271,7 @@ public final class EVoucher implements Serializable {
 	 * Date and time of the voucher's request.
 	 */
 	@Getter
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private final LocalDateTime requestDate;
 
 	/**

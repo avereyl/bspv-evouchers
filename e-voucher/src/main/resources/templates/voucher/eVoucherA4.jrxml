@@ -21,6 +21,8 @@
 	<parameter name="voucherDonationDate" class="java.lang.String"/>
 	<parameter name="voucherResponsible" class="java.lang.String"/>
 	<parameter name="voucherBarcode" class="java.lang.String"/>
+	<parameter name="bspvLogoInputStream" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="bspvSignature" class="java.lang.Object" isForPrompting="false"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -43,7 +45,7 @@
 			</textField>
 			<image hAlign="Right">
 				<reportElement stretchType="RelativeToBandHeight" x="400" y="0" width="80" height="108" uuid="557e80b1-a738-4d3d-aef4-dd6c5b374276"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.renderers.ResourceRenderer.getInstance("src/main/resources/assets/img/logo-splv-text.svg", false)]]></imageExpression>
+				<imageExpression><![CDATA[net.sf.jasperreports.renderers.BatikRenderer.getInstance($P{bspvLogoInputStream})]]></imageExpression>
 			</image>
 			<rectangle>
 				<reportElement mode="Transparent" x="0" y="113" width="480" height="1" backcolor="#000000" uuid="5da95af5-6289-41f4-aaa0-e630a3def112"/>
@@ -165,7 +167,7 @@
 			<image scaleImage="RetainShape">
 				<reportElement isPrintRepeatedValues="false" x="300" y="58" width="148" height="55" isPrintWhenDetailOverflows="true" uuid="1f4a143a-241e-4944-812e-edd915b3f215"/>
 				<graphicElement fill="Solid"/>
-				<imageExpression><![CDATA["src/main/resources/assets/img/signature.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{bspvSignature}]]></imageExpression>
 			</image>
 		</band>
 	</detail>

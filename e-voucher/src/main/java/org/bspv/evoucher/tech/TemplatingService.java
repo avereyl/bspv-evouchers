@@ -34,5 +34,14 @@ public interface TemplatingService {
 		frenchCurrencyFormat.setMaximumFractionDigits(nbOfDecimal);
 		return frenchCurrencyFormat.format(amount.setScale(nbOfDecimal, RoundingMode.HALF_EVEN).doubleValue());
 	}
+	
+	public static String formatDonorName(EVoucher eVoucher) {
+	    String name = eVoucher.getName();
+	    // in case of name on several lines then we keep the first line only.
+	    if (name.indexOf('\n') != -1) {
+	       name = name.substring(0, name.indexOf('\n'));
+	    }
+	    return name;
+	}
 
 }

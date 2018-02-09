@@ -46,11 +46,11 @@ public class TemplatingServiceDefault implements TemplatingService {
 	@Override
 	public String buildEmailContentFromEVoucher(EVoucher eVoucher) {
 	    
-	    System.out.println(messageSource.getMessage("mail.bspv.email", new Object[] {}, Locale.FRANCE));
-//	    templateEngine.setCacheManager(null);
-	    
 		Context thymeleafContext = new Context(Locale.FRANCE);
-		thymeleafContext.setVariable("eVoucher", eVoucher);
+		String eVoucherReference = eVoucher.getId().toString();
+        eVoucherReference = eVoucherReference.substring(eVoucherReference.length()-12);
+		thymeleafContext.setVariable("eVoucherReference", eVoucherReference);
+		thymeleafContext.setVariable("donorName", TemplatingService.formatDonorName(eVoucher));
 		thymeleafContext.setVariable("formattedAmount", TemplatingService.formatAmount(eVoucher.getAmount(), Locale.FRANCE, 2));
 		templateEngine.setTemplateEngineMessageSource(messageSource);
 		return templateEngine.process(EVOUCHER_MAIL_TEMPLATE_KEY, thymeleafContext);

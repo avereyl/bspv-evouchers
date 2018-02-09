@@ -1,6 +1,4 @@
-spring:
-  profiles: 
-    active: dev
+spring: 
   application: 
     name: evouchers
   thymeleaf:
@@ -9,34 +7,6 @@ spring:
 #    throw-exception-if-no-handler-found: true
   resources:
     add-mappings: false
-    
-### specific app properties
-mail: 
-  from: 
-  answer: 
-  archive: 
-  
-voucher:  
-  responsible: 
-barcode: 
-  key: 
-
----
-### dev profil
-
-spring:
-  profiles: dev
-### data access
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    username: 
-    password: 
-    url: jdbc:postgresql://localhost:5432/evouchersdb
-
-  jooq:
-    sql-dialect: POSTGRES
-    
-    
 ### mail
   mail: 
     default-encoding: UTF-8
@@ -55,9 +25,17 @@ spring:
           connectiontimeout: 5000
           timeout: 3000
           writetimeout: 5000
+    
+### data access
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: 
+    password: 
+    url: jdbc:postgresql://localhost:5432/evouchersdb
 
+  jooq:
+    sql-dialect: POSTGRES
           
-
 server: 
   port: 8443
   ssl:
@@ -76,9 +54,16 @@ logging:
 ### security
 security: 
   jwt: 
-    secret: 
+    secret: key
     default-expiration-time: 864000
-
-
-
+    
+### specific app properties
+mail: 
+  from: evoucher@bspv.org
+  answer: noreply.evoucher@bspv.org
+  archive: archive.evoucher@bspv.org
   
+voucher: 
+  responsible: El presidente
+barcode: 
+  key: key

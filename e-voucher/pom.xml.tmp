@@ -242,9 +242,9 @@
 			<id>dev</id>
 			<properties>
 				<db.url>jdbc:postgresql://localhost:5432/evouchersdb</db.url>
-				<db.inputSchema>public</db.inputSchema>
-				<db.username>evoucher</db.username>
-				<db.password>bspv85302db</db.password>
+				<db.inputSchema></db.inputSchema>
+				<db.username></db.username>
+				<db.password></db.password>
 				<db.flyway.locations>db/migration/postgres</db.flyway.locations>
 			</properties>
 			<dependencies>
@@ -257,10 +257,10 @@
 		<profile>
 			<id>prod</id>
 			<properties>
-				<db.url>jdbc:mariadb://192.168.1.30:3307/evouchers</db.url>
-				<db.inputSchema>evouchers</db.inputSchema>
-				<db.username>evouchers</db.username>
-				<db.password>mariabergdb</db.password>
+				<db.url></db.url>
+				<db.inputSchema></db.inputSchema>
+				<db.username></db.username>
+				<db.password></db.password>
 				<db.flyway.locations>db/migration/mariadb</db.flyway.locations>
 			</properties>
 			<dependencies>

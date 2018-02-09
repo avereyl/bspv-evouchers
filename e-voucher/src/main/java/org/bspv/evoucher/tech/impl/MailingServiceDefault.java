@@ -22,6 +22,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -79,7 +80,13 @@ public class MailingServiceDefault implements MailingService {
 		MimeMessagePreparator messagePreparator = mimeMessage -> {
 			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
 			messageHelper.setFrom(this.mailFromAddress);
-			messageHelper.setTo(eVoucher.getEmail());
+			String donorEmail = eVoucher.getEmail();
+			if (!StringUtils.isEmpty(donorEmail)) {
+			    messageHelper.setTo(donorEmail);
+			} else {
+			    log.warn("No donor email: fallback to archive email.");
+			    messageHelper.setTo(this.mailArchiveAddress);
+			}
 			// add team members issuing the evoucher
 			for (User user : userBusinessService.findMembers(eVoucher.getTeam())) {
 				messageHelper.addBcc(user.getEmail());

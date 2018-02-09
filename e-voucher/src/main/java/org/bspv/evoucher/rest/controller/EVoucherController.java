@@ -3,6 +3,7 @@
  */
 package org.bspv.evoucher.rest.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,11 +16,15 @@ import org.bspv.evoucher.core.model.Team;
 import org.bspv.evoucher.core.model.User;
 import org.bspv.evoucher.process.EVoucherProcessService;
 import org.bspv.evoucher.rest.beans.EVoucherBean;
+import org.bspv.evoucher.rest.controller.exception.NotFoundException;
 import org.bspv.evoucher.rest.controller.helper.PaginationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -127,7 +132,7 @@ public class EVoucherController {
 	 *            id of the targeted voucher
 	 * @return The list of events
 	 */
-	@GetMapping("eVoucher/{uuid}/events")
+	@GetMapping("eVouchers/{uuid}/events")
 	public ResponseEntity<List<EVoucherEvent>> readEVoucherEvents(@PathVariable(value = "uuid") UUID uuid) {
 		return ResponseEntity.ok(this.eVoucherProcessService.findEVoucherEvents(uuid));
 	}
@@ -220,6 +225,30 @@ public class EVoucherController {
 //		@formatter:on
 		return emitter;
 	}
+	
+	/**
+	 * Get eVoucher print.
+	 * 
+	 * @param uuid id of the eVoucher to print.
+	 * @param user user asking for the print.
+	 * @return The print as a PDF
+	 * @throws IOException
+	 */
+    @GetMapping(value="eVouchers/{uuid}/print")
+    public ResponseEntity<ByteArrayResource> print(@PathVariable(value = "uuid") UUID uuid,
+            @AuthenticationPrincipal User user) throws IOException {
+        ByteArrayOutputStream baos = eVoucherProcessService.printEvoucher(uuid, user);
+        if (baos == null ) {
+            //404
+            throw new NotFoundException();
+        }
+        ByteArrayResource resource = new ByteArrayResource(baos.toByteArray());
+        HttpHeaders respHeaders = new HttpHeaders();
+        respHeaders.setContentType(MediaType.APPLICATION_PDF);
+        respHeaders.setContentLength(resource.contentLength());
+        respHeaders.set("Content-disposition", "inline; filename="+uuid.toString()+".pdf");
+        return ResponseEntity.ok().headers(respHeaders).body(resource);
+    }
 	
 	/**
 	 * Method to send an {@link EVoucherEvent} through the given {@link SseEmitter}.

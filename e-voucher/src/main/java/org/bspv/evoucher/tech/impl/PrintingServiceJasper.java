@@ -1,5 +1,6 @@
 package org.bspv.evoucher.tech.impl;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +8,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.StringJoiner;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.codec.digest.HmacUtils;
 import org.bspv.evoucher.core.model.EVoucher;
@@ -131,8 +134,13 @@ public class PrintingServiceJasper implements PrintingService {
             parameters.put("voucherDonationDate", messageSource.getMessage("voucher.text.date", new Object[]{requestDate}, locale));
             parameters.put("voucherResponsible", voucherResponsible);
             parameters.put("voucherBarcode", computeBarcodeData(eVoucher));
-
             
+            InputStream bspvLogoInputStream = PrintingServiceJasper.class.getClassLoader().getResourceAsStream("assets/img/logo-splv-text.svg");
+            BufferedImage bspvSignature = ImageIO.read(PrintingServiceJasper.class.getClassLoader().getResourceAsStream("assets/img/signature.png"));
+            
+            parameters.put("bspvLogoInputStream", bspvLogoInputStream);
+            parameters.put("bspvSignature", bspvSignature);
+
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
 					
 			JRPdfExporter exporter = new JRPdfExporter();
@@ -153,8 +161,7 @@ public class PrintingServiceJasper implements PrintingService {
 			
 //			PDF/A conformance
 			exportConfig.setPdfaConformance(PdfaConformanceEnum.PDFA_1A);
-			String iccProfilePath = resourceLoader.getResource("classpath:assets/icm/sRGB Color Space Profile.icm").getURI().getPath();
-			exportConfig.setIccProfilePath(iccProfilePath);
+			exportConfig.setIccProfilePath("assets/icm/sRGB Color Space Profile.icm");
 
 			exporter.setConfiguration(reportConfig);
 			exporter.setConfiguration(exportConfig);
