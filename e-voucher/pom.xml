@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.7.RELEASE</version>
+		<version>1.5.9.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -23,11 +23,14 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 
-		<db.url>jdbc:postgresql://localhost:5432/evouchersdb</db.url>
-		<db.inputSchema>public</db.inputSchema>
-		<db.username>evoucher</db.username>
-		<db.password>bspv85302db</db.password>
-		<db.flyway.locations>db/migration/postgres</db.flyway.locations>
+		<!-- default db properties -->
+		<db.name>evouchersdb</db.name>
+		<db.url>jdbc:hsqldb:hsql://localhost/${db.name}</db.url>
+		<db.inputSchema>PUBLIC</db.inputSchema>
+		<db.username>sa</db.username>
+		<db.password></db.password>
+		<db.flyway.locations>db/migration/hsqldb</db.flyway.locations>
+		<db.hsqldb.startNstop.skip>false</db.hsqldb.startNstop.skip>
 
 		<!-- lib and plugins versions -->
 		<org.bspv.e-voucher-fonts.version>0.0.1-SNAPSHOT</org.bspv.e-voucher-fonts.version>
@@ -46,11 +49,24 @@
 		<com.sendgrid.sendgrid-java.version>4.0.1</com.sendgrid.sendgrid-java.version>
 		<com.ibm.icu.icu4j.version>59.1</com.ibm.icu.icu4j.version>
 		<com.icegreen.greenmail.version>1.5.0</com.icegreen.greenmail.version>
-		<!-- <com.heroku.sdk.heroku-maven-plugin.version>1.2.1</com.heroku.sdk.heroku-maven-plugin.version> -->
 		<org.codehaus.mojo.properties-maven-plugin.version>1.0.0</org.codehaus.mojo.properties-maven-plugin.version>
 		<org.flywaydb.flyway-maven-plugin.version>4.1.2</org.flywaydb.flyway-maven-plugin.version>
-
+		<hsqldb.version>2.3.5</hsqldb.version>
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<db.url>jdbc:postgresql://localhost:5432/evouchersdb</db.url>
+				<db.inputSchema>PUBLIC</db.inputSchema>
+				<db.username>evoucher</db.username>
+				<db.password>bspv85302db</db.password>
+				<db.flyway.locations>db/migration/postgres</db.flyway.locations>
+				<db.hsqldb.startNstop.skip>true</db.hsqldb.startNstop.skip>
+			</properties>
+		</profile>
+	</profiles>
 
 	<dependencyManagement>
 		<!-- Overrinding dependecy management from parent projects -->
@@ -89,18 +105,10 @@
 			<version>${org.bspv.security.jwt-auth-spring-boot-starter.version}</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.hateoas/spring-hateoas -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.hateoas</groupId> -->
-<!-- 			<artifactId>spring-hateoas</artifactId> -->
-<!-- 			<version>0.24.0.RELEASE</version> -->
-<!-- 		</dependency> -->
-
 
 		<dependency>
 			<groupId>io.reactivex</groupId>
@@ -168,25 +176,6 @@
 
 
 		<dependency>
-			<groupId>org.apache.pdfbox</groupId>
-			<artifactId>pdfbox</artifactId>
-			<version>${org.apache.pdfbox.pdfbox.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.pdfbox</groupId>
-			<artifactId>preflight</artifactId>
-			<version>${org.apache.pdfbox.preflight.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>pl.pragmatists</groupId>
-			<artifactId>JUnitParams</artifactId>
-			<version>1.1.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>
 			<version>${org.bouncycastle.bcprov-jdk15on.version}</version>
@@ -215,7 +204,12 @@
 		</dependency>
 
 
+
 		<!-- db and db access -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -237,11 +231,85 @@
 			<version>${com.icegreen.greenmail.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>${org.apache.pdfbox.pdfbox.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>preflight</artifactId>
+			<version>${org.apache.pdfbox.preflight.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>pl.pragmatists</groupId>
+			<artifactId>JUnitParams</artifactId>
+			<version>1.1.1</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
+
+
+
+
+
 	<build>
 		<plugins>
+			<plugin>
+				<!-- current version -->
+				<groupId>fr.avianey.mojo</groupId>
+				<artifactId>hsqldb-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.hsqldb</groupId>
+						<artifactId>hsqldb</artifactId>
+						<version>${hsqldb.version}</version>
+					</dependency>
+				</dependencies>
+
+				<!-- default value for in memory jdbc:hsqldb:hsql://localhost/xdb override 
+					only values you want to change -->
+				<configuration>
+					<driver>org.hsqldb.jdbcDriver</driver>
+					<address>localhost</address>
+					<name>${db.name}</name>
+					<username>sa</username>
+					<password></password>
+					<validationQuery>SELECT 1 FROM INFORMATION_SCHEMA.SYSTEM_USERS</validationQuery>
+
+				</configuration>
+
+				<!-- call start and stop -->
+				<executions>
+					<execution>
+						<id>start-hsqldb</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<skip>${db.hsqldb.startNstop.skip}</skip>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-hsqldb</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+						<configuration>
+							<skip>${db.hsqldb.startNstop.skip}</skip>
+						</configuration>
+					</execution>
+				</executions>
+
+			</plugin>
+
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
@@ -266,9 +334,15 @@
 					<locations>
 						<location>filesystem:src/main/resources/${db.flyway.locations}</location>
 					</locations>
+					<dependencies>
+						<dependency>
+							<groupId>org.hsqldb</groupId>
+							<artifactId>hsqldb</artifactId>
+							<version>${hsqldb.version}</version>
+						</dependency>
+					</dependencies>
 				</configuration>
 			</plugin>
-
 
 			<plugin>
 				<groupId>org.jooq</groupId>
@@ -314,11 +388,6 @@
 									<name>LocalDateTime</name>
 									<types>TIMESTAMP</types>
 								</forcedType>
-								<forcedType><!-- In this app (for mariadb) UUID are stored as BINARY(16) -->
-									<name>UUID</name>
-									<types>BINARY(16)</types>
-								</forcedType>
-
 							</forcedTypes>
 						</database>
 						<target>
