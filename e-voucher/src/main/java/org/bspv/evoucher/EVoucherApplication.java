@@ -1,16 +1,20 @@
 package org.bspv.evoucher;
 
+import org.bspv.evoucher.config.listener.HsqldbServletContextListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
  * 
- * FlywayAutoConfiguration is disabled. Flyway is only used with Maven profile 'generate' and linked to Jooq class
- * generation.
+ * FlywayAutoConfiguration is disabled. Flyway is only used with Maven profile
+ * 'generate' and linked to Jooq class generation.
  */
 @SpringBootApplication(exclude = { FlywayAutoConfiguration.class })
 public class EVoucherApplication extends SpringBootServletInitializer {
@@ -28,7 +32,8 @@ public class EVoucherApplication extends SpringBootServletInitializer {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.springframework.boot.web.support.SpringBootServletInitializer#run(org.springframework.boot.SpringApplication)
+	 * org.springframework.boot.web.support.SpringBootServletInitializer#run(org.
+	 * springframework.boot.SpringApplication)
 	 */
 	@Override
 	protected WebApplicationContext run(SpringApplication application) {
@@ -44,6 +49,17 @@ public class EVoucherApplication extends SpringBootServletInitializer {
 	@Override
 	protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
 		return application.sources(EVoucherApplication.class).initializers();
+	}
+
+	/**
+	 * Register a servlet context listener to start/stop a HSQLDB is no Spring profile defined.
+	 * Consider using {@link Conditional} for more complex activation.
+	 * @return
+	 */
+	@Bean
+	@Profile("default")
+	public HsqldbServletContextListener hsqldbServletContextListener() {
+		return new HsqldbServletContextListener();
 	}
 
 }

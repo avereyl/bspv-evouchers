@@ -38,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Evouchers extends TableImpl<EvouchersRecord> {
 
-    private static final long serialVersionUID = -506134604;
+    private static final long serialVersionUID = -2057931152;
 
     /**
      * The reference instance of <code>PUBLIC.EVOUCHERS</code>
@@ -153,7 +153,7 @@ public class Evouchers extends TableImpl<EvouchersRecord> {
      */
     @Override
     public UniqueKey<EvouchersRecord> getPrimaryKey() {
-        return Keys.SYS_PK_10153;
+        return Keys.SYS_PK_10122;
     }
 
     /**
@@ -161,7 +161,7 @@ public class Evouchers extends TableImpl<EvouchersRecord> {
      */
     @Override
     public List<UniqueKey<EvouchersRecord>> getKeys() {
-        return Arrays.<UniqueKey<EvouchersRecord>>asList(Keys.SYS_PK_10153);
+        return Arrays.<UniqueKey<EvouchersRecord>>asList(Keys.SYS_PK_10122);
     }
 
     /**

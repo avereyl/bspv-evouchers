@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>e-voucher</name>
-	<description>Demo project for Spring Boot</description>
+	<description>BSPV eVoucher project - vouchers handling</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -25,7 +25,8 @@
 
 		<!-- default db properties -->
 		<db.name>evouchersdb</db.name>
-		<db.url>jdbc:hsqldb:hsql://localhost/${db.name}</db.url>
+		<db.url>jdbc:hsqldb:hsql://localhost:9001/${db.name}</db.url>
+		<db.path>file:${project.build.directory}/${db.name}</db.path>
 		<db.inputSchema>PUBLIC</db.inputSchema>
 		<db.username>sa</db.username>
 		<db.password></db.password>
@@ -56,7 +57,7 @@
 
 	<profiles>
 		<profile>
-			<id>dev</id>
+			<id>postgres</id>
 			<properties>
 				<db.url>jdbc:postgresql://localhost:5432/evouchersdb</db.url>
 				<db.inputSchema>PUBLIC</db.inputSchema>
@@ -277,6 +278,7 @@
 				<configuration>
 					<driver>org.hsqldb.jdbcDriver</driver>
 					<address>localhost</address>
+					<path>${db.path}</path>
 					<name>${db.name}</name>
 					<username>sa</username>
 					<password></password>

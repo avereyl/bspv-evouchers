@@ -48,11 +48,11 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<AuthoritiesRecord> SYS_PK_10198 = UniqueKeys0.SYS_PK_10198;
-    public static final UniqueKey<EvouchersRecord> SYS_PK_10153 = UniqueKeys0.SYS_PK_10153;
-    public static final UniqueKey<EvoucherEventsRecord> SYS_PK_10172 = UniqueKeys0.SYS_PK_10172;
-    public static final UniqueKey<TeamMembersRecord> SYS_PK_10187 = UniqueKeys0.SYS_PK_10187;
-    public static final UniqueKey<UsersRecord> SYS_PK_10136 = UniqueKeys0.SYS_PK_10136;
+    public static final UniqueKey<AuthoritiesRecord> SYS_PK_10177 = UniqueKeys0.SYS_PK_10177;
+    public static final UniqueKey<EvouchersRecord> SYS_PK_10122 = UniqueKeys0.SYS_PK_10122;
+    public static final UniqueKey<EvoucherEventsRecord> SYS_PK_10146 = UniqueKeys0.SYS_PK_10146;
+    public static final UniqueKey<TeamMembersRecord> SYS_PK_10166 = UniqueKeys0.SYS_PK_10166;
+    public static final UniqueKey<UsersRecord> SYS_PK_10109 = UniqueKeys0.SYS_PK_10109;
     public static final UniqueKey<UsersRecord> UK_USERS__1 = UniqueKeys0.UK_USERS__1;
     public static final UniqueKey<SchemaVersionRecord> SCHEMA_VERSION_PK = UniqueKeys0.SCHEMA_VERSION_PK;
 
@@ -76,21 +76,21 @@ public class Keys {
     }
 
     private static class UniqueKeys0 extends AbstractKeys {
-        public static final UniqueKey<AuthoritiesRecord> SYS_PK_10198 = createUniqueKey(Authorities.AUTHORITIES, "SYS_PK_10198", Authorities.AUTHORITIES.USER_ID, Authorities.AUTHORITIES.AUTHORITY);
-        public static final UniqueKey<EvouchersRecord> SYS_PK_10153 = createUniqueKey(Evouchers.EVOUCHERS, "SYS_PK_10153", Evouchers.EVOUCHERS.ID);
-        public static final UniqueKey<EvoucherEventsRecord> SYS_PK_10172 = createUniqueKey(EvoucherEvents.EVOUCHER_EVENTS, "SYS_PK_10172", EvoucherEvents.EVOUCHER_EVENTS.ID);
-        public static final UniqueKey<TeamMembersRecord> SYS_PK_10187 = createUniqueKey(TeamMembers.TEAM_MEMBERS, "SYS_PK_10187", TeamMembers.TEAM_MEMBERS.USER_ID, TeamMembers.TEAM_MEMBERS.DISTRIBUTION_YEAR, TeamMembers.TEAM_MEMBERS.TEAM_NUMBER);
-        public static final UniqueKey<UsersRecord> SYS_PK_10136 = createUniqueKey(Users.USERS, "SYS_PK_10136", Users.USERS.ID);
+        public static final UniqueKey<AuthoritiesRecord> SYS_PK_10177 = createUniqueKey(Authorities.AUTHORITIES, "SYS_PK_10177", Authorities.AUTHORITIES.USER_ID, Authorities.AUTHORITIES.AUTHORITY);
+        public static final UniqueKey<EvouchersRecord> SYS_PK_10122 = createUniqueKey(Evouchers.EVOUCHERS, "SYS_PK_10122", Evouchers.EVOUCHERS.ID);
+        public static final UniqueKey<EvoucherEventsRecord> SYS_PK_10146 = createUniqueKey(EvoucherEvents.EVOUCHER_EVENTS, "SYS_PK_10146", EvoucherEvents.EVOUCHER_EVENTS.ID);
+        public static final UniqueKey<TeamMembersRecord> SYS_PK_10166 = createUniqueKey(TeamMembers.TEAM_MEMBERS, "SYS_PK_10166", TeamMembers.TEAM_MEMBERS.USER_ID, TeamMembers.TEAM_MEMBERS.DISTRIBUTION_YEAR, TeamMembers.TEAM_MEMBERS.TEAM_NUMBER);
+        public static final UniqueKey<UsersRecord> SYS_PK_10109 = createUniqueKey(Users.USERS, "SYS_PK_10109", Users.USERS.ID);
         public static final UniqueKey<UsersRecord> UK_USERS__1 = createUniqueKey(Users.USERS, "UK_USERS__1", Users.USERS.USERNAME);
         public static final UniqueKey<SchemaVersionRecord> SCHEMA_VERSION_PK = createUniqueKey(SchemaVersion.SCHEMA_VERSION, "schema_version_pk", SchemaVersion.SCHEMA_VERSION.INSTALLED_RANK);
     }
 
     private static class ForeignKeys0 extends AbstractKeys {
-        public static final ForeignKey<AuthoritiesRecord, UsersRecord> FK_AUTHORITIES__USERS = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10136, Authorities.AUTHORITIES, "FK_AUTHORITIES__USERS", Authorities.AUTHORITIES.USER_ID);
-        public static final ForeignKey<EvouchersRecord, UsersRecord> FK_EVOUCHERS__USERS_1 = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10136, Evouchers.EVOUCHERS, "FK_EVOUCHERS__USERS_1", Evouchers.EVOUCHERS.CREATED_BY);
-        public static final ForeignKey<EvouchersRecord, UsersRecord> FK_EVOUCHERS__USERS_2 = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10136, Evouchers.EVOUCHERS, "FK_EVOUCHERS__USERS_2", Evouchers.EVOUCHERS.LAST_MODIFIED_BY);
-        public static final ForeignKey<EvoucherEventsRecord, EvouchersRecord> FK_EVOUCHER_EVENTS__EVOUCHERS = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10153, EvoucherEvents.EVOUCHER_EVENTS, "FK_EVOUCHER_EVENTS__EVOUCHERS", EvoucherEvents.EVOUCHER_EVENTS.EVOUCHER_ID);
-        public static final ForeignKey<EvoucherEventsRecord, UsersRecord> FK_EVOUCHERS_EVENTS__USERS = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10136, EvoucherEvents.EVOUCHER_EVENTS, "FK_EVOUCHERS_EVENTS__USERS", EvoucherEvents.EVOUCHER_EVENTS.CREATED_BY);
-        public static final ForeignKey<TeamMembersRecord, UsersRecord> FK_TEAM_MEMBERS__USERS = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10136, TeamMembers.TEAM_MEMBERS, "FK_TEAM_MEMBERS__USERS", TeamMembers.TEAM_MEMBERS.USER_ID);
+        public static final ForeignKey<AuthoritiesRecord, UsersRecord> FK_AUTHORITIES__USERS = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10109, Authorities.AUTHORITIES, "FK_AUTHORITIES__USERS", Authorities.AUTHORITIES.USER_ID);
+        public static final ForeignKey<EvouchersRecord, UsersRecord> FK_EVOUCHERS__USERS_1 = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10109, Evouchers.EVOUCHERS, "FK_EVOUCHERS__USERS_1", Evouchers.EVOUCHERS.CREATED_BY);
+        public static final ForeignKey<EvouchersRecord, UsersRecord> FK_EVOUCHERS__USERS_2 = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10109, Evouchers.EVOUCHERS, "FK_EVOUCHERS__USERS_2", Evouchers.EVOUCHERS.LAST_MODIFIED_BY);
+        public static final ForeignKey<EvoucherEventsRecord, EvouchersRecord> FK_EVOUCHER_EVENTS__EVOUCHERS = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10122, EvoucherEvents.EVOUCHER_EVENTS, "FK_EVOUCHER_EVENTS__EVOUCHERS", EvoucherEvents.EVOUCHER_EVENTS.EVOUCHER_ID);
+        public static final ForeignKey<EvoucherEventsRecord, UsersRecord> FK_EVOUCHERS_EVENTS__USERS = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10109, EvoucherEvents.EVOUCHER_EVENTS, "FK_EVOUCHERS_EVENTS__USERS", EvoucherEvents.EVOUCHER_EVENTS.CREATED_BY);
+        public static final ForeignKey<TeamMembersRecord, UsersRecord> FK_TEAM_MEMBERS__USERS = createForeignKey(org.bspv.evouchers.jooq.Keys.SYS_PK_10109, TeamMembers.TEAM_MEMBERS, "FK_TEAM_MEMBERS__USERS", TeamMembers.TEAM_MEMBERS.USER_ID);
     }
 }
