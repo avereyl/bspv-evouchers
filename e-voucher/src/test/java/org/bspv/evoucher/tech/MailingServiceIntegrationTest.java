@@ -36,7 +36,7 @@ import com.icegreen.greenmail.util.ServerSetup;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class MailingServiceTest {
+public class MailingServiceIntegrationTest {
 
 	/**
 	 * Fake SMTP server for testing purpose.

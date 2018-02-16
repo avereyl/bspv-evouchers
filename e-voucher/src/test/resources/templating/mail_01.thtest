@@ -1,0 +1,34 @@
+%TEMPLATE_MODE HTML5
+# ------------ separator comment -----------
+%CONTEXT
+formattedAmount = '50,00 euros'
+donorName = 'Entreprise TEST'
+# ------------------------------------------
+%MESSAGES
+# ------------------------------------------
+%INPUT
+(classpath:templates/mail/eVoucherMailTemplate.html)
+# ------------------------------------------
+%OUTPUT 
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta charset="UTF-8" />
+</head>
+<body>
+
+	<p>Bonjour,</p>
+
+	<p>
+		Lors de notre dernière distribution de calendriers, vous avez fait un don de <span>50,00 euros</span> et nous vous en remercions.
+	</p>
+	<p>
+		Veuillez trouvez ci-joint le reçu correspondant au nom de <span>Entreprise TEST</span>.
+	</p>
+	<p>Pour toute question, n'hésitez pas à nous contacter à l'adresse suivante : <span>pompiers.laverrie@gmail.com</span></p>
+	<br/>
+	<h4>Merci</h4>
+	<hr />
+	<footer>Amicale des sapeurs pompiers de La Verrie</footer>
+</body>
+</html>

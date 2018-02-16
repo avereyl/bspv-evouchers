@@ -60,6 +60,9 @@ public class PrintingServiceJasper implements PrintingService {
 	@Value("${voucher.responsible}")
 	private String voucherResponsible;
 	
+	@Value("${voucher.signature.path}")
+	private String signaturePath;
+	
 	/**
 	 * 
 	 */
@@ -136,7 +139,7 @@ public class PrintingServiceJasper implements PrintingService {
             parameters.put("voucherBarcode", computeBarcodeData(eVoucher));
             
             InputStream bspvLogoInputStream = PrintingServiceJasper.class.getClassLoader().getResourceAsStream("assets/img/logo-splv-text.svg");
-            BufferedImage bspvSignature = ImageIO.read(PrintingServiceJasper.class.getClassLoader().getResourceAsStream("assets/img/signature.png"));
+            BufferedImage bspvSignature = ImageIO.read(PrintingServiceJasper.class.getClassLoader().getResourceAsStream(signaturePath));
             
             parameters.put("bspvLogoInputStream", bspvLogoInputStream);
             parameters.put("bspvSignature", bspvSignature);
