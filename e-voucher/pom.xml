@@ -48,6 +48,7 @@
 		<com.google.zxing.core.version>3.3.0</com.google.zxing.core.version>
 		<com.google.zxing.javase.version>3.3.0</com.google.zxing.javase.version>
 		<com.ibm.icu.icu4j.version>59.1</com.ibm.icu.icu4j.version>
+		<testng.version>6.13.1</testng.version>
 		<org.thymeleaf.thymeleaf-testing.version>2.1.4.RELEASE</org.thymeleaf.thymeleaf-testing.version>
 		<com.icegreen.greenmail.version>1.5.0</com.icegreen.greenmail.version>
 		<org.codehaus.mojo.properties-maven-plugin.version>1.0.0</org.codehaus.mojo.properties-maven-plugin.version>
@@ -213,6 +214,18 @@
 		</dependency>
 
 		<!-- test -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>${testng.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

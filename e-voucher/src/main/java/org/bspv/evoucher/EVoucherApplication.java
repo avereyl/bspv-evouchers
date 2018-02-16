@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -16,6 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
  * FlywayAutoConfiguration is disabled. Flyway is only used with Maven profile
  * 'generate' and linked to Jooq class generation.
  */
+@ServletComponentScan
 @SpringBootApplication(exclude = { FlywayAutoConfiguration.class })
 public class EVoucherApplication extends SpringBootServletInitializer {
 

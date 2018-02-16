@@ -77,6 +77,9 @@ public class HsqldbServletContextListener implements ServletContextListener {
 		log.debug("Database started.");
 	}
 
+	public boolean isServerRunning() {
+		return server != null && !server.isNotRunning();
+	}
 	/**
 	 * To redirect this server output to slf4j output
 	 * 
