@@ -1,5 +1,6 @@
 package org.bspv.evoucher.rest.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -11,30 +12,23 @@ import javax.servlet.http.Cookie;
 
 import org.bspv.evoucher.EVoucherApplication;
 import org.bspv.evoucher.config.listener.HsqldbServletContextListener;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
-//@Slf4j
 @SpringBootTest
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)// leads to ugly naming but useful !
 @ContextConfiguration(classes = { EVoucherApplication.class })
-@RunWith(SpringRunner.class)
-public class EVoucherControllerIntegrationTest implements InitializingBean, DisposableBean {
+public class EVoucherControllerIntegrationTest extends AbstractTestNGSpringContextTests implements InitializingBean, DisposableBean {
 
 	private static final String AUTH_COOKIE_NAME = "AuthorizationCookie";
 
@@ -75,35 +69,35 @@ public class EVoucherControllerIntegrationTest implements InitializingBean, Disp
 		hsqldbServletContextListener.contextDestroyed(null);
 	}
 
-	@Before
+	@BeforeClass
 	public void setup() throws Exception {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).apply(springSecurity()).build();
 	}
 
-	@Test
-	public void t01_givenWac_whenServletContext_thenItProvidesEVoucherController() {
+	@Test(priority=0)
+	public void givenWac_whenServletContext_thenItProvidesEVoucherController() {
 		ServletContext servletContext = wac.getServletContext();
-		Assert.assertNotNull(servletContext);
-		Assert.assertTrue(servletContext instanceof MockServletContext);
-		Assert.assertNotNull(wac.getBean(EVoucherController.class));
+		assertThat(servletContext).isNotNull();
+		assertThat(servletContext).isInstanceOf(MockServletContext.class);
+		assertThat(wac.getBean(EVoucherController.class)).isNotNull();
 	}
 
-	@Test
-	public void t02_givenRootURI_whenMockMVC_thenVerifyResponseStatus() throws Exception {
+	@Test(groups="notLogged")
+	public void givenRootURI_whenMockMVC_thenVerifyResponseStatus() throws Exception {
 		this.mockMvc.perform(get("/"))
 				// .andDo(print())
 				.andExpect(status().isOk());
 	}
 
-	@Test
-	public void t03_givenEVouchersURI_whenMockMVC_thenVerify403Status() throws Exception {
+	@Test(groups="notLogged")
+	public void givenEVouchersURI_whenMockMVC_thenVerify403Status() throws Exception {
 		this.mockMvc.perform(get("/eVouchers/"))
 				// .andDo(print())
 				.andExpect(status().isForbidden());
 	}
 
-	@Test
-	public void t04_givenLoginURI_whenMockMVC_thenResponseOkAndJwtCookie() throws Exception {
+	@Test(groups="login", dependsOnGroups="notLogged")
+	public void givenLoginURI_whenMockMVC_thenResponseOkAndJwtCookie() throws Exception {
 		// @formatter:off
 		MvcResult result = this.mockMvc.perform(post("/login")
 				.content("{\"username\":\"gbillaud\", \"password\":\"key\"}"))
@@ -115,10 +109,8 @@ public class EVoucherControllerIntegrationTest implements InitializingBean, Disp
 		authCookie.setValue(result.getResponse().getCookie(AUTH_COOKIE_NAME).getValue());
 	}
 	
-	// FIXME use TestNG to be able to use a field value set by a previous test !
-	// plus handle dependencies between tests or tests groups
-	@Test
-	public void t05_givenEVouchersURI_whenMockMVC_thenVerify200Status() throws Exception {
+	@Test(groups="logged", dependsOnGroups="login")
+	public void givenEVouchersURI_whenMockMVC_thenVerify200Status() throws Exception {
 		this.mockMvc.perform(get("/eVouchers/").cookie(authCookie)).andExpect(status().isOk());
 	}
 

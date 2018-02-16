@@ -96,6 +96,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>nz.net.ultraq.thymeleaf</groupId>
+					<artifactId>thymeleaf-layout-dialect</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.bspv.security</groupId>
@@ -178,18 +184,6 @@
 			<artifactId>bcprov-jdk15on</artifactId>
 			<version>${org.bouncycastle.bcprov-jdk15on.version}</version>
 		</dependency>
-		<!-- zxing -->
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>core</artifactId>
-			<version>${com.google.zxing.core.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>javase</artifactId>
-			<version>${com.google.zxing.javase.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
@@ -225,7 +219,7 @@
 			<artifactId>assertj-core</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -269,12 +263,6 @@
 			<groupId>org.apache.pdfbox</groupId>
 			<artifactId>preflight</artifactId>
 			<version>${org.apache.pdfbox.preflight.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>pl.pragmatists</groupId>
-			<artifactId>JUnitParams</artifactId>
-			<version>1.1.1</version>
 			<scope>test</scope>
 		</dependency>
 

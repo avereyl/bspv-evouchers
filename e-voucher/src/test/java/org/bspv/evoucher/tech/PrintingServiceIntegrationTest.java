@@ -1,5 +1,6 @@
 package org.bspv.evoucher.tech;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
@@ -19,13 +20,11 @@ import org.apache.pdfbox.preflight.exception.SyntaxValidationException;
 import org.apache.pdfbox.preflight.parser.PreflightParser;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.bspv.evoucher.core.model.EVoucher;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,8 +34,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @SpringBootTest
-@RunWith(SpringRunner.class)
-public class PrintingServiceIntegrationTest {
+public class PrintingServiceIntegrationTest extends AbstractTestNGSpringContextTests {
 
 	private static final String EVOUCHER_FILEPATH = "target/eVoucher_test.pdf";
 
@@ -69,9 +67,8 @@ public class PrintingServiceIntegrationTest {
 			String content = stripper.getText(document);
 
 			// tests on content
-			Assert.assertNotNull("The document content should not be null.", content);
-			Assert.assertTrue("The voucher should contains the name of the donor.", content.contains(DONOR_NAME));
-
+			assertThat(content).isNotNull();
+			assertThat(content.contains(DONOR_NAME)).isTrue();
 		} finally {
 			if (document != null) {
 				document.close();

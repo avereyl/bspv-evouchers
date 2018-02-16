@@ -1,8 +1,6 @@
 package org.bspv.evoucher.tech;
 
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayOutputStream;
@@ -17,26 +15,25 @@ import javax.mail.internet.MimeMessage;
 import org.bspv.evoucher.config.mail.MailConfig;
 import org.bspv.evoucher.core.business.UserBusinessService;
 import org.bspv.evoucher.core.model.EVoucher;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
-public class MailingServiceIntegrationTest {
+public class MailingServiceIntegrationTest extends AbstractTestNGSpringContextTests {
 
 	/**
 	 * Fake SMTP server for testing purpose.
@@ -79,8 +76,11 @@ public class MailingServiceIntegrationTest {
 	 * Creation of the fake SMTP server.
 	 * @throws Exception
 	 */
-	@Before
+	@BeforeClass
 	public void setUp() throws Exception {
+	    
+	    MockitoAnnotations.initMocks(this);
+	    
 		smtpServer = new GreenMail(new ServerSetup(2525, null, "smtp"));
 		smtpServer.start();
 		((JavaMailSenderImpl) javaMailSender).setHost(smtpServer.getSmtp().getServerSetup().getBindAddress());
@@ -91,7 +91,7 @@ public class MailingServiceIntegrationTest {
 	 * Destruction of the fake SMTP server.
 	 * @throws Exception
 	 */
-	@After
+	@AfterClass
 	public void tearDown() throws Exception {
 		smtpServer.stop();
 	}
@@ -106,7 +106,6 @@ public class MailingServiceIntegrationTest {
 		String subject = messageSource.getMessage("mail.subject", new Object[] {}, Locale.getDefault());
 		ByteArrayOutputStream baos = null;
 		EVoucher eVoucher = EVoucher.builder().withName("test").withAmount(new BigDecimal(10)).withEmail("avereyl@mail.com").build();
-		
 
 		// when
 		when(userBusinessService.findMembers(eVoucher.getTeam())).thenReturn(new HashSet<>());
@@ -116,16 +115,16 @@ public class MailingServiceIntegrationTest {
 		// then
 		// assert subject
 		assertReceivedMessageSubjectIs(subject);
-		// eVoucher email + archive recipients (+no team = 0 other recipients)-> 2 recipients
-		assertEquals(2, smtpServer.getReceivedMessages().length);
+		// eVoucher email + archive recipients (+no team = 0 other recipients)-> 2 recipient
+		assertThat(smtpServer.getReceivedMessages().length).isEqualTo(2);
 	}
 
 	
 	private void assertReceivedMessageSubjectIs(String expectedSubject) throws IOException, MessagingException {
 		MimeMessage[] receivedMessages = smtpServer.getReceivedMessages();
-		assertThat("At least one message should have been sent.", receivedMessages.length, not(0));
+		assertThat(receivedMessages.length).isGreaterThan(0);
 		String receivedSubject = receivedMessages[0].getSubject();
-		assertEquals("Subject of the mail is not the expected one.", expectedSubject, receivedSubject);
+		assertThat(receivedSubject).isEqualTo(expectedSubject);
 	}
 
 }

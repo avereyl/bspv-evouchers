@@ -3,12 +3,12 @@
  */
 package org.bspv.evoucher.rest.controller.helper;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.bspv.evoucher.rest.controller.exception.RangeUnsatisfiableException;
-import org.junit.Test;
 import org.springframework.data.domain.PageRequest;
+import org.testng.annotations.Test;
 
 /**
  *
@@ -25,10 +25,10 @@ public class PaginationHelperTest {
 		// when
 		PageRequest pr = PaginationHelper.rangeToPageRequest(range);
 		// then
-		assertNotNull("", pr);
-		assertEquals("", 20 - 10, pr.getPageSize());
-		assertEquals("", 1, pr.getPageNumber());
-		assertEquals("", 10, pr.getOffset());
+		assertThat(pr).isNotNull();
+		assertThat(pr.getPageSize()).isEqualTo(20-10);
+		assertThat(pr.getPageNumber()).isEqualTo(1);
+		assertThat(pr.getOffset()).isEqualTo(10);
 	}
 
 	/**
@@ -41,16 +41,16 @@ public class PaginationHelperTest {
 		// when
 		PageRequest pr = PaginationHelper.rangeToPageRequest(range);
 		// then
-		assertNotNull("", pr);
-		assertEquals("", PaginationHelper.DEFAULT_PAGE_SIZE, pr.getPageSize());
-		assertEquals("", 0, pr.getPageNumber());
-		assertEquals("", 0, pr.getOffset());
+		assertThat(pr).isNotNull();
+        assertThat(pr.getPageSize()).isEqualTo(PaginationHelper.DEFAULT_PAGE_SIZE);
+        assertThat(pr.getPageNumber()).isEqualTo(0);
+        assertThat(pr.getOffset()).isEqualTo(0);
 	}
 
 	/**
 	 * 
 	 */
-	@Test(expected = RangeUnsatisfiableException.class)
+	@Test(expectedExceptions = RangeUnsatisfiableException.class)
 	public void unsatisfiableRangeToPageRequestTest() {
 		// given
 		String range = "0-300";
@@ -62,7 +62,7 @@ public class PaginationHelperTest {
 	/**
 	 * 
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void badFormatRangeToPageRequestTest() {
 		// given
 		String range = "a+10";
