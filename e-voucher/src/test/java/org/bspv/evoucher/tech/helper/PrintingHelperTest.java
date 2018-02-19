@@ -14,7 +14,7 @@ public class PrintingHelperTest {
 	 *
 	 */
 	@Test
-	public void ormatAmountInEurosAndLitteralFrenchTest() {
+	public void formatAmountInEurosAndLitteralFrenchTest() {
 		// given
 		float amountWithoutCents = 50.0f;
 		float amountWithCents = 50.32f;

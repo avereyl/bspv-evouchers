@@ -147,6 +147,10 @@ public class PrintingServiceJasper implements PrintingService {
             parameters.put("bspvSignature", bspvSignature);
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+            if (jasperPrint.getPages().size() > 1) {
+                log.warn("Too many pages");
+                throw new JRException("Only 1 page is expected.");
+            }
 					
 			JRPdfExporter exporter = new JRPdfExporter();
 			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
@@ -177,7 +181,6 @@ public class PrintingServiceJasper implements PrintingService {
 		} catch (JRException e) {
 			log.error("Oups !!!!!!!!!!!!", e);
 			throw e;
-//			return null;
 		}
 	}
 	

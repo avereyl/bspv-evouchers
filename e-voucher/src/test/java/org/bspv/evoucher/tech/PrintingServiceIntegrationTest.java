@@ -11,19 +11,16 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import javax.annotation.PostConstruct;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.preflight.PreflightDocument;
 import org.apache.pdfbox.preflight.ValidationResult;
 import org.apache.pdfbox.preflight.exception.SyntaxValidationException;
 import org.apache.pdfbox.preflight.parser.PreflightParser;
-import org.apache.pdfbox.text.PDFTextStripper;
 import org.bspv.evoucher.core.model.EVoucher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,54 +34,41 @@ import net.sf.jasperreports.engine.JRException;
 @SpringBootTest
 public class PrintingServiceIntegrationTest extends AbstractTestNGSpringContextTests {
 
-	private static final String EVOUCHER_FILEPATH = "target/eVoucher_test.pdf";
-
-	private static final String DONOR_NAME = "SARL Bonne nuit les petits loups";
-
 	@Autowired
 	@Qualifier("printingServiceJasper")
 	private PrintingService printingService;
+	
+	@DataProvider(name="data")
+	public Object[][] dataProvider() {
+	    Object[][] data = {
+	            {"Test company", new BigDecimal(137.271d), "target/eVoucher_test01.pdf"},
+	            {"Lorem ipsum dolor sit amet\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet", new BigDecimal(137.271d), "target/eVoucher_test02.pdf"},
+	            {"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", new BigDecimal(137.271d), "target/eVoucher_test03.pdf"}
+	    };
+	    return data;
+	}
 
-	@PostConstruct
-	public void printingTestEVoucher() throws IOException, JRException {
+	@Test(priority=0, dataProvider="data")
+	public void printingEVouchers(String donor, BigDecimal amount, String path) throws IOException, JRException {
 		// given
-		EVoucher evoucher = EVoucher.builder().withName(DONOR_NAME).withAmount(new BigDecimal(137.271d))
-				.requestDate(LocalDateTime.now()).build();
+		EVoucher evoucher = EVoucher.builder().withName(donor).withAmount(amount).requestDate(LocalDateTime.now()).build();
 		// when
 		ByteArrayOutputStream baos = printingService.printOriginalEVoucher(evoucher);
-		OutputStream outputStream = new FileOutputStream(EVOUCHER_FILEPATH);
+		OutputStream outputStream = new FileOutputStream(path);
 		baos.writeTo(outputStream);
 		baos.close();
 		outputStream.close();
 	}
-
-	@Test
-	public void printOriginalEVoucherTest() throws IOException {
-		PDDocument document = null;
-		try {
-
-			document = PDDocument.load(new File(EVOUCHER_FILEPATH));
-			PDFTextStripper stripper = new PDFTextStripper();
-			String content = stripper.getText(document);
-
-			// tests on content
-			assertThat(content).isNotNull();
-			assertThat(content.contains(DONOR_NAME)).isTrue();
-		} finally {
-			if (document != null) {
-				document.close();
-			}
-		}
-	}
+	
 
 	/**
 	 * @see https://pdfbox.apache.org/1.8/cookbook/pdfavalidation.html
 	 * @throws IOException
 	 */
-	@Test
-	public void pdf1AValidation() throws IOException {
+	@Test(dataProvider="data", dependsOnMethods="printingEVouchers")
+	public void pdf1AValidation(String donor, BigDecimal amount, String path) throws IOException {
 		ValidationResult result = null;
-		PreflightParser parser = new PreflightParser(new File(EVOUCHER_FILEPATH));
+		PreflightParser parser = new PreflightParser(new File(path));
 		try {
 
 			/*
@@ -100,8 +84,8 @@ public class PrintingServiceIntegrationTest extends AbstractTestNGSpringContextT
 			 * end of PDF/A validation.
 			 */
 			PreflightDocument document = parser.getPreflightDocument();
+			assertThat(document.getNumberOfPages()).isEqualTo(1);
 			document.validate();
-
 			// Get validation result
 			result = document.getResult();
 			document.close();
