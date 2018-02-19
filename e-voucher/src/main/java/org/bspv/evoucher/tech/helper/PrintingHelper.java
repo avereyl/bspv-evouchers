@@ -73,4 +73,18 @@ public class PrintingHelper {
 	public static String formatDateInFrench(LocalDateTime datetime) {
 		return datetime == null ? "" : datetime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(Locale.FRANCE));
 	}
+
+	/**
+	 * Limit the given name so that it fits the report layout.
+	 * <ul>
+	 * <li> 3 lines maximum
+	 * <li> n characters per line
+	 * </ul>
+	 * @param name
+	 * @return
+	 */
+    public static String formatName4print(String name) {
+        // TODO Auto-generated method stub
+        return name;
+    }
 }

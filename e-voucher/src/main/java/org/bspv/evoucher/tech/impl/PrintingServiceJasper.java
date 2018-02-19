@@ -83,7 +83,7 @@ public class PrintingServiceJasper implements PrintingService {
 	 * evoucher.core.model.EVoucher)
 	 */
 	@Override
-	public ByteArrayOutputStream printOriginalEVoucher(EVoucher evoucher) throws IOException {
+	public ByteArrayOutputStream printOriginalEVoucher(EVoucher evoucher) throws IOException, JRException {
 		return printEVoucher(evoucher);
 	}
 
@@ -94,7 +94,7 @@ public class PrintingServiceJasper implements PrintingService {
 	 * evoucher.core.model.EVoucher)
 	 */
 	@Override
-	public ByteArrayOutputStream printDuplicataEVoucher(EVoucher evoucher) throws IOException {
+	public ByteArrayOutputStream printDuplicataEVoucher(EVoucher evoucher) throws IOException, JRException {
 		return printEVoucher(evoucher);
 	}
 
@@ -103,8 +103,9 @@ public class PrintingServiceJasper implements PrintingService {
 	 * @param eVoucher
 	 * @return
 	 * @throws IOException
+	 * @throws JRException 
 	 */
-	private ByteArrayOutputStream printEVoucher(EVoucher eVoucher) throws IOException {
+	private ByteArrayOutputStream printEVoucher(EVoucher eVoucher) throws IOException, JRException {
 		try (
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				InputStream employeeReportStream = resourceLoader
@@ -130,7 +131,8 @@ public class PrintingServiceJasper implements PrintingService {
             //make a bean from these following parameters
             parameters.put("voucherDate", messageSource.getMessage("voucher.date", new Object[]{PrintingHelper.formatDateInFrench(eVoucher.getCreatedDate())}, locale));
             parameters.put("voucherReference", messageSource.getMessage("voucher.reference", new Object[]{eVoucherReference}, locale));
-            parameters.put("voucherDonorName", eVoucher.getName());
+            parameters.put("voucherDonorName", PrintingHelper.formatName4print(eVoucher.getName()));
+          
             parameters.put("voucherAssociationName", messageSource.getMessage("voucher.bspv", new Object[]{}, locale));
             parameters.put("voucherAssociationAddress", messageSource.getMessage("voucher.bspv.address", new Object[]{}, locale));
             parameters.put("voucherDonationAmount", amount.toString());
@@ -174,7 +176,8 @@ public class PrintingServiceJasper implements PrintingService {
 			return baos;
 		} catch (JRException e) {
 			log.error("Oups !!!!!!!!!!!!", e);
-			return null;
+			throw e;
+//			return null;
 		}
 	}
 	

@@ -8,12 +8,14 @@ import java.io.IOException;
 
 import org.bspv.evoucher.core.model.EVoucher;
 
+import net.sf.jasperreports.engine.JRException;
+
 /**
  *
  */
 public interface PrintingService {
 	
-	ByteArrayOutputStream printOriginalEVoucher(EVoucher evoucher) throws IOException;
+	ByteArrayOutputStream printOriginalEVoucher(EVoucher evoucher) throws IOException, JRException;
 	
-	ByteArrayOutputStream printDuplicataEVoucher(EVoucher evoucher) throws IOException;
+	ByteArrayOutputStream printDuplicataEVoucher(EVoucher evoucher) throws IOException, JRException;
 }

@@ -49,7 +49,8 @@ public class EVoucherControllerIntegrationTest extends AbstractTestNGSpringConte
 
 	private MockMvc mockMvc;
 	
-	private volatile Cookie authCookie = new Cookie(AUTH_COOKIE_NAME, "");
+	private Cookie adminAuthCookie = new Cookie(AUTH_COOKIE_NAME, "");
+	private Cookie userAuthCookie = new Cookie(AUTH_COOKIE_NAME, "");
 
 	/*
 	 * (non-Javadoc)
@@ -82,22 +83,22 @@ public class EVoucherControllerIntegrationTest extends AbstractTestNGSpringConte
 		assertThat(wac.getBean(EVoucherController.class)).isNotNull();
 	}
 
-	@Test(groups="notLogged")
+	@Test(groups="anonymous")
 	public void givenRootURI_whenMockMVC_thenVerifyResponseStatus() throws Exception {
 		this.mockMvc.perform(get("/"))
 				// .andDo(print())
 				.andExpect(status().isOk());
 	}
 
-	@Test(groups="notLogged")
+	@Test(groups="anonymous")
 	public void givenEVouchersURI_whenMockMVC_thenVerify403Status() throws Exception {
 		this.mockMvc.perform(get("/eVouchers/"))
 				// .andDo(print())
 				.andExpect(status().isForbidden());
 	}
 
-	@Test(groups="login", dependsOnGroups="notLogged")
-	public void givenLoginURI_whenMockMVC_thenResponseOkAndJwtCookie() throws Exception {
+	@Test(groups="loginAdmin", dependsOnGroups="anonymous")
+	public void givenLoginURIadmin_whenMockMVC_thenResponseOkAndJwtCookie() throws Exception {
 		// @formatter:off
 		MvcResult result = this.mockMvc.perform(post("/login")
 				.content("{\"username\":\"gbillaud\", \"password\":\"key\"}"))
@@ -106,12 +107,32 @@ public class EVoucherControllerIntegrationTest extends AbstractTestNGSpringConte
 				.andExpect(cookie().secure(AUTH_COOKIE_NAME, true))
 				.andReturn();
 		// @formatter:on
-		authCookie.setValue(result.getResponse().getCookie(AUTH_COOKIE_NAME).getValue());
+		adminAuthCookie.setValue(result.getResponse().getCookie(AUTH_COOKIE_NAME).getValue());
 	}
 	
-	@Test(groups="logged", dependsOnGroups="login")
-	public void givenEVouchersURI_whenMockMVC_thenVerify200Status() throws Exception {
-		this.mockMvc.perform(get("/eVouchers/").cookie(authCookie)).andExpect(status().isOk());
+	@Test(groups="loginUser", dependsOnGroups="anonymous")
+	public void givenLoginURIuser_whenMockMVC_thenResponseOkAndJwtCookie() throws Exception {
+	    // @formatter:off
+	    MvcResult result = this.mockMvc.perform(post("/login")
+	            .content("{\"username\":\"aarnou\", \"password\":\"key\"}"))
+	            .andExpect(status().isOk())
+	            .andExpect(cookie().exists(AUTH_COOKIE_NAME))
+	            .andExpect(cookie().secure(AUTH_COOKIE_NAME, true))
+	            .andReturn();
+	    // @formatter:on
+	    userAuthCookie.setValue(result.getResponse().getCookie(AUTH_COOKIE_NAME).getValue());
 	}
+	
+	@Test(groups="loggedUser", dependsOnGroups="loginUser")
+	public void givenEVouchersURI_whenMockMVC_thenVerify200Status() throws Exception {
+		this.mockMvc.perform(get("/eVouchers/").cookie(userAuthCookie)).andExpect(status().isOk());
+	}
+	
+	@Test(groups="loggedUser", dependsOnGroups="loginUser")
+	public void givenEVoucherURIwithId_whenMockMVC_thenVerify404Status() throws Exception {
+	    this.mockMvc.perform(get("/eVouchers/413ea664-e6fc-4149-aca7-ac5198b6e88e").cookie(userAuthCookie)).andExpect(status().isNotFound());
+	}
+	
+	
 
 }

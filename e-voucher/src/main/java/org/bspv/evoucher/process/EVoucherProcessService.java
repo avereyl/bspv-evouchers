@@ -41,6 +41,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jasperreports.engine.JRException;
 import rx.Observable;
 import rx.Observable.OnSubscribe;
 import rx.Subscriber;
@@ -82,7 +83,7 @@ public class EVoucherProcessService {
      *            page request
      */
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("isAdmin()")
     public Page<EVoucher> findEVouchers(Pageable pageable) {
         return eVoucherBusinessService.findEVouchers(pageable);
     }
@@ -95,7 +96,7 @@ public class EVoucherProcessService {
      * @param team
      */
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN') or principal.team == team ")
+    @PreAuthorize("isAdmin() or isUserTeam(#team) ")
     public Page<EVoucher> findEVouchers(Team team, Pageable pageable) {
         return eVoucherBusinessService.findEVouchers(team, pageable);
     }
@@ -108,7 +109,7 @@ public class EVoucherProcessService {
      * @return An eVoucher or null if no eVoucher exists with the given uuid
      */
     @Transactional
-    @PostAuthorize("hasAuthority('ADMIN') or principal.team == returnObject.team ")
+    @PostAuthorize("isAdmin() or returnObject == null or isUserTeam(returnObject.team) ")
     public EVoucher findEVoucher(UUID uuid) {
         return eVoucherBusinessService.findEVoucherById(uuid);
     }
@@ -121,7 +122,7 @@ public class EVoucherProcessService {
      * @return List of {@link EVoucherEvent}
      */
     @Transactional
-    @PostAuthorize("hasAuthority('ADMIN') or principal.team == returnObject.team ")
+    @PostAuthorize("isAdmin() or returnObject == null or isUserTeam(returnObject.team) ")
     public List<EVoucherEvent> findEVoucherEvents(UUID uuid) {
         List<EVoucherEvent> events = new ArrayList<>();
         events.addAll(eVoucherEventBusinessService.findEventsByEVoucherUUID(uuid));
@@ -136,7 +137,7 @@ public class EVoucherProcessService {
      * @return the save eVoucher
      */
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN') or principal.team == eVoucher.team ")
+    @PreAuthorize("isAdmin() or isUserTeam(#eVoucher.team) ")
     public EVoucher saveEVoucher(EVoucher eVoucher, User user) {
         UUID auditor = user.getId();
         EVoucher savedEVoucher = eVoucherBusinessService.save(eVoucher);
@@ -154,7 +155,7 @@ public class EVoucherProcessService {
      *            uuid of the eVoucher to delete
      */
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("isAdmin()")
     public void cancelEVoucher(UUID uuid, User user) {
         UUID auditor = user.getId();
         try {
@@ -177,7 +178,7 @@ public class EVoucherProcessService {
      *            uuid of the eVoucher to delete
      */
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("isAdmin()")
     public void archiveEVoucher(UUID uuid, User user) {
         UUID auditor = user.getId();
         try {
@@ -201,7 +202,7 @@ public class EVoucherProcessService {
      * @return An {@link Observable} of {@link EVoucherEvent}
      */
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN') or principal.team == eVoucher.team ")
+    @PreAuthorize("isAdmin() or isUserTeam(#eVoucher.team) ")
     public Observable<EVoucherEvent> processEVoucher(final EVoucher eVoucher) {
         UUID eVoucherUUID = eVoucher.getId();
         UUID auditor = eVoucher.getCreatedBy();
@@ -257,7 +258,7 @@ public class EVoucherProcessService {
      * @return
      */
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("isAdmin()")
     public Observable<EVoucherEvent> printAndSendEVoucher(UUID uuid, User user) {
         UUID auditor = user.getId();
         return Observable.create(new OnSubscribe<EVoucherEvent>() {
@@ -309,7 +310,7 @@ public class EVoucherProcessService {
      * @throws IOException In case of i/o exception
      */
     @Transactional
-    public ByteArrayOutputStream printEvoucher(UUID uuid, User user) throws IOException {
+    public ByteArrayOutputStream printEvoucher(UUID uuid, User user) throws IOException, JRException {
         UUID auditor = user.getId();
         ByteArrayOutputStream baos = null;
         final EVoucher workingEVoucher = eVoucherBusinessService.findEVoucherById(uuid);

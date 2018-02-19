@@ -16,6 +16,7 @@ import org.bspv.evoucher.core.model.Team;
 import org.bspv.evoucher.core.model.User;
 import org.bspv.evoucher.process.EVoucherProcessService;
 import org.bspv.evoucher.rest.beans.EVoucherBean;
+import org.bspv.evoucher.rest.controller.exception.InternalErrorException;
 import org.bspv.evoucher.rest.controller.exception.NotFoundException;
 import org.bspv.evoucher.rest.controller.helper.PaginationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import net.sf.jasperreports.engine.JRException;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -142,7 +144,6 @@ public class EVoucherController {
             @AuthenticationPrincipal(errorOnInvalidType = true) User user) {
         PageRequest pageRequest = PaginationHelper.rangeToPageRequest(range);
         Page<EVoucher> page = this.eVoucherProcessService.findEVouchers(user.getTeam(), pageRequest);
-        // handle exceptions : eg range unsatisfiable...
         return ResponseEntity.ok(page);
     }
 
@@ -235,10 +236,15 @@ public class EVoucherController {
     @GetMapping(value = "eVouchers/{uuid}/print")
     public ResponseEntity<ByteArrayResource> print(@PathVariable(value = "uuid") UUID uuid,
             @AuthenticationPrincipal User user) throws IOException {
-        ByteArrayOutputStream baos = eVoucherProcessService.printEvoucher(uuid, user);
+       
+        ByteArrayOutputStream baos = null;
+        try {
+            baos = eVoucherProcessService.printEvoucher(uuid, user);
+        } catch (JRException e) {
+            throw new InternalErrorException(); //500
+        }
         if (baos == null) {
-            // 404
-            throw new NotFoundException();
+            throw new NotFoundException(); // 404
         }
         ByteArrayResource resource = new ByteArrayResource(baos.toByteArray());
         HttpHeaders respHeaders = new HttpHeaders();

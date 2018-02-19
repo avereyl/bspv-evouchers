@@ -27,6 +27,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  * 
@@ -45,7 +46,7 @@ public class PrintingServiceIntegrationTest extends AbstractTestNGSpringContextT
 	private PrintingService printingService;
 
 	@PostConstruct
-	public void printingTestEVoucher() throws IOException {
+	public void printingTestEVoucher() throws IOException, JRException {
 		// given
 		EVoucher evoucher = EVoucher.builder().withName(DONOR_NAME).withAmount(new BigDecimal(137.271d))
 				.requestDate(LocalDateTime.now()).build();
