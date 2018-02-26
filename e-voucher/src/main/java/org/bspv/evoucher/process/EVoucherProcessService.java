@@ -43,7 +43,6 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
 import rx.Observable;
-import rx.Observable.OnSubscribe;
 import rx.Subscriber;
 
 /**
@@ -207,47 +206,43 @@ public class EVoucherProcessService {
         UUID eVoucherUUID = eVoucher.getId();
         UUID auditor = eVoucher.getCreatedBy();
         log.info("Processing eVoucher {} for team {}", eVoucherUUID, eVoucher.getTeam());
-        return Observable.create(new OnSubscribe<EVoucherEvent>() {
-            /* (non-Javadoc) @see rx.functions.Action1#call(java.lang.Object) */
-            @Override
-            public void call(Subscriber<? super EVoucherEvent> subscriber) {
-                EVoucherEvent event = EVoucherEvent.builderFor(eVoucherUUID).withKey(ACK).createdBy(auditor).build();
-                try {
-                    // acknowledgement
+        return Observable.create((Subscriber<? super EVoucherEvent> subscriber) -> {
+            EVoucherEvent event = EVoucherEvent.builderFor(eVoucherUUID).withKey(ACK).createdBy(auditor).build();
+            try {
+                // acknowledgement
+                subscriber.onNext(event);
+
+                // registration
+                final EVoucher workingEVoucher = eVoucherBusinessService.saveNewEVoucher(eVoucher);
+                if (workingEVoucher.getVersion() != 1L) {
+                    // eVoucher already submitting and so ignored
+                    event = EVoucherEvent.builderBasedOn(event).withKey(NO_OPERATION).build();
+                    subscriber.onNext(event);
+                } else {
+                    // registration ok...
+                    event = EVoucherEvent.builderBasedOn(event).withKey(CREATION).build();
+                    event = eVoucherEventBusinessService.save(event);
                     subscriber.onNext(event);
 
-                    // registration
-                    final EVoucher workingEVoucher = eVoucherBusinessService.saveNewEVoucher(eVoucher);
-                    if (workingEVoucher.getVersion() != 1L) {
-                        // eVoucher already submitting and so ignored
-                        event = EVoucherEvent.builderBasedOn(event).withKey(NO_OPERATION).build();
-                        subscriber.onNext(event);
-                    } else {
-                        // registration ok...
-                        event = EVoucherEvent.builderBasedOn(event).withKey(CREATION).build();
-                        event = eVoucherEventBusinessService.save(event);
-                        subscriber.onNext(event);
-
-                        // printing
-                        ByteArrayOutputStream baos = printingService.printOriginalEVoucher(workingEVoucher);
-                        event = EVoucherEvent.builderBasedOn(event).withKey(PRINTING).build();
-                        event = eVoucherEventBusinessService.save(event);
-                        subscriber.onNext(event);
-
-                        // mailing
-                        mailingService.sendEVoucherPrint(workingEVoucher, baos);
-                        event = EVoucherEvent.builderBasedOn(event).withKey(DISPATCH).build();
-                        event = eVoucherEventBusinessService.save(event);
-                        subscriber.onNext(event);
-                    }
-                    // end of process
-                    subscriber.onCompleted();
-                } catch (Exception e) {
-                    log.error("Error occcurred when processing the e-voucher.", e);
-                    event = EVoucherEvent.builderBasedOn(event).withKey(ERROR).build();
+                    // printing
+                    ByteArrayOutputStream baos = printingService.printOriginalEVoucher(workingEVoucher);
+                    event = EVoucherEvent.builderBasedOn(event).withKey(PRINTING).build();
+                    event = eVoucherEventBusinessService.save(event);
                     subscriber.onNext(event);
-                    subscriber.onCompleted();
+
+                    // mailing
+                    mailingService.sendEVoucherPrint(workingEVoucher, baos);
+                    event = EVoucherEvent.builderBasedOn(event).withKey(DISPATCH).build();
+                    event = eVoucherEventBusinessService.save(event);
+                    subscriber.onNext(event);
                 }
+                // end of process
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("Error occcurred when processing the e-voucher.", e);
+                event = EVoucherEvent.builderBasedOn(event).withKey(ERROR).build();
+                subscriber.onNext(event);
+                subscriber.onCompleted();
             }
         });
     }
@@ -261,10 +256,7 @@ public class EVoucherProcessService {
     @PreAuthorize("isAdmin()")
     public Observable<EVoucherEvent> printAndSendEVoucher(UUID uuid, User user) {
         UUID auditor = user.getId();
-        return Observable.create(new OnSubscribe<EVoucherEvent>() {
-            /* (non-Javadoc) @see rx.functions.Action1#call(java.lang.Object) */
-            @Override
-            public void call(Subscriber<? super EVoucherEvent> subscriber) {
+        return Observable.create((Subscriber<? super EVoucherEvent> subscriber)-> {
                 EVoucherEvent event = EVoucherEvent.builderFor(uuid).withKey(ACK).createdBy(auditor).build();
                 try {
                     // acknowledgement
@@ -297,17 +289,19 @@ public class EVoucherProcessService {
                     subscriber.onNext(event);
                     subscriber.onCompleted();
                 }
-            }
         });
     }
 
     /**
      * Print the eVoucher and save a printing event for the eVoucher with the given id.
      * 
-     * @param uuid The id of the eVoucher to print.
-     * @param user User asking for the print.
+     * @param uuid
+     *            The id of the eVoucher to print.
+     * @param user
+     *            User asking for the print.
      * @return The print of the eVoucher with given id
-     * @throws IOException In case of i/o exception
+     * @throws IOException
+     *             In case of i/o exception
      */
     @Transactional
     public ByteArrayOutputStream printEvoucher(UUID uuid, User user) throws IOException, JRException {

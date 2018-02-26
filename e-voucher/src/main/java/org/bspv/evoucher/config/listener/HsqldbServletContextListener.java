@@ -47,7 +47,6 @@ public class HsqldbServletContextListener implements ServletContextListener {
 		if (server != null) {
 			server.shutdown();
 		}
-		server.shutdown();
 		log.debug("Database stopped.");
 	}
 
@@ -56,15 +55,16 @@ public class HsqldbServletContextListener implements ServletContextListener {
 		log.debug("Starting database...");
 
 		String s = connectionURL.replaceFirst(URL_PREFIX, "");
-		String host = s.substring(0, s.indexOf(":"));
-		String declaredPort = s.substring(s.indexOf(":") + 1, s.indexOf("/"));
-		String dbname = s.substring(s.indexOf("/") + 1);
+		String host = s.substring(0, s.indexOf(':'));
+		String declaredPort = s.substring(s.indexOf(':') + 1, s.indexOf('/'));
+		String dbname = s.substring(s.indexOf('/') + 1);
 		
 		Integer port = Integer.valueOf(declaredPort);
 
 		server = new Server();
 		server.setDaemon(true);
 		server.setNoSystemExit(true);
+		server.setSilent(true);
 		server.setLogWriter(slf4jPrintWriter());
 		server.setErrWriter(slf4jPrintWriter());
 
@@ -86,13 +86,12 @@ public class HsqldbServletContextListener implements ServletContextListener {
 	 * @return
 	 */
 	private PrintWriter slf4jPrintWriter() {
-		PrintWriter printWriter = new PrintWriter(new ByteArrayOutputStream()) {
+		return new PrintWriter(new ByteArrayOutputStream()) {
 			@Override
 			public void println(final String x) {
 				log.debug(x);
 			}
 		};
-		return printWriter;
 	}
 
 }

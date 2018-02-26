@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Authorities extends TableImpl<AuthoritiesRecord> {
 
-    private static final long serialVersionUID = -910670168;
+    private static final long serialVersionUID = -1192532310;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHORITIES</code>
@@ -95,7 +95,7 @@ public class Authorities extends TableImpl<AuthoritiesRecord> {
      */
     @Override
     public UniqueKey<AuthoritiesRecord> getPrimaryKey() {
-        return Keys.SYS_PK_10177;
+        return Keys.SYS_PK_10198;
     }
 
     /**
@@ -103,7 +103,7 @@ public class Authorities extends TableImpl<AuthoritiesRecord> {
      */
     @Override
     public List<UniqueKey<AuthoritiesRecord>> getKeys() {
-        return Arrays.<UniqueKey<AuthoritiesRecord>>asList(Keys.SYS_PK_10177);
+        return Arrays.<UniqueKey<AuthoritiesRecord>>asList(Keys.SYS_PK_10198);
     }
 
     /**

@@ -61,7 +61,7 @@
 			<id>postgres</id>
 			<properties>
 				<db.url>jdbc:postgresql://localhost:5432/evouchersdb</db.url>
-				<db.inputSchema>PUBLIC</db.inputSchema>
+				<db.inputSchema>public</db.inputSchema>
 				<db.username>evoucher</db.username>
 				<db.password>bspv85302db</db.password>
 				<db.flyway.locations>db/migration/postgres</db.flyway.locations>
@@ -148,6 +148,10 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
 		<dependency>

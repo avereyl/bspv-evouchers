@@ -17,7 +17,6 @@ public class UUIDConverter implements Converter<byte[], UUID> {
      */
     @Override
     public UUID from(byte[] databaseObject) {
-        //FIXME ADD '-'
         return UUID.fromString(new String(databaseObject));
     }
 
@@ -27,7 +26,6 @@ public class UUIDConverter implements Converter<byte[], UUID> {
      */
     @Override
     public byte[] to(UUID userObject) {
-        //FIXME REMOVE '-'
         return userObject.toString().getBytes();
     }
 
