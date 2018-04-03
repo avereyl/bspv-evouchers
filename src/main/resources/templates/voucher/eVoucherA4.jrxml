@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="eVoucherA4" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="56" rightMargin="56" topMargin="56" bottomMargin="56" uuid="82325a7b-09e6-4b8e-9fe4-287551d19f18">
+	<property name="net.sf.jasperreports.export.pdf.tagged" value="true"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<subDataset name="Empty Dataset1" uuid="e6c499a4-4bff-4694-9f09-f1ae714493f4"/>
+	<parameter name="voucherDate" class="java.lang.String"/>
+	<parameter name="voucherReference" class="java.lang.String"/>
+	<parameter name="voucherDonorName" class="java.lang.String"/>
+	<parameter name="voucherAssociationName" class="java.lang.String"/>
+	<parameter name="voucherAssociationAddress" class="java.lang.String"/>
+	<parameter name="voucherDonationAmount" class="java.lang.String"/>
+	<parameter name="voucherDonationDate" class="java.lang.String"/>
+	<parameter name="voucherResponsible" class="java.lang.String"/>
+	<parameter name="voucherBarcode" class="java.lang.String"/>
+	<parameter name="bspvLogoInputStream" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="bspvSignature" class="java.lang.Object" isForPrompting="false"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="134" splitType="Stretch">
+			<textField>
+				<reportElement x="98" y="27" width="286" height="30" uuid="5e3abe36-5e7c-4163-8a03-8c3da67f4700"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{voucher.title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="84" width="384" height="24" uuid="88ef92ff-e5fd-4b5d-a123-bdaa6ccad47a"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="11"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{voucher.bspv}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Right">
+				<reportElement stretchType="RelativeToBandHeight" x="400" y="0" width="80" height="108" uuid="557e80b1-a738-4d3d-aef4-dd6c5b374276"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.renderers.BatikRenderer.getInstance($P{bspvLogoInputStream})]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="113" width="480" height="1" backcolor="#000000" uuid="5da95af5-6289-41f4-aaa0-e630a3def112"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</title>
+	<detail>
+		<band height="97" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="239" height="17" uuid="b6b13437-eba4-4d79-b5b5-24b710f21906"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{voucherDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="17" width="479" height="17" isPrintWhenDetailOverflows="true" forecolor="#858383" uuid="a8059234-176d-44a8-b9ee-27d5604cda6e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{voucherReference}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="252" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<textField>
+				<reportElement x="0" y="0" width="239" height="50" uuid="49adef16-d1e4-49a1-b59a-1da981596e48"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto" size="14" isBold="true"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{voucher.association}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="241" y="0" width="239" height="50" uuid="628b33ea-50f4-420e-88e4-64c82b95c415"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto" size="14" isBold="true"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{voucher.donor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="160" width="480" height="19" uuid="05aeb1b9-3235-4c9a-ad85-188fb2c4441c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{voucher.text.amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="179" width="480" height="19" uuid="91eb5629-d7e9-43cd-a6e9-fa8537f4cabd"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{voucherDonationAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="198" width="480" height="19" uuid="259e5f1d-9828-4b1d-aafb-5354ac362e71"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{voucherDonationDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="50" width="239" height="19" uuid="1caf7a23-0c41-46f2-a824-c36bc1ce58b4"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{voucherAssociationName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement isPrintRepeatedValues="false" x="241" y="50" width="239" height="19" isPrintWhenDetailOverflows="true" uuid="ef1e836a-e948-4ccb-9d1b-19f2fd178fcc"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{voucherDonorName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement isPrintRepeatedValues="false" x="0" y="69" width="239" height="19" isPrintWhenDetailOverflows="true" uuid="914c5a83-bb29-437d-9a1c-6b35d4d636c4"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{voucherAssociationAddress}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="120">
+			<textField>
+				<reportElement x="300" y="21" width="148" height="17" uuid="c14c7b72-eb24-49ae-95bb-fb79949b20ca">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{voucher.responsible}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="38" width="148" height="17" uuid="65ea83b9-fbf6-4a3b-99a0-0a3b535b09cd">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{voucherResponsible}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape">
+				<reportElement isPrintRepeatedValues="false" x="300" y="58" width="148" height="55" isPrintWhenDetailOverflows="true" uuid="1f4a143a-241e-4944-812e-edd915b3f215"/>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA[$P{bspvSignature}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="85" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<line>
+				<reportElement x="0" y="75" width="480" height="1" uuid="99c6369a-e994-4b54-bdb0-7a98cc40e49e"/>
+			</line>
+			<componentElement>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="90" height="75" uuid="23ef5068-c865-4c9b-855e-a0b891cba63e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<jr:codeExpression><![CDATA[$P{voucherBarcode}.toString()]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+		</band>
+	</pageFooter>
+</jasperReport>
