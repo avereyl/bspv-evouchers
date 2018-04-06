@@ -1,16 +1,19 @@
 package org.bspv.evoucher;
 
 import org.bspv.evoucher.config.listener.HsqldbServletContextListener;
+import org.bspv.security.annotation.EnableJwtFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.context.WebApplicationContext;
 
 
@@ -19,8 +22,10 @@ import org.springframework.web.context.WebApplicationContext;
  * FlywayAutoConfiguration is disabled. Flyway is only used with Maven profile
  * 'generate' and linked to Jooq class generation.
  */
+@EnableJwtFilter
+@EnableWebSecurity
 @ServletComponentScan
-@SpringBootApplication(exclude = { FlywayAutoConfiguration.class })
+@SpringBootApplication(exclude = { FlywayAutoConfiguration.class, SecurityAutoConfiguration.class })
 public class EVoucherApplication extends SpringBootServletInitializer {
 
 	/**

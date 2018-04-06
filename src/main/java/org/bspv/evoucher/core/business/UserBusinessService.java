@@ -10,31 +10,19 @@ import org.bspv.evoucher.core.model.Team;
 import org.bspv.evoucher.core.model.User;
 import org.bspv.evoucher.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
  *
  */
 @Service
-public class UserBusinessService implements UserDetailsService {
+public class UserBusinessService {
 
 	/**
 	 * Repository handling users.
 	 */
 	@Autowired
 	private UserRepository userRepository;
-	
-	/*
-	 * (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
-	 */
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userRepository.loadByUsername(username);
-	}
 	
 	/**
 	 * Find current team mates of the given user.

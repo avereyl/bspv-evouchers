@@ -26,6 +26,8 @@ import lombok.ToString;
 @EqualsAndHashCode(of = { "username" })
 public final class User implements Serializable, UserDetails, CredentialsContainer {
 
+    //FIXME make this extends org.bspv.security.model.User + Team
+    
 	/**
 	 * Generated serial version UID.
 	 */

@@ -24,6 +24,8 @@ import io.jsonwebtoken.Jwts;
  */
 @Component
 public class TokenToUserMapper implements TokenToUserDetailsMapper<User> {
+    
+    //FIXME override org.bspv.security.jwt.mapper.TokenToUserMapper and load team from a service (cache + from DB)
 
 	public static final String USER_ID_CLAIM_NAME = "id";
 	public static final String TEAM_CLAIM_NAME = "team";

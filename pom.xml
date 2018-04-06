@@ -35,7 +35,7 @@
 
 		<!-- lib and plugins versions -->
 		<org.bspv.bspv-evouchers-fonts.version>0.0.1-SNAPSHOT</org.bspv.bspv-evouchers-fonts.version>
-		<org.bspv.security.jwt-auth-spring-boot-starter.version>0.0.1-SNAPSHOT</org.bspv.security.jwt-auth-spring-boot-starter.version>
+		<org.bspv.bspv-security.version>0.0.1-SNAPSHOT</org.bspv.bspv-security.version>
 		<io.reactivex.rxjava-reactive-streams.version>1.2.1</io.reactivex.rxjava-reactive-streams.version>
 		<io.reactivex.rxjava.version>1.2.2</io.reactivex.rxjava.version>
 		<org.projectlombok.lombok.version>1.16.18</org.projectlombok.lombok.version>
@@ -104,14 +104,25 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.bspv.security</groupId>
-			<artifactId>jwt-auth-spring-boot-starter</artifactId>
-			<version>${org.bspv.security.jwt-auth-spring-boot-starter.version}</version>
+			<groupId>org.bspv</groupId>
+			<artifactId>bspv-security</artifactId>
+			<version>${org.bspv.bspv-security.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
 		<dependency>
@@ -148,10 +159,6 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
 		<dependency>
