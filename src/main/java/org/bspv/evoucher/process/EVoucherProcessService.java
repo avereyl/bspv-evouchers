@@ -30,13 +30,13 @@ import org.bspv.evoucher.core.model.User;
 import org.bspv.evoucher.tech.MailingService;
 import org.bspv.evoucher.tech.PrintingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +51,9 @@ import rx.Subscriber;
 @Slf4j
 @Service
 public class EVoucherProcessService {
+
+    @Value("${bspv.security.service.name}")
+    private String serviceName;
 
     /**
      * Business service handling e-vouchers.
@@ -249,6 +252,7 @@ public class EVoucherProcessService {
 
     /**
      * 
+     * @param jwtToken 
      * @param eVoucher
      * @return
      */
@@ -256,49 +260,51 @@ public class EVoucherProcessService {
     @PreAuthorize("isAdmin()")
     public Observable<EVoucherEvent> printAndSendEVoucher(UUID uuid, User user) {
         UUID auditor = user.getId();
-        return Observable.create((Subscriber<? super EVoucherEvent> subscriber)-> {
-                EVoucherEvent event = EVoucherEvent.builderFor(uuid).withKey(ACK).createdBy(auditor).build();
-                try {
-                    // acknowledgement
-                    subscriber.onNext(event);
+        return Observable.create((Subscriber<? super EVoucherEvent> subscriber) -> {
+            EVoucherEvent event = EVoucherEvent.builderFor(uuid).withKey(ACK).createdBy(auditor).build();
+            try {
+                // acknowledgement
+                subscriber.onNext(event);
 
-                    // reading of the e-voucher
-                    final EVoucher workingEVoucher = eVoucherBusinessService.findEVoucherById(uuid);
-                    if (workingEVoucher == null) {
-                        // eVoucher not existing (or not valid)
-                        event = EVoucherEvent.builderBasedOn(event).withKey(ERROR).build();
-                        subscriber.onNext(event);
-                    } else {
-                        // printing
-                        ByteArrayOutputStream baos = printingService.printDuplicataEVoucher(workingEVoucher);
-                        event = EVoucherEvent.builderBasedOn(event).withKey(PRINTING).build();
-                        event = eVoucherEventBusinessService.save(event);
-                        subscriber.onNext(event);
-
-                        // mailing
-                        mailingService.sendEVoucherPrint(workingEVoucher, baos);
-                        event = EVoucherEvent.builderBasedOn(event).withKey(DISPATCH).build();
-                        event = eVoucherEventBusinessService.save(event);
-                        subscriber.onNext(event);
-                    }
-                    // end of process
-                    subscriber.onCompleted();
-                } catch (Exception e) {
-                    log.error("Error occcurred when processing the e-voucher.", e);
+                // reading of the e-voucher
+                final EVoucher workingEVoucher = eVoucherBusinessService.findEVoucherById(uuid);
+                if (workingEVoucher == null) {
+                    // eVoucher not existing (or not valid)
                     event = EVoucherEvent.builderBasedOn(event).withKey(ERROR).build();
                     subscriber.onNext(event);
-                    subscriber.onCompleted();
+                } else {
+                    // printing
+                    ByteArrayOutputStream baos = printingService.printDuplicataEVoucher(workingEVoucher);
+                    event = EVoucherEvent.builderBasedOn(event).withKey(PRINTING).build();
+                    event = eVoucherEventBusinessService.save(event);
+                    subscriber.onNext(event);
+
+                    // mailing
+                    mailingService.sendEVoucherPrint(workingEVoucher, baos);
+                    event = EVoucherEvent.builderBasedOn(event).withKey(DISPATCH).build();
+                    event = eVoucherEventBusinessService.save(event);
+                    subscriber.onNext(event);
                 }
+                // end of process
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("Error occcurred when processing the e-voucher.", e);
+                event = EVoucherEvent.builderBasedOn(event).withKey(ERROR).build();
+                subscriber.onNext(event);
+                subscriber.onCompleted();
+            }
         });
     }
 
     /**
-     * Print the eVoucher and save a printing event for the eVoucher with the given id.
+     * Print the eVoucher and save a printing event for the eVoucher with the given
+     * id.
      * 
      * @param uuid
      *            The id of the eVoucher to print.
      * @param user
      *            User asking for the print.
+     * @param authenticationToken 
      * @return The print of the eVoucher with given id
      * @throws IOException
      *             In case of i/o exception
@@ -311,10 +317,10 @@ public class EVoucherProcessService {
         if (workingEVoucher == null) {
             // eVoucher not existing (or not valid)
             return baos;
-        } else if (!user.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))
+        } else if (!user.hasAuthorithyForService("ADMIN", serviceName)
                 && !user.getTeam().equals(workingEVoucher.getTeam())) {
             // user not authorized (nor admin neither in the relevant team)
-            throw new AccessDeniedException("Access denied to print of eVoucher " + uuid.toString());
+            throw new AccessDeniedException("Access denied to eVoucher printing " + uuid.toString());
         } else {
             // printing
             baos = printingService.printDuplicataEVoucher(workingEVoucher);

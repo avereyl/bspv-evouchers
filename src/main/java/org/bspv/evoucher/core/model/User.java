@@ -3,31 +3,20 @@
  */
 package org.bspv.evoucher.core.model;
 
-import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
+import org.bspv.security.model.ServiceGrantedAuthority;
 import org.springframework.security.core.CredentialsContainer;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.ToString;
 
 /**
  * Represents a user of this service.
  * This class is not immutable as the {@link CredentialsContainer} interface should let the password/key to be erased.
  */
-@ToString
-@EqualsAndHashCode(of = { "username" })
-public final class User implements Serializable, UserDetails, CredentialsContainer {
+public final class User extends org.bspv.security.model.User {
 
-    //FIXME make this extends org.bspv.security.model.User + Team
-    
 	/**
 	 * Generated serial version UID.
 	 */
@@ -37,22 +26,8 @@ public final class User implements Serializable, UserDetails, CredentialsContain
 	 * Builder class for {@link User}.
 	 * 
 	 */
-	public static class Builder {
+	public static class Builder extends org.bspv.security.model.User.Builder {
 
-		/** @see User#id */
-		private UUID id;
-		/** @see User#version */
-		private Long version;
-		/** @see User#username */
-		private String username;
-		/** @see User#privateKey */
-		private String privateKey;
-		/** @see User#enabled */
-		private boolean enabled = true;
-		/** @see User#email */
-		private String email;
-		/** @see User#authorities */
-		private Set<GrantedAuthority> authorities = new HashSet<>();
 		/** @see User#team */
 		private Team team;
 
@@ -63,143 +38,105 @@ public final class User implements Serializable, UserDetails, CredentialsContain
 		private Builder() {
 			super();
 		}
+		
+        private Builder fromUser(User user) {
+            super.fromUser(user);
+            this.team = user.team;
+            return this;
+        }
 
-		/**
-		 * build the user calling the constructor or the User class.
-		 * 
-		 * @return new instance of {@link User}
-		 */
-		public User build() {
-			return new User(this);
-		}
+        /* (non-Javadoc)
+         * @see org.bspv.security.model.User.Builder#id(java.util.UUID)
+         */
+        @Override
+        public Builder id(UUID id) {
+            super.id(id);
+            return this;
+        }
 
-		/**
-		 * 
-		 * @param id
-		 * @return this builder instance
-		 */
-		public Builder withId(UUID id) {
-			this.id = id;
-			return this;
-		}
+        /* (non-Javadoc)
+         * @see org.bspv.security.model.User.Builder#version(java.lang.Long)
+         */
+        @Override
+        public Builder version(Long version) {
+            super.version(version);
+            return this;
+        }
 
-		/**
-		 * 
-		 * @param version
-		 * @return this builder instance
-		 */
-		public Builder withVersion(Long version) {
-			this.version = version;
-			return this;
-		}
+        /* (non-Javadoc)
+         * @see org.bspv.security.model.User.Builder#username(java.lang.String)
+         */
+        @Override
+        public Builder username(String userName) {
+            super.username(userName);
+            return this;
+        }
 
-		/**
-		 * 
-		 * @param userName
-		 * @return this builder instance
-		 */
-		public Builder withUserName(@NonNull String userName) {
-			this.username = userName;
-			return this;
-		}
+        /* (non-Javadoc)
+         * @see org.bspv.security.model.User.Builder#email(java.lang.String)
+         */
+        @Override
+        public Builder email(String email) {
+            super.email(email);
+            return this;
+        }
 
-		/**
-		 * @param email
-		 * @return this builder instance
-		 */
-		public Builder withEmail(String email) {
-			this.email = email;
-			return this;
-		}
+        /* (non-Javadoc)
+         * @see org.bspv.security.model.User.Builder#password(java.lang.String)
+         */
+        @Override
+        public Builder password(String password) {
+            super.password(password);
+            return this;
+        }
 
-		/**
-		 * @param key
-		 * @return this builder instance
-		 */
-		public Builder withKey(@NonNull String key) {
-			this.privateKey = key;
-			return this;
-		}
+        /* (non-Javadoc)
+         * @see org.bspv.security.model.User.Builder#enable(boolean)
+         */
+        @Override
+        public Builder enable(boolean enabled) {
+            super.enable(enabled);
+            return this;
+        }
 
-		/**
-		 * @param enabled
-		 * @return this builder instance
-		 */
-		public Builder enable(boolean enabled) {
-			this.enabled = enabled;
-			return this;
-		}
+        /* (non-Javadoc)
+         * @see org.bspv.security.model.User.Builder#authority(org.bspv.security.model.ServiceGrantedAuthority)
+         */
+        @Override
+        public Builder authority(ServiceGrantedAuthority authority) {
+            super.authority(authority);
+            return this;
+        }
 
-		/**
-		 * @param authority
-		 * @return this builder instance
-		 */
-		public Builder withAuthority(GrantedAuthority authority) {
-			this.authorities.add(authority);
-			return this;
-		}
+        /* (non-Javadoc)
+         * @see org.bspv.security.model.User.Builder#authorities(java.util.Collection)
+         */
+        @Override
+        public Builder authorities(Collection<ServiceGrantedAuthority> authorities) {
+            super.authorities(authorities);
+            return this;
+        }
 
-		/**
-		 * @param authorities
-		 * @return this builder instance
-		 */
-		public Builder withAuthorities(Collection<GrantedAuthority> authorities) {
-			this.authorities.addAll(authorities);
-			return this;
-		}
-
-		/**
+        /**
 		 * 
 		 * @param team
 		 * @return this builder instance
 		 */
-		public Builder withTeam(Team team) {
+		public Builder team(Team team) {
 			this.team = team;
 			return this;
 		}
+
+        /* (non-Javadoc)
+         * @see org.bspv.security.model.User.Builder#build()
+         */
+        @Override
+        public User build() {
+            return new User(this);
+        }
+		
+		
 	}
-
-	/**
-	 * Unique identifier of the user.
-	 */
-	@Getter
-	private final UUID id;
-
-	/**
-	 * Version of the bean
-	 */
-	@Getter
-	private final Long version;
-
-	/**
-	 * Unique userName.
-	 */
-	@Getter
-	private final String username;
-
-	/**
-	 * User key.
-	 */
-	@Getter
-	private String privateKey;
-
-	/**
-	 * Flag indicating if the user is enabled.
-	 */
-	@Getter
-	private final boolean enabled;
-
-	/**
-	 * User's email.
-	 */
-	@Getter
-	private final String email;
-
-	/**
-	 * Set of {@link Authority}s.
-	 */
-	@Getter
-	private final Set<GrantedAuthority> authorities = new HashSet<>();
 	
 	/**
 	 * Current team of the user.
@@ -222,58 +159,15 @@ public final class User implements Serializable, UserDetails, CredentialsContain
 	 * @param builder
 	 */
 	private User(Builder builder) {
-		this.id = builder.id != null ? builder.id : UUID.randomUUID();
-		this.version = builder.version != null ? builder.version : 0L;
-		this.username = builder.username;
-		this.privateKey = builder.privateKey;
-		this.enabled = builder.enabled;
-		this.email = builder.email;
-		this.authorities.addAll(builder.authorities);
+	    super(builder);
 		this.team = builder.team;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.springframework.security.core.CredentialsContainer#eraseCredentials()
-	 */
-	@Override
-	public void eraseCredentials() {
-		this.privateKey = null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetails#getPassword()
-	 */
-	@Override
-	public String getPassword() {
-		return this.privateKey;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetails#isAccountNonExpired()
-	 */
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetails#isAccountNonLocked()
-	 */
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetails#isCredentialsNonExpired()
-	 */
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+    /* (non-Javadoc)
+     * @see org.bspv.security.model.User#toBuilder()
+     */
+    @Override
+    public Builder toBuilder() {
+        return User.builder().fromUser(this);
+    }
 }

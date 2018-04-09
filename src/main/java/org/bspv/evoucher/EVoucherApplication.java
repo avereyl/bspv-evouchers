@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Profile;
@@ -24,6 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @EnableJwtFilter
 @EnableWebSecurity
+@EnableCircuitBreaker
 @ServletComponentScan
 @SpringBootApplication(exclude = { FlywayAutoConfiguration.class, SecurityAutoConfiguration.class })
 public class EVoucherApplication extends SpringBootServletInitializer {

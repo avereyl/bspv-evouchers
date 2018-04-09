@@ -77,11 +77,11 @@ public final class RecordConverterFactory {
 	public static User.Builder toBuilder(UsersRecord record) {
 		return User
 				.builder()
-				.withId(record.getId())
-				.withVersion(record.getVersion())
-				.withUserName(record.getUsername())
-				.withEmail(record.getEmail())
-				.withKey(record.getSecretkey())
+				.id(record.getId())
+				.version(record.getVersion())
+				.username(record.getUsername())
+				.email(record.getEmail())
+				.password(record.getSecretkey())
 				.enable(record.getEnabled());
 	}
 	

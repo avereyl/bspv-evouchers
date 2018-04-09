@@ -13,7 +13,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.bspv.evoucher.config.mail.MailConfig;
-import org.bspv.evoucher.core.business.UserBusinessService;
+import org.bspv.evoucher.core.business.TeamMembersBusinessService;
 import org.bspv.evoucher.core.model.EVoucher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -61,10 +61,10 @@ public class MailingServiceIntegrationTest extends AbstractTestNGSpringContextTe
 	private MailingService mailingService;
 
 	/**
-	 * Mock of the {@link UserBusinessService} used in the {@link MailingService}
+	 * Mock of the {@link TeamMembersBusinessService} used in the {@link MailingService}
 	 */
 	@Mock
-	private UserBusinessService userBusinessService;
+	private TeamMembersBusinessService userBusinessService;
 	/**
 	 * Mock of the {@link TemplatingService} used in the {@link MailingService}
 	 */

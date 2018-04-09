@@ -7,9 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 
 import org.bspv.evoucher.config.mail.MailConfig;
-import org.bspv.evoucher.core.business.UserBusinessService;
 import org.bspv.evoucher.core.model.EVoucher;
-import org.bspv.evoucher.core.model.User;
 import org.bspv.evoucher.tech.MailingService;
 import org.bspv.evoucher.tech.TemplatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,12 +45,6 @@ public class MailingServiceDefault implements MailingService {
 	private TemplatingService templatingService;
 
 	/**
-	 * Service handling users.
-	 */
-	@Autowired
-	private UserBusinessService userBusinessService;
-	
-	/**
 	 * Message source @see {@link MailConfig}
 	 */
 	@Autowired
@@ -87,12 +79,8 @@ public class MailingServiceDefault implements MailingService {
 			    log.warn("No donor email: fallback to archive email.");
 			    messageHelper.setTo(this.mailArchiveAddress);
 			}
-			// add team members issuing the evoucher
-			for (User user : userBusinessService.findMembers(eVoucher.getTeam())) {
-				messageHelper.addBcc(user.getEmail());
-			}
-			// add archiving address
 			
+			// add archiving address
 			messageHelper.addBcc(this.mailArchiveAddress);
 			messageHelper.setSubject(messageSource.getMessage("mail.subject", new Object[] {}, Locale.getDefault()));
 			// generate content																						
