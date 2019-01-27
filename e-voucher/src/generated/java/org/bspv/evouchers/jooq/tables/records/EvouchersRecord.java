@@ -31,185 +31,185 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EvouchersRecord extends UpdatableRecordImpl<EvouchersRecord> implements Record13<UUID, Long, UUID, LocalDateTime, UUID, LocalDateTime, String, String, LocalDateTime, BigDecimal, String, Integer, Integer> {
 
-    private static final long serialVersionUID = -1889445932;
+    private static final long serialVersionUID = -1696549036;
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.ID</code>.
+     * Setter for <code>public.evouchers.id</code>.
      */
     public void setId(UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.ID</code>.
+     * Getter for <code>public.evouchers.id</code>.
      */
     public UUID getId() {
         return (UUID) get(0);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.VERSION</code>.
+     * Setter for <code>public.evouchers.version</code>.
      */
     public void setVersion(Long value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.VERSION</code>.
+     * Getter for <code>public.evouchers.version</code>.
      */
     public Long getVersion() {
         return (Long) get(1);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.CREATED_BY</code>.
+     * Setter for <code>public.evouchers.created_by</code>.
      */
     public void setCreatedBy(UUID value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.CREATED_BY</code>.
+     * Getter for <code>public.evouchers.created_by</code>.
      */
     public UUID getCreatedBy() {
         return (UUID) get(2);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.CREATED_DATE</code>.
+     * Setter for <code>public.evouchers.created_date</code>.
      */
     public void setCreatedDate(LocalDateTime value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.CREATED_DATE</code>.
+     * Getter for <code>public.evouchers.created_date</code>.
      */
     public LocalDateTime getCreatedDate() {
         return (LocalDateTime) get(3);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.LAST_MODIFIED_BY</code>.
+     * Setter for <code>public.evouchers.last_modified_by</code>.
      */
     public void setLastModifiedBy(UUID value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.LAST_MODIFIED_BY</code>.
+     * Getter for <code>public.evouchers.last_modified_by</code>.
      */
     public UUID getLastModifiedBy() {
         return (UUID) get(4);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.LAST_MODIFIED_DATE</code>.
+     * Setter for <code>public.evouchers.last_modified_date</code>.
      */
     public void setLastModifiedDate(LocalDateTime value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.LAST_MODIFIED_DATE</code>.
+     * Getter for <code>public.evouchers.last_modified_date</code>.
      */
     public LocalDateTime getLastModifiedDate() {
         return (LocalDateTime) get(5);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.NAME</code>.
+     * Setter for <code>public.evouchers.name</code>.
      */
     public void setName(String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.NAME</code>.
+     * Getter for <code>public.evouchers.name</code>.
      */
     public String getName() {
         return (String) get(6);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.EMAIL</code>.
+     * Setter for <code>public.evouchers.email</code>.
      */
     public void setEmail(String value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.EMAIL</code>.
+     * Getter for <code>public.evouchers.email</code>.
      */
     public String getEmail() {
         return (String) get(7);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.REQUEST_DATE</code>.
+     * Setter for <code>public.evouchers.request_date</code>.
      */
     public void setRequestDate(LocalDateTime value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.REQUEST_DATE</code>.
+     * Getter for <code>public.evouchers.request_date</code>.
      */
     public LocalDateTime getRequestDate() {
         return (LocalDateTime) get(8);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.AMOUNT</code>.
+     * Setter for <code>public.evouchers.amount</code>.
      */
     public void setAmount(BigDecimal value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.AMOUNT</code>.
+     * Getter for <code>public.evouchers.amount</code>.
      */
     public BigDecimal getAmount() {
         return (BigDecimal) get(9);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.STATUS</code>.
+     * Setter for <code>public.evouchers.status</code>.
      */
     public void setStatus(String value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.STATUS</code>.
+     * Getter for <code>public.evouchers.status</code>.
      */
     public String getStatus() {
         return (String) get(10);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.DISTRIBUTION_YEAR</code>.
+     * Setter for <code>public.evouchers.distribution_year</code>.
      */
     public void setDistributionYear(Integer value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.DISTRIBUTION_YEAR</code>.
+     * Getter for <code>public.evouchers.distribution_year</code>.
      */
     public Integer getDistributionYear() {
         return (Integer) get(11);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHERS.TEAM_NUMBER</code>.
+     * Setter for <code>public.evouchers.team_number</code>.
      */
     public void setTeamNumber(Integer value) {
         set(12, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHERS.TEAM_NUMBER</code>.
+     * Getter for <code>public.evouchers.team_number</code>.
      */
     public Integer getTeamNumber() {
         return (Integer) get(12);

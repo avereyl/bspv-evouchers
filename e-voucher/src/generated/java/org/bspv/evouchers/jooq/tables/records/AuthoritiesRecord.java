@@ -28,31 +28,31 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AuthoritiesRecord extends UpdatableRecordImpl<AuthoritiesRecord> implements Record2<UUID, String> {
 
-    private static final long serialVersionUID = 989172940;
+    private static final long serialVersionUID = -752099252;
 
     /**
-     * Setter for <code>PUBLIC.AUTHORITIES.USER_ID</code>.
+     * Setter for <code>public.authorities.user_id</code>.
      */
     public void setUserId(UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.AUTHORITIES.USER_ID</code>.
+     * Getter for <code>public.authorities.user_id</code>.
      */
     public UUID getUserId() {
         return (UUID) get(0);
     }
 
     /**
-     * Setter for <code>PUBLIC.AUTHORITIES.AUTHORITY</code>.
+     * Setter for <code>public.authorities.authority</code>.
      */
     public void setAuthority(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.AUTHORITIES.AUTHORITY</code>.
+     * Getter for <code>public.authorities.authority</code>.
      */
     public String getAuthority() {
         return (String) get(1);

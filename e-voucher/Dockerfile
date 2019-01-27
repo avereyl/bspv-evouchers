@@ -6,9 +6,10 @@ RUN apk add --no-cache ttf-dejavu
 # copy application WAR (with libraries inside + keystore and config file)
 COPY target/e-voucher-*.jar /eVoucher.jar
 COPY src/main/resources/security/keystore.p12 /keystore.p12
-COPY src/main/resources/application-docker.properties /application.properties
+COPY src/main/resources/application-docker-sendgrid.properties /application.properties
 
 # specify default command + add config file
 CMD ["/usr/bin/java", "-jar", "-Dspring.config.location=/", "/eVoucher.jar"]
 
 EXPOSE 8443
+EXPOSE 587

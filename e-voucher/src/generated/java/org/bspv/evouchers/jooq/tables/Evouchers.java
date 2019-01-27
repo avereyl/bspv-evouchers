@@ -38,10 +38,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Evouchers extends TableImpl<EvouchersRecord> {
 
-    private static final long serialVersionUID = -506134604;
+    private static final long serialVersionUID = -58870001;
 
     /**
-     * The reference instance of <code>PUBLIC.EVOUCHERS</code>
+     * The reference instance of <code>public.evouchers</code>
      */
     public static final Evouchers EVOUCHERS = new Evouchers();
 
@@ -54,79 +54,79 @@ public class Evouchers extends TableImpl<EvouchersRecord> {
     }
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.ID</code>.
+     * The column <code>public.evouchers.id</code>.
      */
-    public final TableField<EvouchersRecord, UUID> ID = createField("ID", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<EvouchersRecord, UUID> ID = createField("id", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.VERSION</code>.
+     * The column <code>public.evouchers.version</code>.
      */
-    public final TableField<EvouchersRecord, Long> VERSION = createField("VERSION", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("1", org.jooq.impl.SQLDataType.BIGINT)), this, "");
+    public final TableField<EvouchersRecord, Long> VERSION = createField("version", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("1", org.jooq.impl.SQLDataType.BIGINT)), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.CREATED_BY</code>.
+     * The column <code>public.evouchers.created_by</code>.
      */
-    public final TableField<EvouchersRecord, UUID> CREATED_BY = createField("CREATED_BY", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<EvouchersRecord, UUID> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.CREATED_DATE</code>.
+     * The column <code>public.evouchers.created_date</code>.
      */
-    public final TableField<EvouchersRecord, LocalDateTime> CREATED_DATE = createField("CREATED_DATE", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "", new LocalDateTimeConverter());
+    public final TableField<EvouchersRecord, LocalDateTime> CREATED_DATE = createField("created_date", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "", new LocalDateTimeConverter());
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.LAST_MODIFIED_BY</code>.
+     * The column <code>public.evouchers.last_modified_by</code>.
      */
-    public final TableField<EvouchersRecord, UUID> LAST_MODIFIED_BY = createField("LAST_MODIFIED_BY", org.jooq.impl.SQLDataType.UUID, this, "");
+    public final TableField<EvouchersRecord, UUID> LAST_MODIFIED_BY = createField("last_modified_by", org.jooq.impl.SQLDataType.UUID, this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.LAST_MODIFIED_DATE</code>.
+     * The column <code>public.evouchers.last_modified_date</code>.
      */
-    public final TableField<EvouchersRecord, LocalDateTime> LAST_MODIFIED_DATE = createField("LAST_MODIFIED_DATE", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new LocalDateTimeConverter());
+    public final TableField<EvouchersRecord, LocalDateTime> LAST_MODIFIED_DATE = createField("last_modified_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new LocalDateTimeConverter());
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.NAME</code>.
+     * The column <code>public.evouchers.name</code>.
      */
-    public final TableField<EvouchersRecord, String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(75).nullable(false), this, "");
+    public final TableField<EvouchersRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(100).nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.EMAIL</code>.
+     * The column <code>public.evouchers.email</code>.
      */
-    public final TableField<EvouchersRecord, String> EMAIL = createField("EMAIL", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<EvouchersRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.REQUEST_DATE</code>.
+     * The column <code>public.evouchers.request_date</code>.
      */
-    public final TableField<EvouchersRecord, LocalDateTime> REQUEST_DATE = createField("REQUEST_DATE", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new LocalDateTimeConverter());
+    public final TableField<EvouchersRecord, LocalDateTime> REQUEST_DATE = createField("request_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new LocalDateTimeConverter());
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.AMOUNT</code>.
+     * The column <code>public.evouchers.amount</code>.
      */
-    public final TableField<EvouchersRecord, BigDecimal> AMOUNT = createField("AMOUNT", org.jooq.impl.SQLDataType.DECIMAL.precision(10, 2).nullable(false).defaultValue(org.jooq.impl.DSL.field("0.00", org.jooq.impl.SQLDataType.DECIMAL)), this, "");
+    public final TableField<EvouchersRecord, BigDecimal> AMOUNT = createField("amount", org.jooq.impl.SQLDataType.NUMERIC.nullable(false).defaultValue(org.jooq.impl.DSL.field("0.0", org.jooq.impl.SQLDataType.NUMERIC)), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.STATUS</code>.
+     * The column <code>public.evouchers.status</code>.
      */
-    public final TableField<EvouchersRecord, String> STATUS = createField("STATUS", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
+    public final TableField<EvouchersRecord, String> STATUS = createField("status", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.DISTRIBUTION_YEAR</code>.
+     * The column <code>public.evouchers.distribution_year</code>.
      */
-    public final TableField<EvouchersRecord, Integer> DISTRIBUTION_YEAR = createField("DISTRIBUTION_YEAR", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<EvouchersRecord, Integer> DISTRIBUTION_YEAR = createField("distribution_year", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.EVOUCHERS.TEAM_NUMBER</code>.
+     * The column <code>public.evouchers.team_number</code>.
      */
-    public final TableField<EvouchersRecord, Integer> TEAM_NUMBER = createField("TEAM_NUMBER", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<EvouchersRecord, Integer> TEAM_NUMBER = createField("team_number", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * Create a <code>PUBLIC.EVOUCHERS</code> table reference
+     * Create a <code>public.evouchers</code> table reference
      */
     public Evouchers() {
-        this("EVOUCHERS", null);
+        this("evouchers", null);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.EVOUCHERS</code> table reference
+     * Create an aliased <code>public.evouchers</code> table reference
      */
     public Evouchers(String alias) {
         this(alias, EVOUCHERS);
@@ -153,7 +153,7 @@ public class Evouchers extends TableImpl<EvouchersRecord> {
      */
     @Override
     public UniqueKey<EvouchersRecord> getPrimaryKey() {
-        return Keys.SYS_PK_10153;
+        return Keys.EVOUCHERS_PKEY;
     }
 
     /**
@@ -161,7 +161,7 @@ public class Evouchers extends TableImpl<EvouchersRecord> {
      */
     @Override
     public List<UniqueKey<EvouchersRecord>> getKeys() {
-        return Arrays.<UniqueKey<EvouchersRecord>>asList(Keys.SYS_PK_10153);
+        return Arrays.<UniqueKey<EvouchersRecord>>asList(Keys.EVOUCHERS_PKEY);
     }
 
     /**
@@ -169,7 +169,7 @@ public class Evouchers extends TableImpl<EvouchersRecord> {
      */
     @Override
     public List<ForeignKey<EvouchersRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<EvouchersRecord, ?>>asList(Keys.FK_EVOUCHERS__USERS_1, Keys.FK_EVOUCHERS__USERS_2);
+        return Arrays.<ForeignKey<EvouchersRecord, ?>>asList(Keys.EVOUCHERS__FK_EVOUCHERS__USERS_1, Keys.EVOUCHERS__FK_EVOUCHERS__USERS_2);
     }
 
     /**

@@ -194,8 +194,11 @@
 			<artifactId>icu4j</artifactId>
 			<version>${com.ibm.icu.icu4j.version}</version>
 		</dependency>
-
-
+		<dependency>
+			<groupId>com.sendgrid</groupId>
+			<artifactId>sendgrid-java</artifactId>
+			<version>4.0.1</version>
+		</dependency>
 
 		<!-- db and db access -->
 		<dependency>

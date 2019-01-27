@@ -30,73 +30,73 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EvoucherEventsRecord extends UpdatableRecordImpl<EvoucherEventsRecord> implements Record5<Long, UUID, String, UUID, LocalDateTime> {
 
-    private static final long serialVersionUID = -698092483;
+    private static final long serialVersionUID = 34450557;
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHER_EVENTS.ID</code>.
+     * Setter for <code>public.evoucher_events.id</code>.
      */
     public void setId(Long value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHER_EVENTS.ID</code>.
+     * Getter for <code>public.evoucher_events.id</code>.
      */
     public Long getId() {
         return (Long) get(0);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHER_EVENTS.EVOUCHER_ID</code>.
+     * Setter for <code>public.evoucher_events.evoucher_id</code>.
      */
     public void setEvoucherId(UUID value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHER_EVENTS.EVOUCHER_ID</code>.
+     * Getter for <code>public.evoucher_events.evoucher_id</code>.
      */
     public UUID getEvoucherId() {
         return (UUID) get(1);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHER_EVENTS.EVENT_TYPE</code>.
+     * Setter for <code>public.evoucher_events.event_type</code>.
      */
     public void setEventType(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHER_EVENTS.EVENT_TYPE</code>.
+     * Getter for <code>public.evoucher_events.event_type</code>.
      */
     public String getEventType() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHER_EVENTS.CREATED_BY</code>.
+     * Setter for <code>public.evoucher_events.created_by</code>.
      */
     public void setCreatedBy(UUID value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHER_EVENTS.CREATED_BY</code>.
+     * Getter for <code>public.evoucher_events.created_by</code>.
      */
     public UUID getCreatedBy() {
         return (UUID) get(3);
     }
 
     /**
-     * Setter for <code>PUBLIC.EVOUCHER_EVENTS.CREATED_DATE</code>.
+     * Setter for <code>public.evoucher_events.created_date</code>.
      */
     public void setCreatedDate(LocalDateTime value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.EVOUCHER_EVENTS.CREATED_DATE</code>.
+     * Getter for <code>public.evoucher_events.created_date</code>.
      */
     public LocalDateTime getCreatedDate() {
         return (LocalDateTime) get(4);

@@ -37,10 +37,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeamMembers extends TableImpl<TeamMembersRecord> {
 
-    private static final long serialVersionUID = -260386608;
+    private static final long serialVersionUID = -1969750765;
 
     /**
-     * The reference instance of <code>PUBLIC.TEAM_MEMBERS</code>
+     * The reference instance of <code>public.team_members</code>
      */
     public static final TeamMembers TEAM_MEMBERS = new TeamMembers();
 
@@ -53,39 +53,39 @@ public class TeamMembers extends TableImpl<TeamMembersRecord> {
     }
 
     /**
-     * The column <code>PUBLIC.TEAM_MEMBERS.USER_ID</code>.
+     * The column <code>public.team_members.user_id</code>.
      */
-    public final TableField<TeamMembersRecord, UUID> USER_ID = createField("USER_ID", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<TeamMembersRecord, UUID> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.TEAM_MEMBERS.DISTRIBUTION_YEAR</code>.
+     * The column <code>public.team_members.distribution_year</code>.
      */
-    public final TableField<TeamMembersRecord, Integer> DISTRIBUTION_YEAR = createField("DISTRIBUTION_YEAR", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<TeamMembersRecord, Integer> DISTRIBUTION_YEAR = createField("distribution_year", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.TEAM_MEMBERS.TEAM_NUMBER</code>.
+     * The column <code>public.team_members.team_number</code>.
      */
-    public final TableField<TeamMembersRecord, Integer> TEAM_NUMBER = createField("TEAM_NUMBER", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<TeamMembersRecord, Integer> TEAM_NUMBER = createField("team_number", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.TEAM_MEMBERS.VALIDITY_START</code>.
+     * The column <code>public.team_members.validity_start</code>.
      */
-    public final TableField<TeamMembersRecord, LocalDateTime> VALIDITY_START = createField("VALIDITY_START", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "", new LocalDateTimeConverter());
+    public final TableField<TeamMembersRecord, LocalDateTime> VALIDITY_START = createField("validity_start", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "", new LocalDateTimeConverter());
 
     /**
-     * The column <code>PUBLIC.TEAM_MEMBERS.VALIDITY_END</code>.
+     * The column <code>public.team_members.validity_end</code>.
      */
-    public final TableField<TeamMembersRecord, LocalDateTime> VALIDITY_END = createField("VALIDITY_END", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "", new LocalDateTimeConverter());
+    public final TableField<TeamMembersRecord, LocalDateTime> VALIDITY_END = createField("validity_end", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "", new LocalDateTimeConverter());
 
     /**
-     * Create a <code>PUBLIC.TEAM_MEMBERS</code> table reference
+     * Create a <code>public.team_members</code> table reference
      */
     public TeamMembers() {
-        this("TEAM_MEMBERS", null);
+        this("team_members", null);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.TEAM_MEMBERS</code> table reference
+     * Create an aliased <code>public.team_members</code> table reference
      */
     public TeamMembers(String alias) {
         this(alias, TEAM_MEMBERS);
@@ -112,7 +112,7 @@ public class TeamMembers extends TableImpl<TeamMembersRecord> {
      */
     @Override
     public UniqueKey<TeamMembersRecord> getPrimaryKey() {
-        return Keys.SYS_PK_10187;
+        return Keys.TEAM_MEMBERS_PKEY;
     }
 
     /**
@@ -120,7 +120,7 @@ public class TeamMembers extends TableImpl<TeamMembersRecord> {
      */
     @Override
     public List<UniqueKey<TeamMembersRecord>> getKeys() {
-        return Arrays.<UniqueKey<TeamMembersRecord>>asList(Keys.SYS_PK_10187);
+        return Arrays.<UniqueKey<TeamMembersRecord>>asList(Keys.TEAM_MEMBERS_PKEY);
     }
 
     /**
@@ -128,7 +128,7 @@ public class TeamMembers extends TableImpl<TeamMembersRecord> {
      */
     @Override
     public List<ForeignKey<TeamMembersRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<TeamMembersRecord, ?>>asList(Keys.FK_TEAM_MEMBERS__USERS);
+        return Arrays.<ForeignKey<TeamMembersRecord, ?>>asList(Keys.TEAM_MEMBERS__FK_TEAM_MEMBERS__USERS);
     }
 
     /**

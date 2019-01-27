@@ -35,10 +35,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Authorities extends TableImpl<AuthoritiesRecord> {
 
-    private static final long serialVersionUID = -1192532310;
+    private static final long serialVersionUID = 760356541;
 
     /**
-     * The reference instance of <code>PUBLIC.AUTHORITIES</code>
+     * The reference instance of <code>public.authorities</code>
      */
     public static final Authorities AUTHORITIES = new Authorities();
 
@@ -51,24 +51,24 @@ public class Authorities extends TableImpl<AuthoritiesRecord> {
     }
 
     /**
-     * The column <code>PUBLIC.AUTHORITIES.USER_ID</code>.
+     * The column <code>public.authorities.user_id</code>.
      */
-    public final TableField<AuthoritiesRecord, UUID> USER_ID = createField("USER_ID", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<AuthoritiesRecord, UUID> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.AUTHORITIES.AUTHORITY</code>.
+     * The column <code>public.authorities.authority</code>.
      */
-    public final TableField<AuthoritiesRecord, String> AUTHORITY = createField("AUTHORITY", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
+    public final TableField<AuthoritiesRecord, String> AUTHORITY = createField("authority", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
 
     /**
-     * Create a <code>PUBLIC.AUTHORITIES</code> table reference
+     * Create a <code>public.authorities</code> table reference
      */
     public Authorities() {
-        this("AUTHORITIES", null);
+        this("authorities", null);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.AUTHORITIES</code> table reference
+     * Create an aliased <code>public.authorities</code> table reference
      */
     public Authorities(String alias) {
         this(alias, AUTHORITIES);
@@ -95,7 +95,7 @@ public class Authorities extends TableImpl<AuthoritiesRecord> {
      */
     @Override
     public UniqueKey<AuthoritiesRecord> getPrimaryKey() {
-        return Keys.SYS_PK_10198;
+        return Keys.AUTHORITIES_PKEY;
     }
 
     /**
@@ -103,7 +103,7 @@ public class Authorities extends TableImpl<AuthoritiesRecord> {
      */
     @Override
     public List<UniqueKey<AuthoritiesRecord>> getKeys() {
-        return Arrays.<UniqueKey<AuthoritiesRecord>>asList(Keys.SYS_PK_10198);
+        return Arrays.<UniqueKey<AuthoritiesRecord>>asList(Keys.AUTHORITIES_PKEY);
     }
 
     /**
@@ -111,7 +111,7 @@ public class Authorities extends TableImpl<AuthoritiesRecord> {
      */
     @Override
     public List<ForeignKey<AuthoritiesRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<AuthoritiesRecord, ?>>asList(Keys.FK_AUTHORITIES__USERS);
+        return Arrays.<ForeignKey<AuthoritiesRecord, ?>>asList(Keys.AUTHORITIES__FK_AUTHORITIES__USERS);
     }
 
     /**

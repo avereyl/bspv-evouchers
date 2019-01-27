@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="eVoucherA4" pageWidth="595" pageHeight="842" columnWidth="483" leftMargin="56" rightMargin="56" topMargin="56" bottomMargin="56" uuid="82325a7b-09e6-4b8e-9fe4-287551d19f18">
 	<property name="net.sf.jasperreports.export.pdf.tagged" value="true"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
@@ -76,7 +76,7 @@
 				<textFieldExpression><![CDATA[$P{voucherReference}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="252" splitType="Stretch">
+		<band height="217" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<textField>
 				<reportElement x="0" y="0" width="239" height="50" uuid="49adef16-d1e4-49a1-b59a-1da981596e48"/>
@@ -119,7 +119,7 @@
 				<textFieldExpression><![CDATA[$P{voucherDonationDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="0" y="50" width="239" height="19" uuid="1caf7a23-0c41-46f2-a824-c36bc1ce58b4"/>
+				<reportElement isPrintRepeatedValues="false" x="0" y="50" width="240" height="19" uuid="1caf7a23-0c41-46f2-a824-c36bc1ce58b4"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
 					<font size="11" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -127,7 +127,7 @@
 				<textFieldExpression><![CDATA[$P{voucherAssociationName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement isPrintRepeatedValues="false" x="241" y="50" width="239" height="19" isPrintWhenDetailOverflows="true" uuid="ef1e836a-e948-4ccb-9d1b-19f2fd178fcc"/>
+				<reportElement isPrintRepeatedValues="false" x="242" y="50" width="240" height="19" isPrintWhenDetailOverflows="true" uuid="ef1e836a-e948-4ccb-9d1b-19f2fd178fcc"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
 					<font size="11" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -135,7 +135,7 @@
 				<textFieldExpression><![CDATA[$P{voucherDonorName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement isPrintRepeatedValues="false" x="0" y="69" width="239" height="19" isPrintWhenDetailOverflows="true" uuid="914c5a83-bb29-437d-9a1c-6b35d4d636c4"/>
+				<reportElement isPrintRepeatedValues="false" x="0" y="69" width="240" height="19" isPrintWhenDetailOverflows="true" uuid="914c5a83-bb29-437d-9a1c-6b35d4d636c4"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
 					<font size="11" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>

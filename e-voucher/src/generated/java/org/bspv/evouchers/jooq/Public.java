@@ -17,6 +17,7 @@ import org.bspv.evouchers.jooq.tables.SchemaVersion;
 import org.bspv.evouchers.jooq.tables.TeamMembers;
 import org.bspv.evouchers.jooq.tables.Users;
 import org.jooq.Catalog;
+import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
@@ -34,48 +35,48 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = -3419710;
+    private static final long serialVersionUID = 917911854;
 
     /**
-     * The reference instance of <code>PUBLIC</code>
+     * The reference instance of <code>public</code>
      */
     public static final Public PUBLIC = new Public();
 
     /**
-     * The table <code>PUBLIC.AUTHORITIES</code>.
+     * The table <code>public.authorities</code>.
      */
     public final Authorities AUTHORITIES = org.bspv.evouchers.jooq.tables.Authorities.AUTHORITIES;
 
     /**
-     * The table <code>PUBLIC.EVOUCHERS</code>.
-     */
-    public final Evouchers EVOUCHERS = org.bspv.evouchers.jooq.tables.Evouchers.EVOUCHERS;
-
-    /**
-     * The table <code>PUBLIC.EVOUCHER_EVENTS</code>.
+     * The table <code>public.evoucher_events</code>.
      */
     public final EvoucherEvents EVOUCHER_EVENTS = org.bspv.evouchers.jooq.tables.EvoucherEvents.EVOUCHER_EVENTS;
 
     /**
-     * The table <code>PUBLIC.TEAM_MEMBERS</code>.
+     * The table <code>public.evouchers</code>.
+     */
+    public final Evouchers EVOUCHERS = org.bspv.evouchers.jooq.tables.Evouchers.EVOUCHERS;
+
+    /**
+     * The table <code>public.schema_version</code>.
+     */
+    public final SchemaVersion SCHEMA_VERSION = org.bspv.evouchers.jooq.tables.SchemaVersion.SCHEMA_VERSION;
+
+    /**
+     * The table <code>public.team_members</code>.
      */
     public final TeamMembers TEAM_MEMBERS = org.bspv.evouchers.jooq.tables.TeamMembers.TEAM_MEMBERS;
 
     /**
-     * The table <code>PUBLIC.USERS</code>.
+     * The table <code>public.users</code>.
      */
     public final Users USERS = org.bspv.evouchers.jooq.tables.Users.USERS;
-
-    /**
-     * The table <code>PUBLIC.schema_version</code>.
-     */
-    public final SchemaVersion SCHEMA_VERSION = org.bspv.evouchers.jooq.tables.SchemaVersion.SCHEMA_VERSION;
 
     /**
      * No further instances allowed
      */
     private Public() {
-        super("PUBLIC", null);
+        super("public", null);
     }
 
 
@@ -88,6 +89,18 @@ public class Public extends SchemaImpl {
     }
 
     @Override
+    public final List<Sequence<?>> getSequences() {
+        List result = new ArrayList();
+        result.addAll(getSequences0());
+        return result;
+    }
+
+    private final List<Sequence<?>> getSequences0() {
+        return Arrays.<Sequence<?>>asList(
+            Sequences.EVOUCHER_EVENTS_ID_SEQ);
+    }
+
+    @Override
     public final List<Table<?>> getTables() {
         List result = new ArrayList();
         result.addAll(getTables0());
@@ -97,10 +110,10 @@ public class Public extends SchemaImpl {
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Authorities.AUTHORITIES,
-            Evouchers.EVOUCHERS,
             EvoucherEvents.EVOUCHER_EVENTS,
+            Evouchers.EVOUCHERS,
+            SchemaVersion.SCHEMA_VERSION,
             TeamMembers.TEAM_MEMBERS,
-            Users.USERS,
-            SchemaVersion.SCHEMA_VERSION);
+            Users.USERS);
     }
 }

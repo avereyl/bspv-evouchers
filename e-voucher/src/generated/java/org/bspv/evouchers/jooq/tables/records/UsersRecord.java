@@ -29,87 +29,87 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Record6<UUID, Long, String, String, Boolean, String> {
 
-    private static final long serialVersionUID = -1997606141;
+    private static final long serialVersionUID = -500106493;
 
     /**
-     * Setter for <code>PUBLIC.USERS.ID</code>.
+     * Setter for <code>public.users.id</code>.
      */
     public void setId(UUID value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.USERS.ID</code>.
+     * Getter for <code>public.users.id</code>.
      */
     public UUID getId() {
         return (UUID) get(0);
     }
 
     /**
-     * Setter for <code>PUBLIC.USERS.VERSION</code>.
+     * Setter for <code>public.users.version</code>.
      */
     public void setVersion(Long value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.USERS.VERSION</code>.
+     * Getter for <code>public.users.version</code>.
      */
     public Long getVersion() {
         return (Long) get(1);
     }
 
     /**
-     * Setter for <code>PUBLIC.USERS.USERNAME</code>.
+     * Setter for <code>public.users.username</code>.
      */
     public void setUsername(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.USERS.USERNAME</code>.
+     * Getter for <code>public.users.username</code>.
      */
     public String getUsername() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>PUBLIC.USERS.SECRETKEY</code>.
+     * Setter for <code>public.users.secretkey</code>.
      */
     public void setSecretkey(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.USERS.SECRETKEY</code>.
+     * Getter for <code>public.users.secretkey</code>.
      */
     public String getSecretkey() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>PUBLIC.USERS.ENABLED</code>.
+     * Setter for <code>public.users.enabled</code>.
      */
     public void setEnabled(Boolean value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.USERS.ENABLED</code>.
+     * Getter for <code>public.users.enabled</code>.
      */
     public Boolean getEnabled() {
         return (Boolean) get(4);
     }
 
     /**
-     * Setter for <code>PUBLIC.USERS.EMAIL</code>.
+     * Setter for <code>public.users.email</code>.
      */
     public void setEmail(String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.USERS.EMAIL</code>.
+     * Getter for <code>public.users.email</code>.
      */
     public String getEmail() {
         return (String) get(5);

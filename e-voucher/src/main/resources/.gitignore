@@ -1,3 +1,4 @@
 /application-dev.yml
 /application-dev.properties
 /application-docker.properties
+/application-docker-sendgrid.properties
