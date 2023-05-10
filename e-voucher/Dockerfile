@@ -1,5 +1,5 @@
 # Base Alpine Linux based image with OpenJDK JRE only
-FROM openjdk:8-jre-alpine
+FROM openjdk:21-ea-20-slim-bullseye
 # Add some fonts (used by JasperReports)
 RUN apk add --no-cache ttf-dejavu
 
