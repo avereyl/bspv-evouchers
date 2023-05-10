@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Profile;
@@ -21,7 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @ServletComponentScan
 @SpringBootApplication(exclude = { FlywayAutoConfiguration.class })
-public class EVoucherApplication extends SpringBootServletInitializer {
+public class EVoucherApplication {
 
 	/**
 	 * Main method.
@@ -30,29 +29,6 @@ public class EVoucherApplication extends SpringBootServletInitializer {
 	 */
 	public static void main(String[] args) {
 		SpringApplication.run(EVoucherApplication.class, args);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.boot.web.support.SpringBootServletInitializer#run(org.
-	 * springframework.boot.SpringApplication)
-	 */
-	@Override
-	protected WebApplicationContext run(SpringApplication application) {
-		return super.run(application);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.springframework.boot.context.web.SpringBootServletInitializer#
-	 * configure(org.springframework.boot.builder.SpringApplicationBuilder)
-	 */
-	@Override
-	protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
-		return application.sources(EVoucherApplication.class).initializers();
 	}
 
 	/**

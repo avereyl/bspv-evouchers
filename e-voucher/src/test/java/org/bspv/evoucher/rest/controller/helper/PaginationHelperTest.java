@@ -5,10 +5,11 @@ package org.bspv.evoucher.rest.controller.helper;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.bspv.evoucher.rest.controller.exception.RangeUnsatisfiableException;
+import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
-import org.testng.annotations.Test;
 
 /**
  *
@@ -50,24 +51,28 @@ public class PaginationHelperTest {
 	/**
 	 * 
 	 */
-	@Test(expectedExceptions = RangeUnsatisfiableException.class)
+	@Test
 	public void unsatisfiableRangeToPageRequestTest() {
 		// given
 		String range = "0-300";
 		// when
-		PaginationHelper.rangeToPageRequest(range);
+		assertThrows(RangeUnsatisfiableException.class, () -> {
+	        PaginationHelper.rangeToPageRequest(range);
+	    });
 		// then ...
 	}
 
 	/**
 	 * 
 	 */
-	@Test(expectedExceptions = IllegalArgumentException.class)
+	@Test
 	public void badFormatRangeToPageRequestTest() {
 		// given
 		String range = "a+10";
 		// when
-		PaginationHelper.rangeToPageRequest(range);
+		assertThrows(IllegalArgumentException.class, () -> {
+			PaginationHelper.rangeToPageRequest(range);
+		});
 		// then ...
 	}
 

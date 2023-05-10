@@ -23,15 +23,15 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.sendgrid.Attachments;
-import com.sendgrid.Content;
-import com.sendgrid.Email;
-import com.sendgrid.Mail;
 import com.sendgrid.Method;
-import com.sendgrid.Personalization;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Attachments;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
+import com.sendgrid.helpers.mail.objects.Personalization;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -91,7 +91,7 @@ public class MailingServiceSendgrid implements MailingService {
 		
 		Email to = null;
 		String donorEmail = eVoucher.getEmail();
-		if (!StringUtils.isEmpty(donorEmail)) {
+		if (StringUtils.hasLength(donorEmail)) {
 			to = new Email(donorEmail);
 		} else {
 		    log.warn("No donor email: fallback to archive email.");

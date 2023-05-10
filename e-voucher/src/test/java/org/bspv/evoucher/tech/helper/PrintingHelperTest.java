@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 public class PrintingHelperTest {
 
@@ -78,7 +78,7 @@ public class PrintingHelperTest {
 		String formattedDate = PrintingHelper.formatDateInFrench(aDate);
 		// then
 		assertThat(formattedNullDate).isEqualTo("");
-        assertThat(formattedDate).isEqualTo("17/10/17");
+        assertThat(formattedDate).isEqualTo("17/10/2017");
 	}
 
 }

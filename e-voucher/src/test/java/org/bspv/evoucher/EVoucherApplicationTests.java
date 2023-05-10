@@ -1,14 +1,13 @@
 package org.bspv.evoucher;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.Test;
 
 @SpringBootTest
-public class EVoucherApplicationTests extends AbstractTestNGSpringContextTests {
+class EVoucherApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	void contextLoads() {
 	}
 
 }

@@ -15,6 +15,9 @@ import javax.mail.internet.MimeMessage;
 import org.bspv.evoucher.config.mail.MailConfig;
 import org.bspv.evoucher.core.business.UserBusinessService;
 import org.bspv.evoucher.core.model.EVoucher;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -24,16 +27,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
 
 @SpringBootTest
-public class MailingServiceIntegrationTest extends AbstractTestNGSpringContextTests {
+public class MailingServiceIntegrationTest {
 
 	/**
 	 * Fake SMTP server for testing purpose.

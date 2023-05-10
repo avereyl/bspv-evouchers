@@ -42,8 +42,8 @@ public final class PaginationHelper {
 	 * @return a {@link PageRequest}
 	 */
 	public static PageRequest rangeToPageRequest(final String range) throws IllegalArgumentException {
-		String elementRange = StringUtils.isEmpty(range) ? DEFAULT_PAGINATION_RANGE : range;
-		PageRequest pr = new PageRequest(0, DEFAULT_PAGE_SIZE);
+		String elementRange = StringUtils.hasLength(range) ? range : DEFAULT_PAGINATION_RANGE;
+		PageRequest pr = PageRequest.of(0, DEFAULT_PAGE_SIZE);
 		String[] data = elementRange.split("-");
 		try {
 			int start = Integer.parseInt(data[0]);
@@ -52,7 +52,7 @@ public final class PaginationHelper {
 				throw new RangeUnsatisfiableException(
 						"Range " + range + " not satisfiable. (Maximum size is " + MAX_RANGE + ")");
 			}
-			pr = new PageRequest(start / (end - start), end - start);
+			pr = PageRequest.of(start / (end - start), end - start);
 		} catch (NumberFormatException | IndexOutOfBoundsException ex) {
 			log.error("Invalid range format");
 			throw new IllegalArgumentException("Exception reading the range parameter", ex);
