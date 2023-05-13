@@ -16,7 +16,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.11</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -30,14 +30,14 @@
 		<db.path>file:${project.build.directory}/${db.name}</db.path>
 		<db.inputSchema>PUBLIC</db.inputSchema>
 		<db.username>sa</db.username>
-		<db.password></db.password>
+		<db.password/>
 		<db.flyway.locations>db/migration/hsqldb</db.flyway.locations>
 		<db.hsqldb.startNstop.skip>false</db.hsqldb.startNstop.skip>
 
 		<!-- lib and plugins versions -->
 		<org.bspv.e-voucher-fonts.version>0.0.1-SNAPSHOT</org.bspv.e-voucher-fonts.version>
 
-		<net.sf.jasperreports.jasperreports.version>6.11.0</net.sf.jasperreports.jasperreports.version>
+		<net.sf.jasperreports.jasperreports.version>6.20.3</net.sf.jasperreports.jasperreports.version>
 		<com.adobe.xmp.xmpcore.version>5.1.3</com.adobe.xmp.xmpcore.version>
 		<org.apache.xmlgraphics.batik-bridge.version>1.16</org.apache.xmlgraphics.batik-bridge.version>
 		<org.apache.pdfbox.pdfbox.version>2.0.7</org.apache.pdfbox.pdfbox.version>
@@ -314,7 +314,7 @@
 					<path>${db.path}</path>
 					<name>${db.name}</name>
 					<username>sa</username>
-					<password></password>
+					<password/>
 					<validationQuery>SELECT 1 FROM INFORMATION_SCHEMA.SYSTEM_USERS</validationQuery>
 
 				</configuration>
