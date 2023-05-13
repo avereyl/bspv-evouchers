@@ -16,7 +16,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.11</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -30,7 +30,7 @@
 		<db.path>file:${project.build.directory}/${db.name}</db.path>
 		<db.inputSchema>PUBLIC</db.inputSchema>
 		<db.username>sa</db.username>
-		<db.password></db.password>
+		<db.password/>
 		<db.flyway.locations>db/migration/hsqldb</db.flyway.locations>
 		<db.hsqldb.startNstop.skip>false</db.hsqldb.startNstop.skip>
 
@@ -42,7 +42,7 @@
 		<org.apache.xmlgraphics.batik-bridge.version>1.16</org.apache.xmlgraphics.batik-bridge.version>
 		<org.apache.pdfbox.pdfbox.version>2.0.7</org.apache.pdfbox.pdfbox.version>
 		<org.apache.pdfbox.preflight.version>2.0.7</org.apache.pdfbox.preflight.version>
-		<org.bouncycastle.bcprov-jdk15on.version>1.69</org.bouncycastle.bcprov-jdk15on.version>
+		<org.bouncycastle.bcprov-jdk15on.version>1.70</org.bouncycastle.bcprov-jdk15on.version>
 		<com.google.zxing.core.version>3.3.0</com.google.zxing.core.version>
 		<com.google.zxing.javase.version>3.3.0</com.google.zxing.javase.version>
 		<com.ibm.icu.icu4j.version>59.1</com.ibm.icu.icu4j.version>
@@ -314,7 +314,7 @@
 					<path>${db.path}</path>
 					<name>${db.name}</name>
 					<username>sa</username>
-					<password></password>
+					<password/>
 					<validationQuery>SELECT 1 FROM INFORMATION_SCHEMA.SYSTEM_USERS</validationQuery>
 
 				</configuration>
