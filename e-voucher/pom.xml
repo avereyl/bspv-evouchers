@@ -16,7 +16,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.11</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -30,7 +30,7 @@
 		<db.path>file:${project.build.directory}/${db.name}</db.path>
 		<db.inputSchema>PUBLIC</db.inputSchema>
 		<db.username>sa</db.username>
-		<db.password></db.password>
+		<db.password/>
 		<db.flyway.locations>db/migration/hsqldb</db.flyway.locations>
 		<db.hsqldb.startNstop.skip>false</db.hsqldb.startNstop.skip>
 
@@ -45,7 +45,7 @@
 		<org.bouncycastle.bcprov-jdk15on.version>1.69</org.bouncycastle.bcprov-jdk15on.version>
 		<com.google.zxing.core.version>3.3.0</com.google.zxing.core.version>
 		<com.google.zxing.javase.version>3.3.0</com.google.zxing.javase.version>
-		<com.ibm.icu.icu4j.version>59.1</com.ibm.icu.icu4j.version>
+		<com.ibm.icu.icu4j.version>59.2</com.ibm.icu.icu4j.version>
 		<org.thymeleaf.thymeleaf-testing.version>3.0.4.RELEASE</org.thymeleaf.thymeleaf-testing.version>
 		<snakeyaml.version>1.33</snakeyaml.version>
 
@@ -314,7 +314,7 @@
 					<path>${db.path}</path>
 					<name>${db.name}</name>
 					<username>sa</username>
-					<password></password>
+					<password/>
 					<validationQuery>SELECT 1 FROM INFORMATION_SCHEMA.SYSTEM_USERS</validationQuery>
 
 				</configuration>
