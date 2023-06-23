@@ -16,7 +16,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.11</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -30,7 +30,7 @@
 		<db.path>file:${project.build.directory}/${db.name}</db.path>
 		<db.inputSchema>PUBLIC</db.inputSchema>
 		<db.username>sa</db.username>
-		<db.password></db.password>
+		<db.password/>
 		<db.flyway.locations>db/migration/hsqldb</db.flyway.locations>
 		<db.hsqldb.startNstop.skip>false</db.hsqldb.startNstop.skip>
 
@@ -93,7 +93,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-			<version>3.0.0</version>
+			<version>3.0.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -314,7 +314,7 @@
 					<path>${db.path}</path>
 					<name>${db.name}</name>
 					<username>sa</username>
-					<password></password>
+					<password/>
 					<validationQuery>SELECT 1 FROM INFORMATION_SCHEMA.SYSTEM_USERS</validationQuery>
 
 				</configuration>
